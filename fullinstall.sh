@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo chmod -R 777 $HOME
-yay -S reflector rsync python-pywal16 swww waybar swaync starship myfetch vim hyprland hypridle hyprpicker hyprshot hyprlock pyprland fd cava brightnessctl clock-rs-git noto-fonts-emoji ttf-firacode-nerd otf-codenewroman-nerd nwg-look qogir-icon-theme materia-gtk-theme illogical-impulse-bibata-modern-classic-bin thunar gvfs tumbler bottom ncspot blueman bluez pipewire pipewire-pulse pipewire-alsa pipewire-jack pavucontrol pulsemixer gnome-network-displays gst-plugins-bad
+yay -S reflector rsync python-pywal16 swww waybar swaync starship myfetch vim hyprland hypridle hyprpicker hyprshot hyprlock pyprland fd cava brightnessctl clock-rs-git noto-fonts-emoji ttf-firacode-nerd otf-codenewroman-nerd nwg-look qogir-icon-theme materia-gtk-theme illogical-impulse-bibata-modern-classic-bin thunar gvfs tumbler bottom ncspot blueman bluez pipewire pipewire-pulse pipewire-alsa pipewire-jack pavucontrol pulsemixer gst-plugins-bad linutil-bin celluloid feh asciiquarium vlc eza man sptlrx steam wofi
 systemctl enable bluetooth
 systemctl --user enable pipewire.service
 systemctl --user enable pipewire-pulse.service
