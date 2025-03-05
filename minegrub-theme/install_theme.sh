@@ -23,16 +23,6 @@ fi
 theme_path="$grub_path/themes/minegrub"
 
 ## Prompts
-
-# Choosing a background, comment this out if it's annoying
-read -p "[?] Do you want to choose a specific background? [y/N] " -en 1 choose_bg 
-if [[ "$choose_bg" =~ y|Y ]]; then
-    echo "[INFO] Choosing a background from ./background_options/"
-    $SCRIPT_DIR/choose_background.sh
-else
-    echo "[INFO] [Skipping] Choosing a background"
-fi
-
 echo
 read -p "[?] Copy/Update the theme to '$theme_path'? [Y/n] " -en 1 copy_theme
 if [[ "$copy_theme" =~ y|Y || -z "$copy_theme" ]]; then
@@ -43,7 +33,6 @@ else
     echo "[INFO] [Skipping] Copying the theme files to boot partition"
 fi
 
-
 echo 
 read -p "[?] Do you want to install a systemd service to automatically update the splash texts and backgrounds after every boot? [y/N] " -en 1 skip_service_installation
 if [[ "$skip_service_installation" =~ y|Y ]]; then
@@ -53,28 +42,12 @@ else
     echo "[INFO] [Skipping] Systemd service installation"
 fi
 
-
-echo
-read -p "[?] Do you want a grub drop-in-config file to be edited so setting GRUB_BACKGROUND will set a background for the grub console? [y/N] " -en 1 skip_patch
-if [[ "$skip_patch" =~ y|Y ]]; then
-    echo "[INFO] Editing /etc/grub.d/00_header"
-    # Backing up that file, just in case
-    cp --no-clobber /etc/grub.d/00_header ./00_header.bak
-    # sed'ing that one line
-    sed --in-place -E 's/(.*)elif(.*"x\$GRUB_BACKGROUND" != x ] && [ -f "\$GRUB_BACKGROUND" ].*)/\1fi; if\2/' /etc/grub.d/00_header
+# Check if the GRUB_THEME line exists
+if grep -q "^GRUB_THEME=" /etc/default/grub; then
+    # If it exists, update the line
+    sudo sed -i "s|^GRUB_THEME=.*|GRUB_THEME=\"$theme_path/theme.txt\"|" /etc/default/grub
 else
-    echo "[INFO] [Skipping] Editing grub drop-in-config file"
+    # If it doesn't exist, add the line at the end of the file
+    echo "GRUB_THEME=\"$theme_path/theme.txt\"" | sudo tee -a /etc/default/grub > /dev/null
 fi
-
-
-echo
-echo "======= Done! ======="
-echo "[YEAH] Make sure to add/change this line in /etc/default/grub :"
-echo
-echo -e "    GRUB_THEME=$theme_path/theme.txt"
-echo
-echo "[YEAH] And optionally this line. This won't have any effect unless you have applied the patch"
-echo
-echo -e "    GRUB_BACKGROUND=$theme_path/dirt.png"
-echo
 
