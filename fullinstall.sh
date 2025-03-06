@@ -21,3 +21,4 @@ sudo cp -a ~/dotfiles/wallpapers ~/
 sudo cp -a ~/dotfiles/.config/* ~/.config/
 sudo cp -a ~/dotfiles/.bashrc ~/
 sudo cp -a ~/dotfiles/.bash_profile ~/
+sudo cp ~/dotfiles/vim.desktop /usr/share/applications/

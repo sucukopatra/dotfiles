@@ -51,3 +51,13 @@ else
     echo "GRUB_THEME=\"$theme_path/theme.txt\"" | sudo tee -a /etc/default/grub > /dev/null
 fi
 
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo rm /background.png
+sudo rm /boot_menu2_c.png
+sudo rm /dejavu_14.pf2
+sudo rm /droidlogo*
+sudo rm /highlight*
+sudo rm /preview.png
+sudo rm /progress_highlight_c.png
+sudo rm /theme.txt
+
