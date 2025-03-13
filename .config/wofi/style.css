@@ -1,4 +1,4 @@
-@import url('/home/eli/.cache/wal/colors-waybar.css');
+@import url('/home/ender/.cache/wal/colors-waybar.css');
 
 @define-color mauve  @color9;
 @define-color red  @color9;
@@ -29,8 +29,8 @@ window {
 }
 #inner-box {
     margin: 2px;
-    padding: 5px
-    border: none;
+    padding: 5px;
+    border: 0px;
 }
 #outer-box {    
     border: none;
@@ -50,7 +50,7 @@ window {
     outline: none;
     color: @text;
     box-shadow: 1px 1px 5px rgba(0,0,0, .5);
-    border-radius:10;
+    border-radius:10px;
     background-color: alpha(@background,.2);
 }
 #input image {
@@ -67,7 +67,7 @@ window {
     outline: none;
     border: none;
 
-    border-radius:10;
+    border-radius:10px;
 }
 #text {
     margin: 5px;
@@ -101,5 +101,5 @@ window {
     color: @mauve;
 }
 #entry:drop(active) {
-    background-color: @lavender !important;
+    background-color: @lavender;
 }

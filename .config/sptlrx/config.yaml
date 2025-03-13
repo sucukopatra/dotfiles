@@ -1,7 +1,7 @@
 cookie: ""
 player: mpris
 mpris:
-  players: [ncspot.instance2174]
+  players: []
 host: lyricsapi.vercel.app
 ignoreErrors: true
 timerInterval: 200

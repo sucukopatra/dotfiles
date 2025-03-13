@@ -1,4 +1,4 @@
-@import url('/home/eli/.cache/wal/colors-waybar.css');
+@import url('/home/ender/.cache/wal/colors-waybar.css');
 @define-color mauve  @color9;
 @define-color red  @color9;
 @define-color lavender  @color7;
@@ -70,7 +70,7 @@ window {
 }
 #entry {
     all:unset;
-    padding: 20 0 20 45;
+    padding: 20px 0px 20px 45px;
 }
 #entry arrow {
     border: none;
