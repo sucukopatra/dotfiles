@@ -79,28 +79,8 @@
                 },
                 {
                     "label":"󰤄",
-                    "command": "swaync-client -d",
+                    "command": "systemctl suspend",
                     "type":"toggle"
-                },
-
-                {
-                    "label": "󰀟",
-                    "command": "gnome-network-displays"
-                },
-
-                {
-                    "label": "󰈙",
-                    "command": "kitty bash -i -c 'Docs'"
-                },
-                {
-                    "label": "",
-                    "command": "kitty bash -i -c 'Settings'"
-                    
-                },
-                {
-                    "label": "",
-                    "command": "kitty bash -i -c 'tasks'"
-
                 },
                 {
                     "label": "",
