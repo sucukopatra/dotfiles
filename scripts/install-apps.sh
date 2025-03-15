@@ -10,15 +10,15 @@ systemctl --user start pipewire-pulse.service
 sudo systemctl enable avahi-daemon
 
 # Set wallpaper
-wal -i ~/dotfiles/wallpapers/pywallpaper.jpg -n
+wal -i ~/dotfiles/assets/wallpapers/pywallpaper.jpg -n
 
 # Dynamic-Cursors setup
 hyprpm add https://github.com/virtcode/hypr-dynamic-cursors
 hyprpm enable dynamic-cursors
 
 # Copy files
-sudo cp -a ~/dotfiles/wallpapers ~/
-sudo cp -a ~/dotfiles/.config/* ~/.config/
-sudo cp -a ~/dotfiles/.bashrc ~/
-sudo cp -a ~/dotfiles/.bash_profile ~/
-sudo cp ~/dotfiles/vim.desktop /usr/share/applications/
+sudo cp -a ~/dotfiles/assets/wallpapers ~/
+sudo cp -a ~/dotfiles/assets/.config/* ~/.config/
+sudo cp -a ~/dotfiles/assets/.bashrc ~/
+sudo cp -a ~/dotfiles/assets/.bash_profile ~/
+sudo cp -a ~/dotfiles/assets/vim.desktop /usr/share/applications/
