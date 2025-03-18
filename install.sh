@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of available scripts
-scripts=("yay-install" "caps-to-a" "install-apps.sh" "install-grub-theme.sh" "autologin.sh" "install-zapret.sh")
+scripts=("yay-install.sh" "caps-to-a.sh" "install-apps.sh" "install-grub-theme.sh" "autologin.sh" "install-zapret.sh")
 
 # Display the list of scripts
 echo "Select a script to run:"
