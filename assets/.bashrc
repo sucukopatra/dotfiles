@@ -1,8 +1,7 @@
 # ~/.bashrc
-clear && myfetch -c 8 -C " █"
+clear && pokemon-colorscripts -r | tail -n +2 && myfetch
 eval "$(starship init bash)"
 [[ $- != *i* ]] && return
-
 
 set -o vi
 

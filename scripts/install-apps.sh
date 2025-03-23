@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo chmod -R 777 $HOME
-yay -S reflector rsync python-pywal16 swww waybar swaync starship myfetch vim hyprland hypridle hyprshot hyprlock pyprland fd cava brightnessctl clock-rs-git noto-fonts-emoji otf-ipaexfont ttf-firacode-nerd otf-codenewroman-nerd nwg-look qogir-icon-theme materia-gtk-theme illogical-impulse-bibata-modern-classic-bin thunar bottom ncspot blueman bluez bluez-utils pipewire pipewire-pulse pipewire-alsa pipewire-jack pavucontrol pulsemixer linutil-bin celluloid feh asciiquarium eza man sptlrx wofi kitty zen-browser-bin man timeshift xorg-xhost steam fastanime-git ani-skip-git fzf auto-cpufreq
+yay -S reflector rsync python-pywal16 swww waybar swaync starship myfetch vim hyprland hypridle hyprshot hyprlock pyprland fd cava brightnessctl clock-rs-git noto-fonts-emoji otf-ipaexfont ttf-firacode-nerd otf-codenewroman-nerd nwg-look qogir-icon-theme materia-gtk-theme illogical-impulse-bibata-modern-classic-bin thunar bottom ncspot blueman bluez bluez-utils pipewire pipewire-pulse pipewire-alsa pipewire-jack pavucontrol pulsemixer linutil-bin celluloid feh asciiquarium eza man sptlrx wofi kitty zen-browser-bin man timeshift xorg-xhost steam fastanime-git ani-skip-git fzf auto-cpufreq pokemon-colorscripts-git
 systemctl enable bluetooth
 systemctl --user enable pipewire.service
 systemctl --user enable pipewire-pulse.service
