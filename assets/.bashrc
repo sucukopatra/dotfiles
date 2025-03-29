@@ -1,5 +1,5 @@
 # ~/.bashrc
-paste <(pokemon-colorscripts -r | tail -n +2) <(echo "" && echo "" && echo "" && myfetch) | column | head -n 20
+clear && paste <(pokemon-colorscripts -r | tail -n +2) <(echo "" && echo "" && echo "" && myfetch) | column | head -n 20
 eval "$(starship init bash)"
 [[ $- != *i* ]] && return
 
@@ -23,5 +23,9 @@ alias config='cd ~/.config/'
 alias hconfig='vim ~/.config/hypr/hyprland.conf'
 alias dots='cd ~/dotfiles/'
 alias clock='clock-rs'
+alias timer='clock-rs timer 5400'
 alias cd..='cd ..'
 alias fa='fastanime anilist'
+alias z='sudo zapret start'
+alias zs='sudo zapret stop'
+alias todo='vim ~/todo.md'
