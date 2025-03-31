@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of available scripts
-scripts=("yay-install.sh" "caps-to-a.sh" "install-apps.sh" "install-grub-theme.sh" "autologin.sh" "install-zapret.sh" "changeto-r530.sh")
+scripts=("yay-install.sh" "caps-to-a.sh" "install-apps.sh" "install-grub-theme.sh" "autologin.sh" "install-zapret.sh" "changeto-r530.sh" "install-vesktop")
 
 while true; do
     # Display the list of scripts

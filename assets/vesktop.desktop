@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Vesktop
+Exec=bash -c "pgrep -x zapret > /dev/null || sudo systemctl start zapret; vesktop"
+Terminal=false
+Type=Application
+Icon=vesktop
+StartupWMClass=Vesktop
+GenericName=Internet Messenger
+Categories=Network;
+Keywords=discord;vencord;electron;chat;
+MimeType=x-scheme-handler/discord;
+Comment=Vesktop is a custom Discord desktop app
