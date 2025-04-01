@@ -1,7 +1,5 @@
 cookie: ""
 player: mpris
-mpris:
-  players: []
 host: lyricsapi.vercel.app
 ignoreErrors: true
 timerInterval: 200
@@ -44,7 +42,7 @@ mpd:
 mopidy:
   address: 127.0.0.1:6680
 mpris:
-  players: []
+  players: [ncspot]
 browser:
   port: 8974
 local:
