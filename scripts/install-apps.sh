@@ -18,6 +18,7 @@ sudo cp -a ~/dotfiles/assets/.config/* ~/.config/
 sudo cp -a ~/dotfiles/assets/.bashrc ~/
 sudo cp -a ~/dotfiles/assets/.bash_profile ~/
 sudo cp -a ~/dotfiles/assets/vim.desktop /usr/share/applications/
+sudo cp -a ~/dotfiles/assets/nvim.desktop /usr/share/applications/
 sudo cp -a ~/dotfiles/assets/steam.desktop /usr/share/applications/
 chmod 444 /usr/share/applications/steam.desktop
 sudo cp -a ~/dotfiles/assets/timeshift-gtk.desktop /usr/share/applications/
