@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 echo "Installing zapret and dependencies.."
-yay -S zapret bind
+yay -S --noconfirm zapret bind
 sudo cp ~/dotfiles/assets/zapretconfig /opt/zapret/config
 clear
 
