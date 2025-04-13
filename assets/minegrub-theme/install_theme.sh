@@ -38,6 +38,7 @@ read -p "[?] Do you want to install a systemd service to automatically update th
 if [[ "$skip_service_installation" =~ y|Y ]]; then
     echo -ne "[INFO] Installing systemd service to update splash and package labels on boot\n\t"
     cp -uv $SCRIPT_DIR/minegrub-update.service /etc/systemd/system/
+    systemctl enable minegrub-update.service
 else
     echo "[INFO] [Skipping] Systemd service installation"
 fi
