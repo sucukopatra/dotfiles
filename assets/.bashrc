@@ -1,5 +1,5 @@
 # ~/.bashrc
-clear && paste <(pokemon-colorscripts -r | tail -n +2) <(echo "" && echo "" && echo "" && myfetch) | column | head -n 20
+clear && paste <(pokemon-colorscripts -r --no-title) <(echo "" && echo "" && echo "" && myfetch) | column | head -n 20
 eval "$(starship init bash)"
 [[ $- != *i* ]] && return
 
