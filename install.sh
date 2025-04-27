@@ -24,3 +24,8 @@ bash scripts/install-apps.sh
 git config --global user.email "endercortuk@proton.me"
 git config --global user.name "sucukopatra"
 git config --global credential.helper store
+
+clear
+
+ask "Do you want to set up nextdns?" && dns="yes" || dns"no"
+[[ $dns == yes ]] && curl -sSL https://nextdns.io/install | sh
