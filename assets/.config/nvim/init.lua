@@ -1,3 +1,7 @@
+vim.opt.tabstop = 4       -- Number of visual spaces per TAB
+vim.opt.softtabstop = 4   -- Number of spaces a <Tab> counts for in insert mode
+vim.opt.shiftwidth = 4    -- Number of spaces to use for each step of (auto)indent
+vim.opt.expandtab = true  -- Convert tabs to spaces
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.o.termguicolors = true
@@ -241,7 +245,24 @@ require('lazy').setup({
       enabled = true,
       timeout = 3000,
     },
-    picker = { enabled = true },
+    picker = {
+          sources = {
+            explorer = {
+              ignored = true,
+              hidden = true,
+            },
+            
+            files = {
+              ignored = false,
+              hidden = false,
+            },
+            
+            grep = {
+            ignored = false,
+            hidden = false,
+            },
+          },
+        },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = true },
