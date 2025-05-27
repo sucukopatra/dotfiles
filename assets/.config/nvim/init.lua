@@ -254,12 +254,12 @@ require('lazy').setup({
             
             files = {
               ignored = false,
-              hidden = false,
+              hidden = true,
             },
             
             grep = {
             ignored = false,
-            hidden = false,
+            hidden = true,
             },
           },
         },
