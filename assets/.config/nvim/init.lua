@@ -1,4 +1,4 @@
-vim.opt.tabstop = 4       -- Number of visual spaces per TAB
+vim.opt.tabstop = 4       -- Number of visual space/ per TAB
 vim.opt.softtabstop = 4   -- Number of spaces a <Tab> counts for in insert mode
 vim.opt.shiftwidth = 4    -- Number of spaces to use for each step of (auto)indent
 vim.opt.expandtab = true  -- Convert tabs to spaces
@@ -28,16 +28,22 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<leader><Tab>', '<Cmd>BufferLineCycleNext<CR>', {})
+vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', {})
+vim.keymap.set("n", "<leader>w", ":bdelete<CR>", { desc = "Close current buffer" })
+
+for i = 1, 9 do
+  vim.keymap.set("n", "<leader>" .. i, function()
+    require("bufferline").go_to(i, true)
+  end, { desc = "Go to buffer " .. i })
+end
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -67,6 +73,30 @@ require('lazy').setup({
       names = false, -- disable color names like "red"
     })
   end,
+},
+
+{
+  "akinsho/bufferline.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    require("bufferline").setup {
+      options = {
+        always_show_bufferline = true, -- allow us to control visibility
+      }
+    }
+
+    local function toggle_tabline()
+      vim.o.showtabline = #vim.tbl_filter(
+        function(b) return vim.bo[b].buflisted end,
+        vim.api.nvim_list_bufs()
+      ) > 1 and 2 or 0
+    end
+
+    vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete", "BufEnter", "VimEnter" }, {
+      callback = toggle_tabline,
+    })
+  end
 },
 
 {
