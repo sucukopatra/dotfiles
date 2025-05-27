@@ -1,5 +1,6 @@
 #!/bin/bash
 
+clear
 ask() { read -p "$1 (y/n): " a; [[ ${a,,} == y* ]]; }
 
 ask "Do you want the configs and wallpapers?" && con="yes" || con="no"
@@ -28,10 +29,6 @@ bash scripts/install-apps.sh
 [[ $z == yes ]] && ./scripts/install-zapret.sh
 [[ $dc == yes ]] && ./scripts/install-discord.sh
 [[ $wb == yes ]] && ./scripts/windows-thingy.sh
-
-git config --global user.email "endercortuk@proton.me"
-git config --global user.name "sucukopatra"
-git config --global credential.helper store
 
 clear
 
