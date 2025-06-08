@@ -3,6 +3,7 @@
 clear
 ask() { read -p "$1 (y/n): " a; [[ ${a,,} == y* ]]; }
 
+ask "Do you want to install the apps?" && a="yes" || a="no"
 ask "Do you want the configs and wallpapers?" && con="yes" || con="no"
 ask "Do you want to use your dedicated gpu?" && gpu="yes" || gpu="no"
 ask "Do you want to remap caps to a?" && cta="yes" || cta="no"
@@ -12,14 +13,14 @@ ask "Do you want to install zapret?" && z="yes" || z="no"
 ask "Do you want to install discord?" && dc="yes" || dc="no"
 ask "Do you want to install wine and bottles?" && wb="yes" || wb="no"
 ask "Do you want to use auto-cpufreq?" && cpu="yes" || cpu="no"
+ask "Do you want swap?" && s="yes" || s="no"
 
 sudo -v
 if ! command -v yay &> /dev/null; then
     bash scripts/yay-install.sh
 fi
 
-bash scripts/install-apps.sh
-
+[[ $a == yes ]] && ./scripts/install-apps.sh
 [[ $con == yes ]] && ./scripts/configs-wallpapers.sh
 [[ $gpu == yes ]] && ./scripts/dedicated-gpu.sh
 [[ $cta == yes ]] && ./scripts/caps-to-a.sh
@@ -29,8 +30,8 @@ bash scripts/install-apps.sh
 [[ $z == yes ]] && ./scripts/install-zapret.sh
 [[ $dc == yes ]] && ./scripts/install-discord.sh
 [[ $wb == yes ]] && ./scripts/windows-thingy.sh
+[[ $s == yes ]] && ./scripts/swap.sh
 
 clear
 
-ask "Do you want to set up nextdns?" && dns="yes" || dns"no"
-[[ $dns == yes ]] && curl -sSL https://nextdns.io/install | sh
+echo "If you want to set up next dns, please use this command: curl -sSL https://nextdns.io/install | sh"
