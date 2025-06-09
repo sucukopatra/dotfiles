@@ -14,3 +14,5 @@ grep -q '/swapfile' /etc/fstab || echo '/swapfile none swap sw,pri=10 0 0' | sud
 
 # Enable swapfile
 sudo swapon /swapfile
+
+clear
