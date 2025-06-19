@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install zram-generator
-sudo pacman -Syu --needed --noconfirm zramswap
+yay --needed --noconfirm zramswap
 sudo systemctl enable --now zramswap.service
 
 # Create 16G swapfile
