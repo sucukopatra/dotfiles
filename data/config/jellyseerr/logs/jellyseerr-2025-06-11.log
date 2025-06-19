@@ -1,0 +1,209 @@
+2025-06-11T13:42:24.992Z [info]: Commit Tag: $GIT_SHA 
+2025-06-11T13:42:26.631Z [info]: Starting Jellyseerr version 2.6.0 
+2025-06-11T13:42:29.212Z [info][Notifications]: Registered notification agents 
+2025-06-11T13:42:29.230Z [info][Server]: Skipping starting the scheduled jobs as we have no Plex/Jellyfin/Emby servers setup yet 
+2025-06-11T13:42:29.239Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":1,"enabled":true,"isBuiltIn":true,"order":0}}
+2025-06-11T13:42:29.280Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":2,"enabled":true,"isBuiltIn":true,"order":1}}
+2025-06-11T13:42:29.289Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":3,"enabled":true,"isBuiltIn":true,"order":2}}
+2025-06-11T13:42:29.303Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":4,"enabled":true,"isBuiltIn":true,"order":3}}
+2025-06-11T13:42:29.314Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":5,"enabled":true,"isBuiltIn":true,"order":4}}
+2025-06-11T13:42:29.325Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":6,"enabled":true,"isBuiltIn":true,"order":5}}
+2025-06-11T13:42:29.332Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":7,"enabled":true,"isBuiltIn":true,"order":6}}
+2025-06-11T13:42:29.342Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":8,"enabled":true,"isBuiltIn":true,"order":7}}
+2025-06-11T13:42:29.354Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":9,"enabled":true,"isBuiltIn":true,"order":8}}
+2025-06-11T13:42:29.364Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":10,"enabled":true,"isBuiltIn":true,"order":9}}
+2025-06-11T13:42:29.374Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":11,"enabled":true,"isBuiltIn":true,"order":10}}
+2025-06-11T13:42:29.381Z [info][Discover Slider]: Creating built-in discovery slider {"slider":{"type":12,"enabled":true,"isBuiltIn":true,"order":11}}
+2025-06-11T13:42:29.861Z [info][Server]: Server ready on port 5055 
+2025-06-11T13:43:13.768Z [info][API]: Sign-in attempt from Jellyfin user with access to the media server; creating initial admin user for Jellyseerr {"ip":"::ffff:172.39.0.1","jellyfinUsername":"ender"}
+2025-06-11T13:43:13.937Z [info][Jobs]: Scheduled jobs loaded 
+2025-06-11T13:43:22.113Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"4d7049c0-5350-4fa5-8623-3f9f3d82d621"}
+2025-06-11T13:43:22.123Z [info][Jellyfin Sync]: Beginning to process library: Movies 
+2025-06-11T13:43:22.212Z [info][Jellyfin Sync]: Beginning to process library: Shows 
+2025-06-11T13:43:22.220Z [info][Jellyfin Sync]: Full Scan Complete 
+2025-06-11T13:45:00.027Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T13:45:00.028Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"05cd4b2e-e811-49df-ad6a-d81520136297"}
+2025-06-11T13:45:00.034Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T13:45:00.065Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T13:45:00.074Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T13:48:21.847Z [info][Notifications]: Sending notification(s) for MEDIA_AUTO_APPROVED {"subject":"The Gold Rush (1925)"}
+2025-06-11T13:48:21.853Z [info][Media Request]: Sent request to Radarr {"requestId":1,"mediaId":1}
+2025-06-11T13:48:23.199Z [info][Radarr]: Radarr accepted request 
+2025-06-11T13:50:00.045Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T13:50:00.047Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"21b50711-5adf-491c-abe3-32de397aa11d"}
+2025-06-11T13:50:00.055Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T13:50:00.069Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T13:50:00.074Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T13:55:00.025Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T13:55:00.026Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"67d2cb88-2127-493c-af75-1bd857ba257e"}
+2025-06-11T13:55:00.028Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T13:55:00.035Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T13:55:00.039Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T13:55:39.764Z [info]: Commit Tag: $GIT_SHA 
+2025-06-11T13:55:41.609Z [info]: Starting Jellyseerr version 2.6.0 
+2025-06-11T13:55:44.048Z [info][Notifications]: Registered notification agents 
+2025-06-11T13:55:44.185Z [info][Jobs]: Scheduled jobs loaded 
+2025-06-11T13:55:44.740Z [info][Server]: Server ready on port 5055 
+2025-06-11T14:00:00.030Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:00:00.031Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"a81e4b44-bdda-4f94-ae60-ab469a8b9cd5"}
+2025-06-11T14:00:00.044Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:00:00.363Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:00:00.380Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:07:22.763Z [info]: Commit Tag: $GIT_SHA 
+2025-06-11T14:07:23.694Z [info]: Starting Jellyseerr version 2.6.0 
+2025-06-11T14:07:24.882Z [info][Notifications]: Registered notification agents 
+2025-06-11T14:07:24.921Z [info][Jobs]: Scheduled jobs loaded 
+2025-06-11T14:07:25.165Z [info][Server]: Server ready on port 5055 
+2025-06-11T14:10:00.015Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:10:00.017Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"e162a20e-6e9f-4ddf-b5fe-8782ca893736"}
+2025-06-11T14:10:00.030Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:10:00.247Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:10:00.259Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:11:17.340Z [info][API]: Found matching Jellyfin user; updating user with Jellyfin {"ip":"::ffff:192.168.0.17","jellyfinUsername":"ender"}
+2025-06-11T14:15:00.014Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:15:00.015Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"bf764b9b-0170-450f-92f9-1b3902c805d2"}
+2025-06-11T14:15:00.018Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:15:00.026Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:15:00.030Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:20:00.011Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:20:00.011Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"778cb4b0-0ef4-4751-8f4c-107a2517362d"}
+2025-06-11T14:20:00.014Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:20:00.028Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:20:00.033Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:25:00.026Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:25:00.027Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"6970161b-672c-41c5-b8d4-99cf7d0fa9fd"}
+2025-06-11T14:25:00.037Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:25:00.048Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:25:00.054Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:30:00.016Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:30:00.017Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"0cc5a01e-6188-4137-88b4-45c8f0bee96e"}
+2025-06-11T14:30:00.025Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:30:00.036Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:30:00.040Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:35:00.011Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:35:00.012Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"c20cb0e3-d554-4c94-93c9-36ce11329e53"}
+2025-06-11T14:35:00.015Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:35:00.022Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:35:00.028Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:40:00.008Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:40:00.008Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"e7b8c249-797b-415c-8ec8-8de9a9c07735"}
+2025-06-11T14:40:00.012Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:40:00.019Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:40:00.025Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:45:00.009Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:45:00.010Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"79931f0b-dc65-46cc-8653-f08a4eb888e1"}
+2025-06-11T14:45:00.014Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:45:00.025Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:45:00.031Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:50:00.005Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:50:00.005Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"653eeba9-ae95-4e42-89fe-fcc504314b58"}
+2025-06-11T14:50:00.007Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:50:00.012Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:50:00.016Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:55:00.004Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T14:55:00.004Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"521f5878-3b97-4965-bb46-c7aaa7f1bf22"}
+2025-06-11T14:55:00.009Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T14:55:00.016Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T14:55:00.022Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T14:56:50.794Z [info][API]: Found matching Jellyfin user; updating user with Jellyfin {"ip":"::ffff:192.168.0.20","jellyfinUsername":"ender"}
+2025-06-11T15:00:00.009Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:00:00.010Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"cf3cf6f5-6582-4738-b3d5-0291521c4f56"}
+2025-06-11T15:00:00.014Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:00:00.024Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:00:00.047Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:05:00.008Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:05:00.009Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"437a5417-3673-4e64-be41-35481c7de690"}
+2025-06-11T15:05:00.015Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:05:00.042Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:05:00.134Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:10:00.007Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:10:00.007Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"d0a46b48-6984-4a09-a541-ad5360f01dc4"}
+2025-06-11T15:10:00.012Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:10:00.022Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:10:00.027Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:15:00.002Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:15:00.002Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"59bdf899-0222-40ed-90f3-e9a2eab623f8"}
+2025-06-11T15:15:00.005Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:15:00.009Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:15:00.012Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:20:00.008Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:20:00.008Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"670ecdb6-f9f3-498a-9e33-7e39df479cd3"}
+2025-06-11T15:20:00.014Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:20:00.021Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:20:00.025Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:25:00.006Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:25:00.006Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"359dc83d-2716-4c12-a21c-c889ad2eb4d3"}
+2025-06-11T15:25:00.013Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:25:00.018Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:25:00.023Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:30:00.011Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:30:00.012Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"728b9e63-e94d-4c05-bec2-ac03f4b9a7c5"}
+2025-06-11T15:30:00.015Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:30:00.024Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:30:00.029Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:35:00.007Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:35:00.008Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"15ce7230-34e5-478f-996b-f7d0ce802dac"}
+2025-06-11T15:35:00.011Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:35:00.018Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:35:00.023Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:36:21.918Z [info][Notifications]: Sending notification(s) for MEDIA_AUTO_APPROVED {"subject":"Mushoku Tensei: Jobless Reincarnation (2021)"}
+2025-06-11T15:36:21.942Z [info][Media Request]: Sent request to Sonarr {"requestId":2,"mediaId":2}
+2025-06-11T15:36:22.719Z [info][Sonarr]: Sonarr accepted request 
+2025-06-11T15:38:31.906Z [info][Notifications]: Sending notification(s) for MEDIA_AVAILABLE {"subject":"Mushoku Tensei: Jobless Reincarnation (2021)"}
+2025-06-11T15:40:00.015Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:40:00.016Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"7403cb2b-3937-4522-becc-0e9370bbdfca"}
+2025-06-11T15:40:00.022Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:40:00.034Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:40:00.038Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:45:00.008Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:45:00.009Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"64116795-ada9-481e-b282-ba9d2c302adb"}
+2025-06-11T15:45:00.016Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:45:00.026Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:45:00.032Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:50:00.007Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:50:00.007Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"ffbe13c8-7af5-4589-ad7e-a124070ac110"}
+2025-06-11T15:50:00.011Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:50:00.018Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:50:00.024Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:50:13.997Z [info][Notifications]: Sending notification(s) for MEDIA_AUTO_APPROVED {"subject":"The Dark Knight (2008)"}
+2025-06-11T15:50:14.008Z [info][Media Request]: Sent request to Radarr {"requestId":3,"mediaId":3}
+2025-06-11T15:50:14.845Z [info][Radarr]: Radarr accepted request 
+2025-06-11T15:55:00.006Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T15:55:00.006Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"1ad4243f-ea2d-490a-aeaa-427be37e2ce2"}
+2025-06-11T15:55:00.010Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T15:55:00.016Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T15:55:00.021Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T15:58:28.977Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:30.769Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:31.022Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:31.431Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:31.651Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:31.833Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:32.002Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:32.184Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T15:58:34.865Z [error][Media]: [Radarr] Failed to remove serie: Request failed with status code 404 
+2025-06-11T16:00:00.005Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T16:00:00.006Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"fa6a5248-bda0-4e92-9147-dbe20ecc3c35"}
+2025-06-11T16:00:00.012Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T16:00:00.028Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T16:00:00.033Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T16:05:00.006Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T16:05:00.007Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"fb7cb568-31ce-4a5b-b484-0177ba3973a7"}
+2025-06-11T16:05:00.010Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T16:05:00.015Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T16:05:00.020Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T16:10:00.005Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T16:10:00.006Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"087f6fea-b2e8-42f0-b026-b90b3774a358"}
+2025-06-11T16:10:00.009Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T16:10:00.015Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T16:10:00.020Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T16:15:00.004Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T16:15:00.004Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"88233083-4021-4830-81c0-1c178608659b"}
+2025-06-11T16:15:00.006Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T16:15:00.009Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T16:15:00.014Z [info][Jellyfin Sync]: Recently Added Scan Complete 
+2025-06-11T16:20:00.007Z [info][Jobs]: Starting scheduled job: Jellyfin Recently Added Scan 
+2025-06-11T16:20:00.007Z [info][Jellyfin Sync]: Jellyfin Sync Starting {"sessionId":"1fdcc42b-089e-4820-bb12-622128df4d46"}
+2025-06-11T16:20:00.010Z [info][Jellyfin Sync]: Beginning to process recently added for library: Movies 
+2025-06-11T16:20:00.016Z [info][Jellyfin Sync]: Beginning to process recently added for library: Shows 
+2025-06-11T16:20:00.021Z [info][Jellyfin Sync]: Recently Added Scan Complete 

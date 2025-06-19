@@ -1,0 +1,21 @@
+Wed Jun 11 12:50:22 2025	INFO	nzbget 25.0 server-mode
+Wed Jun 11 12:50:22 2025	INFO	using /config/nzbget.conf
+Wed Jun 11 12:50:22 2025	INFO	nzbget runs on 0.0.0.0:6789
+Wed Jun 11 12:50:22 2025	WARNING	Request received on port 6789 from 172.39.0.1, but username (nzbget) or password invalid
+Wed Jun 11 12:51:43 2025	INFO	Reloading...
+Wed Jun 11 12:51:44 2025	INFO	nzbget 25.0 server-mode
+Wed Jun 11 12:51:44 2025	INFO	using /config/nzbget.conf
+Wed Jun 11 12:51:44 2025	INFO	nzbget runs on 0.0.0.0:6789
+Wed Jun 11 13:42:08 2025	INFO	Stopping, please wait...
+Wed Jun 11 13:42:17 2025	INFO	nzbget 25.0 server-mode
+Wed Jun 11 13:42:17 2025	INFO	using /config/nzbget.conf
+Wed Jun 11 13:42:17 2025	INFO	nzbget runs on 0.0.0.0:6789
+Wed Jun 11 13:55:21 2025	INFO	Stopping, please wait...
+Wed Jun 11 13:55:33 2025	INFO	nzbget 25.0 server-mode
+Wed Jun 11 13:55:33 2025	INFO	using /config/nzbget.conf
+Wed Jun 11 13:55:33 2025	INFO	nzbget runs on 0.0.0.0:6789
+Wed Jun 11 14:04:47 2025	INFO	Stopping, please wait...
+Wed Jun 11 14:07:19 2025	INFO	nzbget 25.0 server-mode
+Wed Jun 11 14:07:19 2025	INFO	using /config/nzbget.conf
+Wed Jun 11 14:07:19 2025	INFO	nzbget runs on 0.0.0.0:6789
+Wed Jun 11 16:21:27 2025	INFO	Stopping, please wait...
