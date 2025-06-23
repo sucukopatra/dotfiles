@@ -383,7 +383,11 @@ mkdir -p /mnt/opt/swap # make a dir that we can apply NOCOW to to make it btrfs-
 if findmnt -n -o FSTYPE /mnt | grep -q btrfs; then
     chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
 fi
+
+
 dd if=/dev/zero of=/mnt/opt/swap/swapfile bs=1M count=16384 status=progress
+
+
 chmod 600 /mnt/opt/swap/swapfile # set permissions.
 chown root /mnt/opt/swap/swapfile
 mkswap /mnt/opt/swap/swapfile
