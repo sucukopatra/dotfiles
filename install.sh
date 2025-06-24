@@ -21,6 +21,10 @@ if ! command -v yay &> /dev/null; then
     bash scripts/yay-install.sh
 fi
 
+read -p "Continue? (y/n): " answer
+[ "$answer" = "y" ] || exit 1
+
+
 [[ $app == yes ]] && ./scripts/install-apps.sh
 [[ $con == yes ]] && ./scripts/configs-wallpapers.sh
 [[ $gpu == yes ]] && ./scripts/dedicated-gpu.sh
