@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 clear
 echo "Installing zapret and dependencies.."
 yay -S --noconfirm --needed zapret bind

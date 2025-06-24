@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Set wallpaper
 wal -i ~/dotfiles/assets/wallpapers/pywallpaper.jpg -n
 

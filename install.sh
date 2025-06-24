@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 clear
 ask() { read -p "$1 (y/n): " a; [[ ${a,,} == y* ]]; }
 

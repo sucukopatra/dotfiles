@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 sudo pacman -S --noconfirm --needed xf86-video-amdgpu mesa vulkan-radeon lib32-mesa lib32-vulkan-radeon
 
 if ! grep -q "DRI_PRIME=1" /etc/environment; then
