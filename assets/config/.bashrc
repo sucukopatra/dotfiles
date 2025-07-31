@@ -7,6 +7,7 @@ set -o vi
 
 # Aliases
 alias ..='cd ..'
+alias dotpush='cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push'
 alias vim='nvim'
 alias bashrc='nvim ~/.bashrc'
 alias home='cd ~'

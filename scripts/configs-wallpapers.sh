@@ -18,4 +18,4 @@ sudo cp ~/dotfiles/assets/vencord-settings.json ~/
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory
 
-cd ~/dotfiles/assets; stow -D -t ~ config && stow -t ~ --adopt config && cd ~/dotfiles/
+cd ~/dotfiles/assets && stow -D -t ~ config; stow -t ~ --adopt config && cd ~/dotfiles/
