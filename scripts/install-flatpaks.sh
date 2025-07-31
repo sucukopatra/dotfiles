@@ -1,5 +1,6 @@
 FLATPAKS=(
   "spotify"
+  "discord"
   "bottles"
   "flatseal"
 )
