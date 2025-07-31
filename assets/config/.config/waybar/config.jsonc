@@ -57,7 +57,7 @@
             "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
             "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
             "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
-            "on-click-right": "blueman-manager",
+            "on-click-right": "blueman-manager"
         }, 
         "battery": {
             "interval":30,
@@ -77,16 +77,16 @@
             "󰂀",
             "󰂂",
             "󰁹"
-            ],
+            ]
         },
         "custom/pacman": {
             "format": "󰅢 {}",
             "interval": 30,   
             "exec": "checkupdates | wc -l",
             "exec-if": "exit 0",
-            "on-click": "kitty sh -c 'yay --noconfirm; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+            "on-click": "kitty sh -c 'sudo systemctl stop zapret; yay --noconfirm; sudo systemctl start zapret; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
             "signal": 8,
-            "tooltip": false,
+            "tooltip": false
         },
         "custom/expandr": {
             "format": "",
@@ -121,12 +121,12 @@
                 "transition-to-right": true,
                 "click-to-reveal": true
             },
-            "modules": ["custom/expandl","custom/media-prev","custom/media-play","custom/media-next","custom/media"],
+            "modules": ["custom/expandl","custom/media-prev","custom/media-play","custom/media-next","custom/media"]
         },
         "custom/media": {
         "exec": "~/.config/waybar/scripts/media.sh",
         "interval": 3,
-        "format": "{}",
+        "format": "{}"
         },
         "group/expandr": {
             "orientation": "horizontal",
@@ -135,7 +135,7 @@
                 "transition-to-left": true,
                 "click-to-reveal": true
             },
-            "modules": ["custom/expandr","cpu","memory","temperature"],
+            "modules": ["custom/expandr","cpu","memory","temperature"]
         },
         "cpu": {
             "format": "󰻠",
@@ -146,11 +146,11 @@
         },
         "temperature": {
             "critical-threshold": 80,
-            "format": "",
+            "format": ""
         },
         "tray": {
             "icon-size": 14,
             "spacing": 10
-        },
+        }
 } 
 
