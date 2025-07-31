@@ -10,11 +10,12 @@ find ~/dotfiles/assets/.config/wofi/ -type f -name "*.css" -exec sed -i "s|/home
 
 # Copy files
 sudo cp -av ~/dotfiles/assets/wallpapers ~/
-sudo cp -a ~/dotfiles/assets/.config/. ~/.config/
-sudo cp -rv ~/dotfiles/assets/userdir/. ~/
 sudo cp -rv ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
 sudo cp ~/dotfiles/assets/hosts /etc/hosts
+sudo cp ~/dotfiles/assets/zen-mods-export.json ~/
+sudo cp ~/dotfiles/assets/vencord-settings.json ~/
 
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory
 
+cd ~/dotfiles/assets; stow -D -t ~ config && stow -t ~ --adopt config && cd ~/dotfiles/
