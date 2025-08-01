@@ -3,7 +3,7 @@ set -e
 clear
 echo "Installing zapret and dependencies.."
 yay -S --noconfirm --needed zapret bind
-sudo cp ~/dotfiles/assets/zapretconfig /opt/zapret/config
+sudo cp ~/dotfiles/assets/.conf/zapretconfig /opt/zapret/config
 clear
 
 USERNAME=$(whoami)
