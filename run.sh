@@ -16,15 +16,15 @@ clear
 set -e
 
 # Source utility functions
-source utils.sh
+source scripts/utils.sh
 
 # Source the package list
-if [ ! -f "packages.conf" ]; then
+if [ ! -f "scripts/packages.conf" ]; then
   echo "Error: packages.conf not found!"
   exit 1
 fi
 
-source packages.conf
+source scripts/packages.conf
 
 echo "Starting the system setup..."
 
@@ -85,21 +85,21 @@ for service in "${SERVICES[@]}"; do
   fi
 done
 
-echo "Setting config files"
-bash scripts/configs-wallpapers.sh
-
-echo "Installing grub theme"
-bash scripts/install-grub-theme
-
-echo "Setting up Autologin"
-bash scripts/autologin.sh
-
-echo "Installing zapret"
-bash scripts/install-zapret.sh
-
-# Some programs just run better as flatpaks. Like discord/spotify
-echo "Installing flatpaks"
-. scripts/install-flatpaks.sh
+#echo "Setting config files"
+#bash scripts/configs-wallpapers.sh
+#
+#echo "Installing grub theme"
+#bash scripts/install-grub-theme
+#
+#echo "Setting up Autologin"
+#bash scripts/autologin.sh
+#
+#echo "Installing zapret"
+#bash scripts/install-zapret.sh
+#
+## Some programs just run better as flatpaks. Like discord/spotify
+#echo "Installing flatpaks"
+#. scripts/install-flatpaks.sh
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Activating dedicated gpu"
