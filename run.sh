@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/dotfiles/
+
 # Parse command line arguments
 LAPTOP=false
 while [[ "$#" -gt 0 ]]; do
@@ -8,9 +10,6 @@ while [[ "$#" -gt 0 ]]; do
     *) echo "Unknown parameter: $1"; exit 1 ;;
   esac
 done
-
-# Clear screen and show logo
-clear
 
 # Exit on any error
 set -e
@@ -85,21 +84,21 @@ for service in "${SERVICES[@]}"; do
   fi
 done
 
-#echo "Setting config files"
-#bash scripts/configs-wallpapers.sh
-#
-#echo "Installing grub theme"
-#bash scripts/install-grub-theme
-#
-#echo "Setting up Autologin"
-#bash scripts/autologin.sh
-#
-#echo "Installing zapret"
-#bash scripts/install-zapret.sh
-#
-## Some programs just run better as flatpaks. Like discord/spotify
-#echo "Installing flatpaks"
-#. scripts/install-flatpaks.sh
+echo "Setting config files"
+bash scripts/configs-wallpapers.sh
+
+echo "Installing grub theme"
+bash scripts/install-grub-theme.sh
+
+echo "Setting up Autologin"
+bash scripts/autologin.sh
+
+echo "Installing zapret"
+bash scripts/install-zapret.sh
+
+# Some programs just run better as flatpaks. Like discord/spotify
+echo "Installing flatpaks"
+. scripts/install-flatpaks.sh
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Activating dedicated gpu"
@@ -110,7 +109,6 @@ if [[ "$LAPTOP" == true ]]; then
 
   echo "Installing auto cpu freq"
   bash scripts/auto-cpufreq.sh
-else
 fi
 
 echo "Setup complete! You may want to reboot your system."

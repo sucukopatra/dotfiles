@@ -1,8 +1,8 @@
 FLATPAKS=(
-  "spotify"
-  "discord"
-  "bottles"
   "flatseal"
+  "bottles"
+  "spotify"
+  "discordapp"
 )
 
 for pak in "${FLATPAKS[@]}"; do
