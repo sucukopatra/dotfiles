@@ -58,6 +58,7 @@ vim.opt.path:append("**")                          -- include subdirectories in 
 vim.opt.mouse = "a"                                -- Enable mouse support
 vim.opt.clipboard:append("unnamedplus")            -- Use system clipboard
 vim.o.confirm = true                               -- Raise a dialog asking if you wish to save
+vim.o.inccommand = "nosplit"
 
 -- Split behavior
 vim.opt.splitbelow = true                          -- Horizontal splits go below
