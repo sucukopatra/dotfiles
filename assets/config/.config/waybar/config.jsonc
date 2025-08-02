@@ -84,7 +84,7 @@
             "interval": 30,   
             "exec": "checkupdates | wc -l",
             "exec-if": "exit 0",
-            "on-click": "kitty sh -c 'sudo systemctl stop zapret; yay --noconfirm; sudo systemctl start zapret; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+            "on-click": "kitty sh -c '~/.config/waybar/scripts/checkzapret.sh; echo Done - Press enter to exit; read'",
             "signal": 8,
             "tooltip": false
         },

@@ -6,7 +6,6 @@ eval "$(starship init bash)"
 set -o vi
 
 # Aliases
-alias ..='cd ..'
 alias dotpush='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
 alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow -t ~ config)'
 alias vim='nvim'
@@ -26,15 +25,23 @@ alias config='cd ~/.config/'
 alias hconfig='nvim ~/.config/hypr/hyprland.conf'
 alias nconfig='nvim ~/.config/nvim/init.lua'
 alias dots='cd ~/dotfiles/'
-alias clock='clock-rs'
-alias timer='clock-rs timer 5400'
 alias cd..='cd ..'
+alias ..='cd ..'
 alias fa='fastanime anilist'
 alias z='sudo zapret start'
 alias zs='sudo zapret stop'
 alias todo='nvim ~/todo.md'
 
 
-pacman() { sudo systemctl stop zapret; sudo /usr/bin/pacman "$@"; sudo systemctl start zapret; }
-yay() { sudo systemctl stop zapret; command yay "$@"; sudo systemctl start zapret; }
+
+
+wrap_zapret() {
+  pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
+  "$@"
+  [[ $stopped ]] && sudo zapret start
+}
+
+pacman() { wrap_zapret sudo pacman "$@"; }
+yay() { wrap_zapret yay "$@"; }
+
 
