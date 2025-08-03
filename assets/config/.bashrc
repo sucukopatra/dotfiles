@@ -54,7 +54,7 @@ wrap_zapret() {
 }
 
 pacman() { wrap_zapret sudo pacman "$@"; }
-yay() { wrap_zapret yay "$@"; }
+yay() { wrap_zapret command yay "$@"; }
 
 
 # Created by `pipx` on 2025-08-02 19:52:30
