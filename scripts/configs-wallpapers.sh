@@ -12,6 +12,8 @@ find ~/dotfiles/assets/config/.config/wofi/ -type f -name "*.css" -exec sed -i "
 sudo cp -av ~/dotfiles/assets/wallpapers ~/
 sudo cp -rv ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
 sudo cp ~/dotfiles/assets/.conf/hosts /etc/hosts
+mkdir -p /etc/NetworkManager/conf.d/
+sudo cp ~/dotfiles/assets/.conf/hosts /etc/NetworkManager/conf.d/
 sudo cp -r ~/dotfiles/assets/settings/ ~/
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory

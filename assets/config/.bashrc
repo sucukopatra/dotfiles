@@ -31,6 +31,7 @@ alias fa='fastanime anilist'
 alias z='sudo zapret start'
 alias zs='sudo zapret stop'
 alias todo='nvim ~/todo.md'
+alias scrcpy-auto='(adb connect 192.168.0.29 && scrcpy -s 192.168.0.29) || (adb connect phonox && scrcpy -s )'
 
 
 
@@ -42,7 +43,7 @@ wrap_zapret() {
 }
 
 pacman() { wrap_zapret sudo pacman "$@"; }
-
+yay() { wrap_zapret yay "$@"; }
 
 
 # Created by `pipx` on 2025-08-02 19:52:30
