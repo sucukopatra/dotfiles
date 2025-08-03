@@ -31,8 +31,19 @@ alias fa='fastanime anilist'
 alias z='sudo zapret start'
 alias zs='sudo zapret stop'
 alias todo='nvim ~/todo.md'
-alias scrcpy-auto='(adb connect 192.168.0.29 && scrcpy -s 192.168.0.29) || (adb connect phonox && scrcpy -s )'
 
+scrcpy-auto() {
+    timeout 2s adb connect 192.168.0.29 >/dev/null
+    if adb devices | grep -q '192.168.0.29'; then
+        scrcpy -s 192.168.0.29
+        return
+    fi
+
+    timeout 2s adb connect phonox >/dev/null
+    if adb devices | grep -q 'phonox'; then
+        scrcpy -s phonox
+    fi
+}
 
 
 
