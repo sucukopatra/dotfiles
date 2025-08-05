@@ -38,3 +38,15 @@ vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizonta
 
 -- Better J behavior
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position" })
+
+-- Formatting bash files
+vim.keymap.set("n", "<leader>r", function()
+  if vim.bo.filetype == "sh" then
+    local view = vim.fn.winsaveview()
+    vim.cmd("silent! %!shfmt -i 2 -ci")
+    vim.fn.winrestview(view)
+  else
+    print("Not a shell script.")
+  end
+end, { desc = "Format shell script with shfmt" })
+
