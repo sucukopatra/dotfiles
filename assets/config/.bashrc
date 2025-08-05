@@ -6,8 +6,6 @@ eval "$(starship init bash)"
 set -o vi
 
 # Aliases
-alias dotpush='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
-alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow -t ~ config)'
 alias vim='nvim'
 alias bashrc='nvim ~/.bashrc'
 alias home='cd ~'
@@ -31,6 +29,9 @@ alias fa='fastanime anilist'
 alias z='sudo zapret start'
 alias zs='sudo zapret stop'
 alias todo='nvim ~/todo.md'
+alias pushdots='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
+alias pushserver='(cd ~/media-server && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
+alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow -t ~ config)'
 
 scrcpy-auto() {
     timeout 2s adb connect 192.168.0.29 >/dev/null
