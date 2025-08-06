@@ -32,7 +32,8 @@ alias todo='nvim ~/todo.md'
 alias pushdots='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
 alias pushserver='(cd ~/media-server && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
 alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow -t ~ config)'
-
+alias at='cd ~/Videos/Shows/Adventure-Time/Season 01/'
+alias avatar='cd ~/Videos/Shows/Avatar-The-Last-Airbender/Avatar The Last Airbender S01/'
 scrcpy-auto() {
     timeout 2s adb connect 192.168.0.29 >/dev/null
     if adb devices | grep -q '192.168.0.29'; then
