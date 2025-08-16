@@ -3,6 +3,9 @@ vim.g.mapleader = " "                              -- Set leader key to space
 vim.g.maplocalleader = " "                         -- Set local leader key (NEW)
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')-- Clear highlights when pressing ESC
 
+-- Quitting
+vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
+
 -- Center screen when jumping
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
