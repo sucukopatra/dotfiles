@@ -49,14 +49,14 @@ scrcpy-auto() {
 
 
 
-wrap_zapret() {
-  pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
-  "$@"
-  [[ $stopped ]] && sudo zapret start
-}
-
-pacman() { wrap_zapret sudo pacman "$@"; }
-yay() { wrap_zapret command yay "$@"; }
+# wrap_zapret() {
+#   pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
+#   "$@"
+#   [[ $stopped ]] && sudo zapret start
+# }
+#
+# pacman() { wrap_zapret sudo pacman "$@"; }
+# yay() { wrap_zapret command yay "$@"; }
 
 
 # Created by `pipx` on 2025-08-02 19:52:30

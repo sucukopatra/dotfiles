@@ -17,5 +17,14 @@ sudo cp ~/dotfiles/assets/.conf/hosts /etc/hosts
 sudo cp -r ~/dotfiles/assets/settings/ ~/
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory
+
+if [ -f ~/.bashrc ]; then
+  rm ~/.bashrc
+fi
+
+if [ -f ~/.bashrc ]; then
+  rm ~/.bash_profile
+fi
+
 cd ~/dotfiles/assets && stow -D -t ~ config
 stow -t ~ --adopt config && cd ~/dotfiles/

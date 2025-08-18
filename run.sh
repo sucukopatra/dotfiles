@@ -81,7 +81,7 @@ install_packages "${MEDIA[@]}"
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"
 
-yay -S --needed stow
+yay -S --noconfirm --needed stow
 
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
