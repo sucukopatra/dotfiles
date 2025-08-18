@@ -2,12 +2,21 @@
 
 cd ~/dotfiles/
 
+# Stopping zapret if its running
+pgrep -x nfqws >/dev/null && sudo zapret stop
+
 # Parse command line arguments
 LAPTOP=false
 while [[ "$#" -gt 0 ]]; do
   case $1 in
-    --laptop) LAPTOP=true; shift ;;
-    *) echo "Unknown parameter: $1"; exit 1 ;;
+    --laptop)
+      LAPTOP=true
+      shift
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      exit 1
+      ;;
   esac
 done
 
@@ -32,7 +41,7 @@ echo "Updating system..."
 sudo pacman -Syu --noconfirm
 
 # Install yay AUR helper if not present
-if ! command -v yay &> /dev/null; then
+if ! command -v yay &>/dev/null; then
   echo "Installing yay AUR helper..."
   sudo pacman -S --needed git base-devel --noconfirm
   if [[ ! -d "yay" ]]; then
@@ -53,7 +62,6 @@ else
   echo "yay is already installed"
 fi
 
-
 # Install all packages
 echo "Installing system utilities..."
 install_packages "${SYSTEM_UTILS[@]}"
@@ -73,28 +81,19 @@ install_packages "${MEDIA[@]}"
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"
 
-# Enable services
-echo "Configuring services..."
-for service in "${SERVICES[@]}"; do
-  if ! systemctl is-enabled "$service" &> /dev/null; then
-    echo "Enabling $service..."
-    sudo systemctl enable "$service"
-  else
-    echo "$service is already enabled"
-  fi
-done
+yay -S --needed stow
 
 echo "Setting config files"
-bash scripts/configs-wallpapers.sh
+. scripts/configs-wallpapers.sh
 
 echo "Installing grub theme"
-bash scripts/install-grub-theme.sh
+sudo bash assets/minegrub-theme/install_theme.sh
 
 echo "Setting up Autologin"
-bash scripts/autologin.sh
+. scripts/autologin.sh
 
 echo "Installing zapret"
-bash scripts/install-zapret.sh
+. scripts/install-zapret.sh
 
 # Some programs just run better as flatpaks. Like discord/spotify
 echo "Installing flatpaks"
@@ -110,5 +109,16 @@ if [[ "$LAPTOP" == true ]]; then
   echo "Installing auto cpu freq"
   bash scripts/auto-cpufreq.sh
 fi
+
+#Enable services
+echo "Configuring services..."
+for service in "${SERVICES[@]}"; do
+  if ! systemctl is-enabled "$service" &>/dev/null; then
+    echo "Enabling $service..."
+    sudo systemctl enable "$service"
+  else
+    echo "$service is already enabled"
+  fi
+done
 
 echo "Setup complete! You may want to reboot your system."
