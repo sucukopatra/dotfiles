@@ -25,7 +25,7 @@ alias nconfig='nvim ~/.config/nvim/init.lua'
 alias dots='cd ~/dotfiles/'
 alias cd..='cd ..'
 alias ..='cd ..'
-alias fa='fastanime anilist'
+alias fa='viu anilist'
 alias z='sudo zapret start'
 alias zs='sudo zapret stop'
 alias todo='nvim ~/todo.md'
@@ -61,3 +61,4 @@ scrcpy-auto() {
 
 # Created by `pipx` on 2025-08-02 19:52:30
 export PATH="$PATH:/home/ender/.local/bin"
+export PATH=$HOME/.local/bin:$PATH
