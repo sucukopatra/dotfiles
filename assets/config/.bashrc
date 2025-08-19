@@ -10,7 +10,6 @@ alias vim='nvim'
 alias bashrc='nvim ~/.bashrc'
 alias home='cd ~'
 alias ls='eza -F -a --color=always'
-alias pacup='sudo pacman -Rns $(pacman -Qdtq)'
 alias grep='grep --color=auto'
 alias pool='clear && asciiquarium'
 alias f='clear && myfetch -i e -f -c 16 -C "  "'
@@ -48,17 +47,20 @@ scrcpy-auto() {
 }
 
 
+pacup() {
+  command yay -Yc --noconfirm
+}
 
-# wrap_zapret() {
-#   pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
-#   "$@"
-#   [[ $stopped ]] && sudo zapret start
-# }
-#
-# pacman() { wrap_zapret sudo pacman "$@"; }
-# yay() { wrap_zapret command yay "$@"; }
+wrap_zapret() {
+  pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
+  "$@"
+  [[ $stopped ]] && sudo zapret start
+}
+
+pacman() { wrap_zapret sudo pacman "$@"; }
+yay() { wrap_zapret command yay "$@"; }
 
 
 # Created by `pipx` on 2025-08-02 19:52:30
 export PATH="$PATH:/home/ender/.local/bin"
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
