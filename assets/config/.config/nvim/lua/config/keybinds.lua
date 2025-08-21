@@ -6,6 +6,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')-- Clear highlights when pres
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
 
+-- Save file with sudo if needed
+
 -- Center screen when jumping
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })

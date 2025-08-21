@@ -26,11 +26,11 @@ IPSET_OPT="hashsize 262144 maxelem $SET_MAXELEM"
 IP2NET_OPT4="--prefix-length=22-30 --v4-threshold=3/4"
 IP2NET_OPT6="--prefix-length=56-64 --v6-threshold=5"
 # options for auto hostlist
-AUTOHOSTLIST_RETRANS_THRESHOLD=2
-AUTOHOSTLIST_FAIL_THRESHOLD=2
-AUTOHOSTLIST_FAIL_TIME=30
+AUTOHOSTLIST_RETRANS_THRESHOLD=3
+AUTOHOSTLIST_FAIL_THRESHOLD=3
+AUTOHOSTLIST_FAIL_TIME=60
 # 1 = debug autohostlist positives to ipset/zapret-hosts-auto-debug.log
-AUTOHOSTLIST_DEBUGLOG=1
+AUTOHOSTLIST_DEBUGLOG=0
 
 # number of parallel threads for domain list resolves
 MDIG_THREADS=30
@@ -55,7 +55,7 @@ TPPORT_SOCKS=987
 # <HOSTLIST_NOAUTO> appends ipset/zapret-hosts-auto.txt as normal list
 TPWS_SOCKS_OPT="
 --filter-tcp=80 --methodeol <HOSTLIST> --new
---filter-tcp=443 --split-pos=1,midsld --disorder <HOSTLIST>
+--filter-tcp=443 --split-tls=sni --disorder <HOSTLIST>
 "
 
 TPWS_ENABLE=0
@@ -64,24 +64,14 @@ TPWS_PORTS=80,443
 # hostlist markers are replaced to empty string if MODE_FILTER does not satisfy
 # <HOSTLIST_NOAUTO> appends ipset/zapret-hosts-auto.txt as normal list
 TPWS_OPT="
---hostspell=hoSt
---hosttab
---hostpad=8192
---split-pos=method+2 --oob
---split-pos=method+2 --oob --disorder
---methodspace
---split-pos=2 --oob
---split-pos=2 --oob --disorder
---tlsrec=midsld
---tlsrec=midsld --oob
---tlsrec=midsld --disorder
---tlsrec=midsld --oob --disorder
+--filter-tcp=80 --methodeol <HOSTLIST> --new
+--filter-tcp=443 --split-tls=sni --disorder <HOSTLIST>
 "
 
 NFQWS_ENABLE=1
 # redirect outgoing traffic with connbytes limiter applied in both directions.
 NFQWS_PORTS_TCP=80,443
-NFQWS_PORTS_UDP=443
+NFQWS_PORTS_UDP=443,50000-65535
 # PKT_OUT means connbytes dir original
 # PKT_IN means connbytes dir reply
 # this is --dpi-desync-cutoff=nX kernel mode implementation for linux. it saves a lot of CPU.
@@ -99,30 +89,14 @@ NFQWS_UDP_PKT_IN=0
 # hostlist markers are replaced to empty string if MODE_FILTER does not satisfy
 # <HOSTLIST_NOAUTO> appends ipset/zapret-hosts-auto.txt as normal list
 NFQWS_OPT="
---dpi-desync=multidisorder --dpi-desync-split-pos=2
---dpi-desync=fake --dpi-desync-ttl=3
---dpi-desync=fake --dpi-desync-fooling=badsum
---dpi-desync=fake --dpi-desync-fooling=md5sig
---dpi-desync=fakedsplit --dpi-desync-ttl=3 --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-fooling=badsum --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1
---dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=-1
---dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=-2
---dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=-3
---dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=-4
---dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=-5
---dpi-desync=fakedsplit --dpi-desync-ttl=1 --dpi-desync-autottl=-1 --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-ttl=1 --dpi-desync-autottl=-2 --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-ttl=1 --dpi-desync-autottl=-3 --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-ttl=1 --dpi-desync-autottl=-4 --dpi-desync-split-pos=1
---dpi-desync=fakedsplit --dpi-desync-ttl=1 --dpi-desync-autottl=-5 --dpi-desync-split-pos=1
---dpi-desync=syndata,multisplit --dpi-desync-fake-syndata=/opt/zapret/files/fake/tls_clienthello_iana_org.bin --dpi-desync-split-pos=1,midsld
-"
-
+--filter-tcp=80  --hostlist="/opt/zapret/ipset/zapret-hosts-user.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
+--filter-udp=443 --hostlist="/opt/zapret/ipset/zapret-hosts-user.txt" --dpi-desync=fake,disorder2 --dpi-desync-cutoff=d4 --dpi-desync-udplen-increment=10 --dpi-desync-repeats=6 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="/opt/zapret/files/fake/quic_initial_www_google_com.bin" --new ^
+--filter-udp=50000-65535 --dpi-desync=fake,tamper --dpi-desync-any-protocol --dpi-desync-fake-quic="/opt/zapret/files/fake/quic_initial_www_google_com.bin" --new ^
+--filter-tcp=443 --hostlist="/opt/zapret/ipset/zapret-hosts-user.txt" --dpi-desync=fake,disorder2 --dpi-desync-autottl=1 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="/opt/zapret/files/fake/tls_clienthello_www_google_com.bin""
 # none,ipset,hostlist,autohostlist
-MODE_FILTER=none
+MODE_FILTER=autohostlist
 
-# donttouch,none,software,hardware
+# openwrt only : donttouch,none,software,hardware
 FLOWOFFLOAD=donttouch
 
 # openwrt: specify networks to be treated as LAN. default is "lan"
@@ -153,11 +127,6 @@ INIT_APPLY_FW=1
 #DISABLE_IPV4=1
 # do not work with ipv6
 DISABLE_IPV6=1
-
-# drop icmp time exceeded messages for nfqws tampered connections
-# in POSTNAT mode this can interfere with default mtr/traceroute in tcp or udp mode. use source port not redirected to nfqws
-# set to 0 if you are not expecting connection breakage due to icmp in response to TCP SYN or UDP
-FILTER_TTL_EXPIRED_ICMP=1
 
 # select which init script will be used to get ip or host list
 # possible values : get_user.sh get_antizapret.sh get_combined.sh get_reestr.sh get_hostlist.sh

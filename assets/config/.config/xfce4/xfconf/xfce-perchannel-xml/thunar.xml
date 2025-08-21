@@ -11,8 +11,8 @@
   <property name="hidden-bookmarks" type="array">
     <value type="string" value="file:///home/ender/Desktop"/>
   </property>
-  <property name="last-window-width" type="int" value="630"/>
-  <property name="last-window-height" type="int" value="680"/>
+  <property name="last-window-width" type="int" value="2536"/>
+  <property name="last-window-height" type="int" value="1369"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-column-widths" type="string" value="50,50,148,50,50,102,50,50,538,50,50,98,50,116"/>
 </channel>

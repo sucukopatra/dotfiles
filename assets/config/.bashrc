@@ -25,8 +25,9 @@ alias dots='cd ~/dotfiles/'
 alias cd..='cd ..'
 alias ..='cd ..'
 alias fa='viu anilist'
-alias z='sudo zapret start'
-alias zs='sudo zapret stop'
+alias z='sudo systemctl start zapret'
+alias zs='sudo systemctl stop zapret'
+alias zstatus='sudo systemctl status zapret'
 alias todo='nvim ~/todo.md'
 alias pushdots='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
 alias pushserver='(cd ~/media-server && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
@@ -48,17 +49,28 @@ scrcpy-auto() {
 
 
 pacup() {
-  command yay -Yc --noconfirm
+  if command -v yay >/dev/null 2>&1; then
+    # Clean orphans + AUR build deps
+    command yay -Yc
+  else
+    # Fall back to pacman only
+    orphans=$(command pacman -Qdtq)
+    if [ -n "$orphans" ]; then
+      command sudo pacman -Rns $orphans
+    else
+      echo "No orphaned packages found."
+    fi
+  fi
 }
 
-wrap_zapret() {
-  pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
-  "$@"
-  [[ $stopped ]] && sudo zapret start
-}
-
-pacman() { wrap_zapret sudo pacman "$@"; }
-yay() { wrap_zapret command yay "$@"; }
+# wrap_zapret() {
+#   pgrep -x nfqws >/dev/null && sudo zapret stop && stopped=1
+#   "$@"
+#   [[ $stopped ]] && sudo zapret start
+# }
+#
+# pacman() { wrap_zapret sudo pacman "$@"; }
+# yay() { wrap_zapret command yay "$@"; }
 
 
 # Created by `pipx` on 2025-08-02 19:52:30
