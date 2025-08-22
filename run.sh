@@ -95,6 +95,9 @@ echo "Setting up Autologin"
 echo "Installing zapret"
 . scripts/install-zapret.sh
 
+echo "Changing to ZSH"
+sudo chsh -s /bin/zsh $USER
+
 # Some programs just run better as flatpaks. Like discord/spotify
 echo "Installing flatpaks"
 . scripts/install-flatpaks.sh
