@@ -87,16 +87,12 @@ echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
 echo "Installing grub theme"
-sudo bash assets/minegrub-theme/install_theme.sh
-
+. scripts/install-grub-theme.sh
 echo "Setting up Autologin"
 . scripts/autologin.sh
 
 echo "Installing zapret"
 . scripts/install-zapret.sh
-
-echo "Changing to ZSH"
-sudo chsh -s /bin/zsh $USER
 
 # Some programs just run better as flatpaks. Like discord/spotify
 echo "Installing flatpaks"
@@ -112,6 +108,9 @@ if [[ "$LAPTOP" == true ]]; then
   echo "Installing auto cpu freq"
   bash scripts/auto-cpufreq.sh
 fi
+
+echo "Changing to ZSH"
+sudo chsh -s /bin/zsh $USER
 
 #Enable services
 echo "Configuring services..."

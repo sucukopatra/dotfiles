@@ -42,7 +42,7 @@ vim.opt.autowrite = false                          -- Don't auto save automatica
 vim.opt.hidden = true                              -- Allow hidden buffers
 vim.opt.errorbells = false                         -- No error bells
 vim.opt.backspace = "indent,eol,start"             -- Better backspace behavior
-vim.opt.autochdir = true                           -- Don't auto change directory
+vim.opt.autochdir = true                           -- Auto change directory
 vim.opt.iskeyword:append("-")                      -- Treat dash as part of word
 vim.opt.path:append("**")                          -- include subdirectories in search
 vim.opt.mouse = "a"                                -- Enable mouse support

@@ -20,14 +20,10 @@ return {
         vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
         vim.keymap.set('n', '<leader>fp', builtin.git_files, {})
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-
-        -- Rip grep + Fzf
-        vim.keymap.set('n', '<leader>fs', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") });
-        end)
+        vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 
         -- find files in vim config
-        vim.keymap.set('n', '<leader>fi', function()
+        vim.keymap.set('n', '<leader>fn', function()
             builtin.find_files({ cwd = "~/.config/nvim/" });
         end)
     end

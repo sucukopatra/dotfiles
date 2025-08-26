@@ -9,8 +9,10 @@ sudo rm /tmp/zapret.zip
 sudo mv /opt/zapret-v71.3 /opt/zapret
 sudo chown -R $USER /opt/zapret
 bash /opt/zapret/install_easy.sh </dev/null
+sudo systemctl stop zapret
 sudo chown -R $USER /opt/zapret
 echo "Copying config files"
 cp -r ~/dotfiles/assets/.conf/zapretconfig/* /opt/zapret/
-
+sudo systemctl disable --now zapret-list-update.timer
+sudo setcap cap_net_raw+ep /opt/zapret/binaries/linux-x86_64/nfqws
 echo "Zapret latest release installed in /opt/zapret."
