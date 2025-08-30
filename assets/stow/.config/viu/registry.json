@@ -1,15 +1,15 @@
 {
   "version": "1.0",
-  "last_updated": "2025-08-22T01:57:08.530631",
+  "last_updated": "2025-08-31T02:09:11.156542",
   "media_index": {
     "anilist_181444": {
       "media_id": 181444,
       "media_api": "anilist",
       "status": "watching",
-      "progress": "7",
-      "last_watch_position": "00:22:38",
-      "last_watched": "2025-08-19T10:04:59.952327",
-      "total_duration": "00:24:02",
+      "progress": "8",
+      "last_watch_position": "00:23:52",
+      "last_watched": "2025-08-31T02:09:11.156460",
+      "total_duration": "00:24:01",
       "total_episodes": 0,
       "score": 0.0,
       "repeat": 0,
@@ -17,7 +17,7 @@
       "last_notified_episode": null,
       "start_date": "2025-08-19T09:43:23.778245",
       "completed_at": "2025-08-19T09:43:23.778246",
-      "watch_completion_percentage": 94.1747572815534
+      "watch_completion_percentage": 99.37543372657876
     },
     "anilist_175914": {
       "media_id": 175914,
@@ -35,14 +35,66 @@
       "start_date": "2025-08-22T01:57:08.529355",
       "completed_at": "2025-08-22T01:57:08.529356",
       "watch_completion_percentage": 0.0
+    },
+    "anilist_178025": {
+      "media_id": 178025,
+      "media_api": "anilist",
+      "status": "watching",
+      "progress": "7",
+      "last_watch_position": "00:23:40",
+      "last_watched": "2025-08-31T00:16:10.996132",
+      "total_duration": "00:23:40",
+      "total_episodes": 0,
+      "score": 0.0,
+      "repeat": 0,
+      "notes": "",
+      "last_notified_episode": null,
+      "start_date": "2025-08-30T23:37:03.730993",
+      "completed_at": "2025-08-30T23:37:03.730994",
+      "watch_completion_percentage": 100.0
+    },
+    "anilist_151384": {
+      "media_id": 151384,
+      "media_api": "anilist",
+      "status": "watching",
+      "progress": "4",
+      "last_watch_position": "00:25:29",
+      "last_watched": "2025-08-31T02:04:54.747512",
+      "total_duration": "00:25:30",
+      "total_episodes": 0,
+      "score": 0.0,
+      "repeat": 0,
+      "notes": "",
+      "last_notified_episode": null,
+      "start_date": "2025-08-31T00:48:11.910830",
+      "completed_at": "2025-08-31T00:48:11.910831",
+      "watch_completion_percentage": 99.93464052287581
+    },
+    "anilist_141391": {
+      "media_id": 141391,
+      "media_api": "anilist",
+      "status": "repeating",
+      "progress": "0",
+      "last_watch_position": null,
+      "last_watched": "2025-08-31T02:06:55.928090",
+      "total_duration": null,
+      "total_episodes": 0,
+      "score": 0.0,
+      "repeat": 0,
+      "notes": "",
+      "last_notified_episode": null,
+      "start_date": "2025-08-31T02:06:55.928092",
+      "completed_at": "2025-08-31T02:06:55.928093",
+      "watch_completion_percentage": 0.0
     }
   },
   "status_breakdown": {
-    "watching": 1,
-    "planning": 1
+    "watching": 3,
+    "planning": 1,
+    "repeating": 1
   },
   "media_count_breakdown": {
-    "anilist": 2
+    "anilist": 5
   },
-  "media_count": 2
+  "media_count": 5
 }

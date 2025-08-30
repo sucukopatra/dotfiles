@@ -58,6 +58,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 
 # Aliases
+alias update='yay --noconfirm && flatpak update -y'
 alias vim='nvim'
 alias zshrc='nvim ~/.zshrc'
 alias home='cd ~'

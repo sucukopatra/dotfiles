@@ -84,7 +84,7 @@
             "interval": 30,
             "exec": "checkupdates | wc -l",
             "exec-if": "command -v checkupdates",
-            "on-click": "kitty bash -c 'yay --noconfirm; echo Done - Press enter to exit; read'",
+            "on-click": "kitty bash -c 'yay --noconfirm && flatpak update -y; echo Done - Press enter to exit; read'",
             "signal": 8,
             "tooltip": false
         },

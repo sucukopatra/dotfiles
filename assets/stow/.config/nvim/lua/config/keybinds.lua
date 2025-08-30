@@ -54,4 +54,3 @@ vim.keymap.set("n", "<leader>r", function()
     print("Not a shell script.")
   end
 end, { desc = "Format shell script with shfmt" })
-
