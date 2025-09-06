@@ -123,4 +123,7 @@ for service in "${SERVICES[@]}"; do
   fi
 done
 
+#Disable this meaningless service
+sudo systemctl disable NetworkManager-wait-online
+
 echo "Setup complete! You may want to reboot your system."

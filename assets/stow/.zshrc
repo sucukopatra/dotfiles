@@ -59,6 +59,7 @@ zstyle ':completion:*' menu select
 
 # Aliases
 alias update='yay --noconfirm && flatpak update -y'
+alias open='xdg-open'
 alias vim='nvim'
 alias zshrc='nvim ~/.zshrc'
 alias home='cd ~'
