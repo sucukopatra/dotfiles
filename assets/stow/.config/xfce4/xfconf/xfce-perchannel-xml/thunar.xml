@@ -7,7 +7,7 @@
   <property name="last-separator-position" type="int" value="170"/>
   <property name="misc-single-click" type="bool" value="false"/>
   <property name="last-toolbar-items" type="string" value="menu:0,back:1,forward:1,open-parent:0,uca-action-1741261348134796-1:1,open-home:1,new-tab:0,new-window:0,toggle-split-view:0,undo:0,redo:0,zoom-out:0,zoom-in:0,zoom-reset:0,view-as-icons:0,view-as-detailed-list:0,view-as-compact-list:0,view-switcher:0,location-bar:1,reload:0,search:1"/>
-  <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="last-show-hidden" type="bool" value="false"/>
   <property name="hidden-bookmarks" type="array">
     <value type="string" value="file:///home/ender/Desktop"/>
   </property>
@@ -15,4 +15,5 @@
   <property name="last-window-height" type="int" value="1369"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-column-widths" type="string" value="50,50,148,50,50,102,50,50,538,50,50,98,50,116"/>
+  <property name="misc-confirm-close-multiple-tabs" type="bool" value="false"/>
 </channel>
