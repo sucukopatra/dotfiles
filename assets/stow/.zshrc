@@ -80,7 +80,7 @@ alias zs='sudo systemctl stop zapret'
 alias zstatus='sudo systemctl status zapret'
 alias dotpush='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $(date +%Y-%m-%d\ %H:%M)" && git push && echo "🚀 Dotfiles pushed!")'
 alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow --adopt -t ~ config)'
-alias pacup='yay -Yc'
+alias pacup='yay -Rncs $(yay -Qdtq)'
 alias pacman='sudo pacman'
 
 # Shell integrations
