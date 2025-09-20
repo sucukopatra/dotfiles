@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2025-09-11T12:21:23.776346",
+  "last_updated": "2025-09-13T00:21:22.256191",
   "media_index": {
     "anilist_181444": {
       "media_id": 181444,
@@ -23,10 +23,10 @@
       "media_id": 175914,
       "media_api": "anilist",
       "status": "planning",
-      "progress": "0",
-      "last_watch_position": null,
-      "last_watched": "2025-08-22T01:57:08.529353",
-      "total_duration": null,
+      "progress": "5",
+      "last_watch_position": "00:12:05",
+      "last_watched": "2025-09-13T00:21:22.256113",
+      "total_duration": "00:22:57",
       "total_episodes": 0,
       "score": 0.0,
       "repeat": 0,
@@ -34,7 +34,7 @@
       "last_notified_episode": null,
       "start_date": "2025-08-22T01:57:08.529355",
       "completed_at": "2025-08-22T01:57:08.529356",
-      "watch_completion_percentage": 0.0
+      "watch_completion_percentage": 52.65068990559186
     },
     "anilist_178025": {
       "media_id": 178025,

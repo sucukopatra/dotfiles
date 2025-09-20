@@ -60,6 +60,7 @@ zstyle ':completion:*' menu select
 # Aliases
 alias update='yay --noconfirm && flatpak update -y'
 alias open='xdg-open'
+alias pm='adb shell pm'
 alias vim='nvim'
 alias zshrc='nvim ~/.zshrc'
 alias home='cd ~'
@@ -82,6 +83,7 @@ alias dotpush='(cd ~/dotfiles && git add -A && git commit -m "Update dotfiles: $
 alias updateconf='(cd ~/dotfiles/assets && stow -D -t ~ config && stow --adopt -t ~ config)'
 alias pacup='yay -Rncs $(yay -Qdtq)'
 alias pacman='sudo pacman'
+alias aot='thunar "/home/ender/Videos/Animes/AOT/Season 4/" & ; disown && killall kitty'
 
 # Shell integrations
 eval "$(fzf --zsh)"

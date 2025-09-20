@@ -62,6 +62,18 @@ else
   echo "yay is already installed"
 fi
 
+#Install Headers
+installed_kernels=$(pacman -Q | grep -E '^linux(| |-rt|-rt-lts|-hardened|-zen|-lts)[^-headers]' | cut -d ' ' -f 1)
+for kernel in $installed_kernels; do
+  header="${kernel}-headers"
+  printf "%b\n" "Installing headers for $kernel..."
+
+  if ! sudo pacman -S --needed --noconfirm "$header"; then
+    exit 1
+  fi
+  printf "%b\n" "Continuing..."
+done
+
 # Install all packages
 echo "Installing system utilities..."
 install_packages "${SYSTEM_UTILS[@]}"
