@@ -2,11 +2,11 @@ FLATPAKS=(
   "flatseal"
   "bottles"
   "spotify"
-  "discordapp"
+  "vesktop"
 )
 
 for pak in "${FLATPAKS[@]}"; do
-  if ! flatpak list | grep -i "$pak" &> /dev/null; then
+  if ! flatpak list | grep -i "$pak" &>/dev/null; then
     echo "Installing Flatpak: $pak"
     flatpak install --noninteractive "$pak"
   else
