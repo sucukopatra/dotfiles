@@ -9,7 +9,7 @@ if [[ $(id -u) -ne 0 ]]; then
 fi
 
 # this should be the directory of the clones repo
-SCRIPT_DIR="$HOME/dotfiles/assets/minegrub-theme"
+SCRIPT_DIR="/home/${SUDO_USER:-$USER}/dotfiles/assets/minegrub-theme"
 # I accidentally deleted the above line once and it copied / into the theme folder, so lets prevent this
 if [[ -z $SCRIPT_DIR ]]; then
   echo "Something didn't work, exiting"

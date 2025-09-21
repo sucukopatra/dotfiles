@@ -6,12 +6,11 @@ set -e
 cd ~/dotfiles/assets && stow -D -t ~ stow
 stow -t ~ --adopt stow && cd ~/dotfiles/
 
-# Set wallpaper
-wal -i ~/dotfiles/assets/wallpapers/pywallpaper.jpg -n
-
 # Change the "USER" placeholders in some config files
-find ~/dotfiles/assets/stow/.config/wofi/ -type f -name "*.css" -exec sed -i "s|/home/USER|/home/$(whoami)|g" {} +
+find ~/dotfiles/assets/stow/.config/wofi/ -type f -name "*.css" -exec sed -i "s|/home/ender|/home/$(whoami)|g" {} +
 
+# Creating directories
+mkdir -p ~/Downloads ~/Videos
 # Copy files
 sudo cp -av ~/dotfiles/assets/wallpapers ~/
 sudo cp -rv ~/dotfiles/assets/desktopfiles/. /usr/share/applications/

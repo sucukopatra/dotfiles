@@ -98,8 +98,9 @@ yay -S --noconfirm --needed stow
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
-echo "Installing grub theme"
-. scripts/install-grub-theme.sh
+#echo "Installing grub theme"
+sudo bash assets/minegrub-theme/install_theme.sh
+
 echo "Setting up Autologin"
 . scripts/autologin.sh
 
@@ -109,6 +110,9 @@ echo "Installing zapret"
 # Some programs just run better as flatpaks. Like discord/spotify
 echo "Installing flatpaks"
 . scripts/install-flatpaks.sh
+
+# Fixing controller issues
+bash scripts/fix-controller.sh
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Activating dedicated gpu"
