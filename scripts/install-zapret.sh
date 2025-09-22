@@ -17,8 +17,10 @@ reinstall() {
   echo "Zapret latest release installed in /opt/zapret."
 }
 
-cmp -s ~/dotfiles/assets/.conf/zapretconfig/config /etc/zapret/config || {
+if cmp -s ~/dotfiles/assets/.conf/zapretconfig/config /opt/zapret/config; then
+  echo "Zapret is installed and has the same config, so skipping ..."
+else
   sudo /opt/zapret/uninstall_easy.sh </dev/null
   sudo rm -rf /opt/zapret
   reinstall
-}
+fi

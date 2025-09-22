@@ -45,4 +45,4 @@ if ! groups $USER | grep -qw input; then
   echo "Added $USER to 'input' group. Log out and back in for it to apply."
 fi
 
-echo "✅ Setup complete."
+echo "Controller is fixed."

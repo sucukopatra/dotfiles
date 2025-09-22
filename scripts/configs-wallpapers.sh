@@ -12,10 +12,10 @@ find ~/dotfiles/assets/stow/.config/wofi/ -type f -name "*.css" -exec sed -i "s|
 # Creating directories
 mkdir -p ~/Downloads ~/Videos
 # Copy files
-sudo cp -av ~/dotfiles/assets/wallpapers ~/
-sudo cp -rv ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
+sudo cp -an ~/dotfiles/assets/wallpapers ~/
+sudo cp -r ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
 sudo cp ~/dotfiles/assets/.conf/hosts /etc/hosts
-sudo cp -r ~/dotfiles/assets/settings/ ~/
+sudo cp -rn ~/dotfiles/assets/settings/ ~/
 
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory
