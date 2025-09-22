@@ -3,7 +3,7 @@
 cd ~/dotfiles/
 
 # Stopping zapret if its running
-pgrep -x nfqws >/dev/null && sudo zapret stop
+pgrep -x nfqws >/dev/null && sudo systemctl stop zapret
 
 # Parse command line arguments
 LAPTOP=false
@@ -61,6 +61,12 @@ if ! command -v yay &>/dev/null; then
 else
   echo "yay is already installed"
 fi
+
+# Adding the easter egg
+echo "Adding the secret sauce"
+grep -q "^[[:space:]]*ILoveCandy" /etc/pacman.conf ||
+  sudo sed -i "/^[[:space:]]*Color/a ILoveCandy" /etc/pacman.conf ||
+  echo ILoveCandy | sudo tee -a /etc/pacman.conf >/dev/null
 
 #Install Headers
 installed_kernels=$(pacman -Q | grep -E '^linux(| |-rt|-rt-lts|-hardened|-zen|-lts)[^-headers]' | cut -d ' ' -f 1)
