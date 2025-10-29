@@ -104,7 +104,7 @@ yay -S --noconfirm --needed stow
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
-#echo "Installing grub theme"
+echo "Installing grub theme"
 sudo bash assets/minegrub-theme/install_theme.sh
 
 echo "Setting up Autologin"
@@ -121,12 +121,6 @@ echo "Installing flatpaks"
 bash scripts/fix-controller.sh
 
 if [[ "$LAPTOP" == true ]]; then
-  echo "Activating dedicated gpu"
-  bash scripts/dedicated-gpu.sh
-
-  echo "Replacing capslock key with A key"
-  bash scripts/caps-to-a.sh
-
   echo "Installing auto cpu freq"
   bash scripts/auto-cpufreq.sh
 fi
