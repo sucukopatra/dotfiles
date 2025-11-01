@@ -24,7 +24,7 @@ vim.opt.showmatch = true                           -- Highlight matching bracket
 vim.g.have_nerd_font = true                        -- Enable nerd fonts
 vim.opt.winblend = 0                               -- Floating window transparency
 vim.opt.lazyredraw = true                          -- Don't redraw during macros
-vim.g.netrw_banner = 0        -- remove that annoying banner
+vim.g.netrw_banner = 0                             -- remove that annoying banner
 
 -- File handling
 vim.opt.backup = false                             -- Don't create backup files
@@ -96,16 +96,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- Create directories when saving files
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = augroup,
-  callback = function()
-    local dir = vim.fn.expand('<afile>:p:h')
-    if vim.fn.isdirectory(dir) == 0 then
-      vim.fn.mkdir(dir, 'p')
-    end
-  end,
-})
 
 -- Create undo directory if it doesn't exist
 local undodir = vim.fn.expand("~/.vim/undodir")

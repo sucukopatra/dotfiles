@@ -27,11 +27,6 @@ set -e
 source scripts/utils.sh
 
 # Source the package list
-if [ ! -f "scripts/packages.conf" ]; then
-  echo "Error: packages.conf not found!"
-  exit 1
-fi
-
 source scripts/packages.conf
 
 echo "Starting the system setup..."
@@ -41,26 +36,7 @@ echo "Updating system..."
 sudo pacman -Syu --noconfirm
 
 # Install yay AUR helper if not present
-if ! command -v yay &>/dev/null; then
-  echo "Installing yay AUR helper..."
-  sudo pacman -S --needed git base-devel --noconfirm
-  if [[ ! -d "yay" ]]; then
-    echo "Cloning yay repository..."
-  else
-    echo "yay directory already exists, removing it..."
-    rm -rf yay
-  fi
-
-  git clone https://aur.archlinux.org/yay.git
-
-  cd yay
-  echo "building yay.... yaaaaayyyyy"
-  makepkg -si --noconfirm
-  cd ..
-  rm -rf yay
-else
-  echo "yay is already installed"
-fi
+setup_yay
 
 # Adding the easter egg
 echo "Adding the secret sauce"
@@ -69,16 +45,7 @@ grep -q "^[[:space:]]*ILoveCandy" /etc/pacman.conf ||
   echo ILoveCandy | sudo tee -a /etc/pacman.conf >/dev/null
 
 #Install Headers
-installed_kernels=$(pacman -Q | grep -E '^linux(| |-rt|-rt-lts|-hardened|-zen|-lts)[^-headers]' | cut -d ' ' -f 1)
-for kernel in $installed_kernels; do
-  header="${kernel}-headers"
-  printf "%b\n" "Installing headers for $kernel..."
-
-  if ! sudo pacman -S --needed --noconfirm "$header"; then
-    exit 1
-  fi
-  printf "%b\n" "Continuing..."
-done
+install_kernel_headers
 
 # Install all packages
 echo "Installing system utilities..."
@@ -104,21 +71,34 @@ yay -S --noconfirm --needed stow
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
-echo "Installing grub theme"
-sudo bash assets/minegrub-theme/install_theme.sh
+if ask "Do you want to use grub menu?" Y; then
+  echo "Installing minecraft theme for grub."
+  sudo bash assets/minegrub-theme/install_theme.sh
+else
+  echo "Changing wait time"
+  sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
 
-echo "Setting up Autologin"
-. scripts/autologin.sh
+if ask "Do you want to setup auto login?" Y; then
+  echo "Setting up Autologin"
+  . scripts/autologin.sh
+else
+  echo "Skipping autologin"
+fi
 
-echo "Installing zapret"
-. scripts/install-zapret.sh
+if ask "Do you want zapret?" Y; then
+  . scripts/install-zapret.sh
+else
+  echo "Uninstalling zapret if its there."
+  [ -f /opt/zapret/uninstall_easy.sh ] && sudo /opt/zapret/uninstall_easy.sh </dev/null && sudo rm -rf /opt/zapret
+fi
 
 # Some programs just run better as flatpaks. Like discord/spotify
 echo "Installing flatpaks"
 . scripts/install-flatpaks.sh
 
 # Fixing controller issues
-bash scripts/fix-controller.sh
+#bash scripts/fix-controller.sh
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Installing auto cpu freq"
