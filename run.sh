@@ -66,10 +66,13 @@ install_packages "${MEDIA[@]}"
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"
 
-yay -S --noconfirm --needed stow
+install_packages stow
 
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
+
+echo "Installing graphic packages"
+. scripts/graphic-card.sh
 
 if ask "Do you want to use grub menu?" Y; then
   echo "Installing minecraft theme for grub."
@@ -97,8 +100,13 @@ fi
 echo "Installing flatpaks"
 . scripts/install-flatpaks.sh
 
-# Fixing controller issues
-#bash scripts/fix-controller.sh
+# Try to detect discrete GPU first
+gpu=$(lspci | grep -i vga | grep -E -i 'nvidia|amd|ati' | head -n1)
+
+if echo "$gpu" | grep -iq 'nvidia'; then
+  echo "NVIDIA GPU detected."
+  installNvidiaDriver
+fi
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Installing auto cpu freq"

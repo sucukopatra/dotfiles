@@ -1,5 +1,11 @@
 #!/bin/bash
 
+RC='\033[0m'
+RED='\033[31m'
+YELLOW='\033[33m'
+CYAN='\033[36m'
+GREEN='\033[32m'
+
 # Function to check if a package is installed
 is_installed() {
   pacman -Qi "$1" &>/dev/null
@@ -93,6 +99,58 @@ setup_yay() {
   else
     echo "yay is already installed"
   fi
+}
+
+checkIntelHardware() {
+  model=$(grep "model name" /proc/cpuinfo | head -n 1 | cut -d ':' -f 2 | cut -c 2-3)
+  [ "$model" -ge 11 ]
+}
+
+setKernelParam() {
+  PARAMETER="$1"
+
+  if grep -q "$PARAMETER" /etc/default/grub; then
+    printf "%b\n" "$PARAMETER already set in GRUB."
+  else
+    sudo sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ $PARAMETER\"/" /etc/default/grub
+    printf "%b\n" "Added $PARAMETER to /etc/default/grub."
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+}
+
+setupHardwareAcceleration() {
+
+  sudo pacman -S --needed --noconfirm libva libva-nvidia-driver
+
+  sudo sed -i '/^MOZ_DISABLE_RDD_SANDBOX/d' "/etc/environment"
+  sudo sed -i '/^LIBVA_DRIVER_NAME/d' "/etc/environment"
+
+  printf "LIBVA_DRIVER_NAME=nvidia\nMOZ_DISABLE_RDD_SANDBOX=1" | sudo tee -a /etc/environment >/dev/null
+
+  printf "%b\n" "Hardware Acceleration setup completed successfully."
+
+  mkdir -p "$HOME/.config/mpv"
+  if [ -f "$HOME/.config/mpv/mpv.conf" ]; then
+    sed -i '/^hwdec/d' "$HOME/.config/mpv/mpv.conf"
+  fi
+  printf "hwdec=auto" | tee -a "$HOME/.config/mpv/mpv.conf" >/dev/null
+  printf "%b\n" "MPV Hardware Acceleration enabled successfully."
+}
+
+installNvidiaDriver() {
+  if checkIntelHardware; then
+    setKernelParam "ibt=off"
+  fi
+
+  sudo pacman -S --needed --noconfirm nvidia nvidia-utils nvidia-dkms nvidia-settings
+  # Refer https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks#Preserve_video_memory_after_suspend
+  setKernelParam "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+  sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+
+  printf "%b\n" "Driver installed successfully."
+  setupHardwareAcceleration
+
+  printf "%b\n" "Please reboot your system for the changes to take effect."
 }
 
 # EXAMPLE USAGE:

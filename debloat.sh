@@ -1,157 +1,65 @@
 #!/bin/bash
 packages=(
-  cn.wps.moffice_eng
-  com.alibaba.aliexpresshd
-  com.altice.android.myapps
-  com.android.egg
-  com.android.hotwordenrollment.okgoogle
-  com.android.hotwordenrollment.xgoogle
-  com.android.printspooler
-  com.android.providers.partnerbookmarks
-  com.aura.oobe.deutsche
-  com.aura.oobe.vodafone
-  com.dti.bouyguestelecom
-  com.dti.telefonica
-  com.facebook.appmanager
-  com.facebook.services
-  com.facebook.system
-  com.google.android.apps.googleassistant
-  com.google.android.apps.healthdata
-  com.google.android.apps.magazines
-  com.google.android.apps.podcasts
-  com.google.android.apps.safetyhub
-  com.google.android.apps.setupwizard.searchselector
-  com.google.android.apps.tachyon
-  com.google.android.feedback
-  com.google.android.gm
-  com.google.android.inputmethod.latin
-  com.google.android.marvin.talkback
-  com.google.android.videos
-  com.google.android.youtube
-  com.ironsource.appcloud.oobe.hutchison
-  com.mi.android.globalFileexplorer
-  com.mi.globalbrowser
   com.mi.globalminusscreen
-  com.mi.healthglobal
-  com.miui.backup
-  com.miui.calculator
-  com.miui.cleaner
-  com.miui.compass
-  com.miui.fmservice
-  com.miui.gallery
-  com.miui.huanji
-  com.miui.msa.global
-  com.miui.notes
-  com.miui.player
-  com.miui.screenrecorder
-  com.miui.videoplayer
-  com.miui.yellowpage
-  com.orange.aura.oobe
-  com.sfr.android.sfrjeux
-  com.snapchat.android
-  com.xiaomi.glgm
-  com.zhiliaoapp.musically
-  de.telekom.tsc
-  com.xiaomi.ab
-  com.xiaomi.aiasst.service
-  com.xiaomi.bluetooth
-  com.xiaomi.gamecenter.sdk.service
-  com.xiaomi.joyose
-  com.xiaomi.mi_connect_service
-  com.xiaomi.micloud.sdk
-  com.xiaomi.migameservice
-  com.xiaomi.miplay_client
-  com.xiaomi.mircs
-  com.xiaomi.mirror
-  com.xiaomi.payment
-  com.xiaomi.powerchecker
-  com.xiaomi.simactivate.service
-  com.xiaomi.xmsf
-  com.xiaomi.xmsfkeeper
-  com.milink.service
-  com.miui.analytics
-  com.miui.audioeffect
-  com.miui.audiomonitor
-  com.miui.bugreport
-  com.miui.cit
-  com.miui.cloudbackup
-  com.miui.cloudservice
-  com.miui.cloudservice.sysbase
-  com.miui.contentcatcher
-  com.miui.daemon
-  com.miui.hybrid
-  com.miui.hybrid.accessory
-  com.miui.maintenancemode
-  com.miui.micloudsync
-  com.miui.miservice
-  com.miui.mishare.connectivity
-  com.miui.misound
-  com.miui.nextpay
-  com.miui.personalassistant
-  com.miui.phrase
-  com.miui.smsextra
-  com.miui.systemAdSolution
-  com.miui.touchassistant
-  com.miui.translation.kingsoft
-  com.miui.translation.xmcloud
-  com.miui.translation.youdao
-  com.miui.translationservice
-  com.miui.voiceassist
-  com.miui.voicetrigger
-  com.miui.vsimcore
-  com.miui.wmsvc
-  com.mobiletools.systemhelper
-  com.android.chrome
-  com.google.android.apps.youtube.music
-  com.linkedin.android
-  com.jewelsblast.ivygames.Adventure.free
   com.amazon.mShop.android.shopping
-  com.ss.android.ugc.trill
-  com.booking
-  com.miui.weather2
-  com.xiaomi.smarthome
-  com.miui.android.fashiongallery
-  com.crazy.juicer.xm
-  com.spotify.music
-  com.sukhavati.gotoplaying.bubble.BubbleShooter.mint
-  com.netflix.mediaclient
-  com.mi.global.bbs
-  com.agoda.mobile.consumer
-  com.xiaomi.midrop
-  com.block.puzzle.game.hippo.mi
-  com.duokan.phone.remotecontroller
-  com.logame.eliminateintruder3d
-  cn.wps.xiaomi.abroad.lite
+  com.miui.calculator
   com.xiaomi.calendar
-  com.nf.snake
-  com.google.android.apps.subscriptions.red
-  com.google.android.googlequicksearchbox
-  com.mintgames.wordtrip
-  ctrip.english
-  com.google.android.apps.photos
-  com.mintgames.triplecrush.tile.fun
-  com.miui.cloudservice
-  com.amazon.appmanager
-  com.mi.global.shop
-  com.facebook.katana
-  com.shopee.sg
-  com.miui.fm
-  com.xiaomi.mipicks
-  com.xiaomi.discover
-  com.android.soundrecorder
-  com.google.android.apps.docs
+  com.miui.compass
+  com.miui.notes
+  com.miui.cleaner
   com.android.providers.downloads.ui
-  com.android.thememanager
+  com.google.android.apps.docs
   com.preff.kb.xm
+  com.facebook.katana
+  com.mi.android.globalFileexplorer
+  com.miui.fm
+  com.xiaomi.glgm
+  com.xiaomi.mipicks
+  com.google.android.gm
+  com.google.android.videos
+  com.linkedin.android
+  com.google.android.apps.tachyon
   com.android.mms
+  com.mi.globalbrowser
+  com.xiaomi.payment
+  cn.wps.xiaomi.abroad.lite
+  com.xiaomi.smarthome
+  com.duokan.phone.remotecontroller
+  com.mi.global.shop
+  com.miui.videoplayer
+  com.getmidas.app
+  com.miui.player
+  com.netflix.mediaclient
+  com.google.android.apps.photos
+  com.android.soundrecorder
+  com.xiaomi.scanner
+  com.miui.screenrecorder
+  com.miui.miservice
+  com.xiaomi.midrop
   com.android.stk
-  com.google.android.inputmethod.latin
+  com.snapchat.android
+  com.zhiliaoapp.musically
+  com.miui.weather2
+  cn.wps.moffice_eng
+  com.mi.global.bbs
+  com.google.android.youtube
+  com.google.android.apps.youtube.music
+  com.android.chrome
+  com.android.thememanager
+  com.badambiz.okeyYuzbir
+  com.king.candycrushsaga
+  com.block.juggle
+  com.vitastudio.mahjong
+  com.mintgames.wordtrip
+  com.fugo.wow
+  com.mintgames.fancycolorpro
+  com.google.android.apps.safetyhub
 )
 
 echo "Removing Bloatware"
 for pkg in "${packages[@]}"; do
   echo ">>> $pkg trying to uninstall..."
-  adb shell pm uninstall -k --user 0 "$pkg"
+  adb shell pm uninstall "$pkg"
   if [ $? -ne 0 ]; then
     echo ">>> Cannot Uninstall, disabling..."
     adb shell pm disable-user --user 0 "$pkg"
