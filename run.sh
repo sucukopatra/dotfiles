@@ -6,6 +6,20 @@ cd ~/dotfiles/
 pgrep -x nfqws >/dev/null && sudo systemctl stop zapret
 
 # Parse command line arguments
+GAMEDEV=false
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --gamedev)
+      GAMEDEV=true
+      shift
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      exit 1
+      ;;
+  esac
+done
+
 LAPTOP=false
 while [[ "$#" -gt 0 ]]; do
   case $1 in
@@ -66,13 +80,8 @@ install_packages "${MEDIA[@]}"
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"
 
-install_packages stow
-
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
-
-echo "Installing graphic packages"
-. scripts/graphic-card.sh
 
 if ask "Do you want to use grub menu?" Y; then
   echo "Installing minecraft theme for grub."
@@ -109,8 +118,13 @@ if echo "$gpu" | grep -iq 'nvidia'; then
 fi
 
 if [[ "$LAPTOP" == true ]]; then
-  echo "Installing auto cpu freq"
-  bash scripts/auto-cpufreq.sh
+  echo "Installing laptop specific things"
+  install_packages "${LAPTOP[@]}"
+fi
+
+if [[ "$GAMEDEV" == true ]]; then
+  echo "Installing gamedev specific things"
+  install_packages "${GAMEDEV[@]}"
 fi
 
 echo "Changing to ZSH"

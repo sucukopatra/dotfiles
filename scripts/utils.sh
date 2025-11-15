@@ -142,7 +142,14 @@ installNvidiaDriver() {
     setKernelParam "ibt=off"
   fi
 
-  sudo pacman -S --needed --noconfirm nvidia nvidia-utils nvidia-dkms nvidia-settings
+  installed_kernels=$(pacman -Qq | grep -E '^linux(|-rt|-rt-lts|-hardened|-zen|-lts)$')
+  gpu_driver=""
+  if echo "$installed_kernels" | grep -vq '^linux$'; then
+    gpu_driver="nvidia-dkms"
+  else
+    gpu_driver="nvidia"
+  fi
+  sudo pacman -S --needed --noconfirm $gpu_driver nvidia-utils nvidia-settings
   # Refer https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks#Preserve_video_memory_after_suspend
   setKernelParam "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
