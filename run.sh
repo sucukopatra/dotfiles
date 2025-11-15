@@ -2,38 +2,6 @@
 
 cd ~/dotfiles/
 
-# Stopping zapret if its running
-pgrep -x nfqws >/dev/null && sudo systemctl stop zapret
-
-# Parse command line arguments
-GAMEDEV=false
-while [[ "$#" -gt 0 ]]; do
-  case $1 in
-    --gamedev)
-      GAMEDEV=true
-      shift
-      ;;
-    *)
-      echo "Unknown parameter: $1"
-      exit 1
-      ;;
-  esac
-done
-
-LAPTOP=false
-while [[ "$#" -gt 0 ]]; do
-  case $1 in
-    --laptop)
-      LAPTOP=true
-      shift
-      ;;
-    *)
-      echo "Unknown parameter: $1"
-      exit 1
-      ;;
-  esac
-done
-
 # Exit on any error
 set -e
 
@@ -42,6 +10,12 @@ source scripts/utils.sh
 
 # Source the package list
 source scripts/packages.conf
+
+# Stopping zapret if its running
+pgrep -x nfqws >/dev/null && sudo systemctl stop zapret
+
+# Parse command line arguments
+parse_arguments "$@"
 
 echo "Starting the system setup..."
 

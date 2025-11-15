@@ -6,6 +6,41 @@ YELLOW='\033[33m'
 CYAN='\033[36m'
 GREEN='\033[32m'
 
+GAMEDEV=false
+LAPTOP=false
+
+# Function to display script usage
+print_help() {
+  echo "Usage: $0 [OPTIONS]"
+  echo "Options:"
+  echo "  --gamedev       Enable game development mode"
+  echo "  --laptop        Enable laptop mode"
+  echo "  -h, --help      Display this help message"
+}
+
+# Function to parse command-line arguments
+parse_arguments() {
+  while [ $# -gt 0 ]; do
+    case $1 in
+      --gamedev)
+        GAMEDEV=true
+        ;;
+      --laptop)
+        LAPTOP=true
+        ;;
+      -h | --help)
+        print_help
+        exit 0
+        ;;
+      *)
+        echo "Invalid option: $1" >&2
+        print_help
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
 # Function to check if a package is installed
 is_installed() {
   pacman -Qi "$1" &>/dev/null
