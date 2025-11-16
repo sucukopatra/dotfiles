@@ -6,8 +6,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')-- Clear highlights when pres
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
 
--- Save file with sudo if needed
-
 -- Center screen when jumping
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
@@ -40,10 +38,11 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
 
-
 -- Better J behavior
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position" })
 
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "move selected line(s) down(J)" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "move selected line(s) up(K)" })
 -- Formatting bash files
 vim.keymap.set("n", "<leader>r", function()
   if vim.bo.filetype == "sh" then

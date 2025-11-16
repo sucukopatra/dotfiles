@@ -66,15 +66,6 @@ vim.opt.maxmempattern = 20000
 -- Basic autocommands
 local augroup = vim.api.nvim_create_augroup("UserConfig", {})
 
--- Format bash files when saving
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = augroup,
-  pattern = "*.sh",
-  callback = function()
-    vim.cmd("%!shfmt -i 2 -ci")
-  end,
-})
-
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
