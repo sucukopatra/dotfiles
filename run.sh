@@ -70,7 +70,7 @@ else
   echo "Skipping autologin"
 fi
 
-if ask "Do you want zapret?" Y; then
+if ask "Do you want zapret?" N; then
   . scripts/install-zapret.sh
 else
   echo "Uninstalling zapret if its there."
@@ -89,14 +89,9 @@ echo "Installing flatpaks"
 #  installNvidiaDriver
 #fi
 
-if [[ "$LAPTOP" == true ]]; then
-  echo "Installing laptop specific things"
-  install_packages "${LAPTOP[@]}"
-fi
-
 if [[ "$GAMEDEV" == true ]]; then
   echo "Installing gamedev specific things"
-  install_packages "${GAMEDEV[@]}"
+  install_packages "${GAME_DEV[@]}"
 fi
 
 echo "Changing to ZSH"
