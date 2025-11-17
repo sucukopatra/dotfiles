@@ -16,11 +16,14 @@ reinstall() {
   sudo setcap cap_net_raw+ep /opt/zapret/binaries/linux-x86_64/nfqws
   echo "Zapret latest release installed in /opt/zapret."
 }
-
-if cmp -s ~/dotfiles/assets/.conf/zapretconfig/config /opt/zapret/config; then
-  echo "Zapret is installed and has the same config, so skipping ..."
-else
-  sudo /opt/zapret/uninstall_easy.sh </dev/null
-  sudo rm -rf /opt/zapret
+if [[ -d "/opt/zapret/" ]]; then
+    if cmp -s ~/dotfiles/assets/.conf/zapretconfig/config /opt/zapret/config; then
+      echo "Zapret is installed and has the same config, so skipping ..."
+    else
+      sudo /opt/zapret/uninstall_easy.sh </dev/null
+      sudo rm -rf /opt/zapret
+      reinstall
+    fi
+  else
   reinstall
 fi

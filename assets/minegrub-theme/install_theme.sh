@@ -36,6 +36,7 @@ echo -ne "[INFO] Installing systemd service to update splash and package labels 
 cp -uv "$SCRIPT_DIR/minegrub-update.service" /etc/systemd/system/
 systemctl enable minegrub-update.service
 
+sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub
 # Check if the GRUB_THEME line exists
 if grep -q "^GRUB_THEME=" /etc/default/grub; then
   # If it exists, update the line

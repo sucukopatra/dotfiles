@@ -19,18 +19,16 @@ parse_arguments "$@"
 
 echo "Starting the system setup..."
 
+# Adding the easter egg
+echo "Adding the secret sauce"
+
+grep -q "^[[:space:]]*ILoveCandy" /etc/pacman.conf || sudo sed -i -e "s/^[[:space:]]*#\?Color/Color/" -e "/^[[:space:]]*Color/ a ILoveCandy" /etc/pacman.conf
 # Update the system first
 echo "Updating system..."
 sudo pacman -Syu --noconfirm
 
 # Install yay AUR helper if not present
 setup_yay
-
-# Adding the easter egg
-echo "Adding the secret sauce"
-grep -q "^[[:space:]]*ILoveCandy" /etc/pacman.conf ||
-  sudo sed -i "/^[[:space:]]*Color/a ILoveCandy" /etc/pacman.conf ||
-  echo ILoveCandy | sudo tee -a /etc/pacman.conf >/dev/null
 
 #Install Headers
 install_kernel_headers
@@ -57,7 +55,7 @@ install_packages "${FONTS[@]}"
 echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
-if ask "Do you want to use grub menu?" Y; then
+if ask "Do you want to use grub menu?" N; then
   echo "Installing minecraft theme for grub."
   sudo bash assets/minegrub-theme/install_theme.sh
 else
@@ -65,7 +63,7 @@ else
   sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
-if ask "Do you want to setup auto login?" Y; then
+if ask "Do you want to setup auto login?" N; then
   echo "Setting up Autologin"
   . scripts/autologin.sh
 else
@@ -83,13 +81,13 @@ fi
 echo "Installing flatpaks"
 . scripts/install-flatpaks.sh
 
-# Try to detect discrete GPU first
-gpu=$(lspci | grep -i vga | grep -E -i 'nvidia|amd|ati' | head -n1)
-
-if echo "$gpu" | grep -iq 'nvidia'; then
-  echo "NVIDIA GPU detected."
-  installNvidiaDriver
-fi
+## Try to detect discrete GPU first
+#gpu=$(lspci | grep -i vga | grep -E -i 'nvidia|amd|ati')
+#
+#if echo "$gpu" | grep -iq 'nvidia'; then
+#  echo "NVIDIA GPU detected."
+#  installNvidiaDriver
+#fi
 
 if [[ "$LAPTOP" == true ]]; then
   echo "Installing laptop specific things"
