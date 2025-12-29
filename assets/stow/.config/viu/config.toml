@@ -23,7 +23,7 @@
 # The duration desktop notifications should be displayed before they disappear
 # in minutes
 # Type: integer
-# Default: 5
+# Default: 300
 desktop_notification_duration = 5
 
 # The preferred watch history tracker (local,remote) in cases of conflicts
@@ -65,6 +65,11 @@ preferred_spinner = "smiley"
 # Default: "anilist"
 media_api = "anilist"
 
+# Whether to enable the welcome screen, that runs once per day
+# Type: boolean
+# Default: true
+welcome_screen = true
+
 # The default anime provider to use for scraping.
 # Possible values: [ "allanime", "animepahe", "animeunity" ]
 # Default: "allanime"
@@ -96,7 +101,8 @@ preview = "full"
 preview_scale_up = false
 
 # The command-line tool to use for rendering images in the terminal.
-# Possible values: [ "icat", "chafa", "imgcat" ]
+# Possible values: [ "icat", "chafa", "imgcat", "system-sixels", "system-
+# kitty", "system-default" ]
 image_renderer = "icat"
 
 # The external application to use for viewing manga pages.
@@ -109,10 +115,16 @@ manga_viewer = "feh"
 # Default: true
 check_for_updates = true
 
+# Whether to show release notes after every  update when running the new
+# version
+# Type: boolean
+# Default: true
+show_new_release = true
+
 # The interval in hours to check for updates
 # Type: float
 # Default: 12
-update_check_interval = 12
+update_check_interval = 12.0
 
 # Enable caching of network requests to speed up subsequent operations.
 # Type: boolean
@@ -512,10 +524,13 @@ auto_download_new_episode = true
 # ==============================================================================
 #
 # HOPE YOU ENJOY VIU AND BE SURE TO STAR THE PROJECT ON GITHUB
-# https://github.com/Benexl/Viu
+# https://github.com/viu-media/Viu
 #
 # Also join the discord server
 # where the anime tech community lives :)
 # https://discord.gg/C4rhMA4mmK
+# If you like the project and are able to support it please consider buying me a coffee at https://buymeacoffee.com/benexl.
+# If you would like to connect with me join the discord server from there you can dm for hackathons, or even to tell me a joke 😂
+# Otherwise enjoy your terminal anime browser experience 😁
 #
 # ==============================================================================

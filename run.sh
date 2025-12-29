@@ -58,6 +58,7 @@ echo "Setting config files"
 if ask "Do you want to use grub menu?" N; then
   echo "Installing minecraft theme for grub."
   sudo bash assets/minegrub-theme/install_theme.sh
+  sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
 else
   echo "Changing wait time"
   sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg

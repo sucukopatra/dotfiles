@@ -3,6 +3,12 @@ vim.g.mapleader = " "                              -- Set leader key to space
 vim.g.maplocalleader = " "                         -- Set local leader key (NEW)
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')-- Clear highlights when pressing ESC
 
+-- Lsp Stuff
+vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
 

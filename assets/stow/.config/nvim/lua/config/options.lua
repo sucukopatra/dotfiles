@@ -6,9 +6,9 @@ vim.opt.scrolloff = 10                             -- Keep 10 lines above/below 
 vim.opt.sidescrolloff = 8                          -- Keep 8 columns left/right of cursor
 
 -- Indentation
-vim.opt.tabstop = 2                                -- Tab width
-vim.opt.shiftwidth = 2                             -- Indent width
-vim.opt.softtabstop = 2                            -- Soft tab stop
+vim.opt.tabstop =  4                               -- Tab width
+vim.opt.shiftwidth = 4                             -- Indent width
+vim.opt.softtabstop = 4                            -- Soft tab stop
 vim.opt.expandtab = true                           -- Use spaces instead of tabs
 vim.opt.smartindent = true                         -- Smart auto-indenting
 vim.opt.autoindent = true                          -- Copy indent from current line
@@ -57,6 +57,16 @@ vim.opt.splitright = true                          -- Vertical splits go right
 -- Performance improvements
 vim.opt.redrawtime = 10000
 vim.opt.maxmempattern = 20000
+
+vim.diagnostic.config({
+  signs = true,
+  underline = true,
+  virtual_text = true,
+  severity_sort = true,
+  update_in_insert = false,
+})
+
+vim.opt.signcolumn = "yes"
 
 -- ============================================================================
 --  FUNCTIONS
