@@ -11,6 +11,9 @@ source scripts/utils.sh
 # Source the package list
 source scripts/packages.conf
 
+# Source stow list
+source scripts/stow.conf
+
 # Stopping zapret if its running
 pgrep -x nfqws >/dev/null && sudo systemctl stop zapret
 
@@ -36,18 +39,22 @@ install_kernel_headers
 # Install all packages
 echo "Installing system utilities..."
 install_packages "${SYSTEM_UTILS[@]}"
+stow_group "${STOW_SYSTEM[@]}"
 
 echo "Installing development tools..."
 install_packages "${DEV_TOOLS[@]}"
+stow_group "${STOW_DEV[@]}"
 
 echo "Installing system maintenance tools..."
 install_packages "${MAINTENANCE[@]}"
 
 echo "Installing desktop environment..."
 install_packages "${DESKTOP[@]}"
+stow_group "${STOW_DESKTOP[@]}"
 
 echo "Installing media packages..."
 install_packages "${MEDIA[@]}"
+stow_group "${STOW_MEDIA[@]}"
 
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"

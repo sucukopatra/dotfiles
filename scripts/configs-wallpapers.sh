@@ -2,12 +2,8 @@
 
 set -e
 
-# Stow the configs
-cd ~/dotfiles/assets && stow -D -t ~ stow
-stow -t ~ --adopt stow && cd ~/dotfiles/
-
 # Change the "USER" placeholders in some config files
-find ~/dotfiles/assets/stow/.config/wofi/ -type f -name "*.css" -exec sed -i "s|/home/ender|/home/$(whoami)|g" {} +
+find ~/dotfiles/assets/stow/wofi/.config/wofi/ -type f -name "*.css" -exec sed -i "s|/home/ender|/home/$(whoami)|g" {} +
 
 # Creating directories
 mkdir -p ~/Downloads ~/Videos

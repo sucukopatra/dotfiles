@@ -99,6 +99,16 @@ ask() {
 
   done
 }
+stow_group() {
+  cd "$HOME/dotfiles/assets/stow"
+  local group=("$@")
+  for pkg in "${group[@]}"; do
+    echo "→ Stowing: $pkg"
+    stow -D -t "$HOME" "$pkg" 2>/dev/null || true
+    stow --adopt -t "$HOME" "$pkg"
+  done
+  cd "$HOME/dotfiles"
+}
 
 install_kernel_headers() {
   installed_kernels=$(pacman -Q | grep -E '^linux(| |-rt|-rt-lts|-hardened|-zen|-lts)[^-headers]' | cut -d ' ' -f 1)
