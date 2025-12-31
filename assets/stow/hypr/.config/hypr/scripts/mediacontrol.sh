@@ -5,6 +5,6 @@ STATUS=$(playerctl status)
 if [[ "$STATUS" == "Paused" ]]; then
     playerctl play
 else
-    playerctl stop
+    playerctl pause
 fi
 
