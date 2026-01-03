@@ -63,13 +63,29 @@ echo "Setting config files"
 . scripts/configs-wallpapers.sh
 
 if ask "Do you want to use grub menu?" N; then
-  echo "Installing minecraft theme for grub."
+  echo "Enabling grub menu and theme."
+
   sudo bash assets/minegrub-theme/install_theme.sh
-  sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+  sudo sed -i \
+    -e 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5/' \
+    -e 's/^GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=menu/' \
+    -e 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/minegrub/theme.txt"|' \
+    -e 's/^#\?GRUB_GFXPAYLOAD_LINUX=.*/GRUB_GFXPAYLOAD_LINUX=keep/' \
+    /etc/default/grub
+
 else
-  echo "Changing wait time"
-  sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub && sudo grub-mkconfig -o /boot/grub/grub.cfg
+  echo "Disabling grub menu for fast boot."
+
+  sudo sed -i \
+    -e 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' \
+    -e 's/^GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/' \
+    -e 's|^GRUB_THEME=.*|#GRUB_THEME=|' \
+    -e 's/^GRUB_GFXPAYLOAD_LINUX=.*/#GRUB_GFXPAYLOAD_LINUX=keep/' \
+    /etc/default/grub
 fi
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 if ask "Do you want to setup auto login?" N; then
   echo "Setting up Autologin"

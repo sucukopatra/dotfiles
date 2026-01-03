@@ -1,8 +1,3 @@
-# Fetch
-clear && paste <(pokemon-colorscripts -r --no-title) <(printf '\n\n\n'; myfetch) | column -t -s $'\t' | head -n 20
-
-# Init Starship
-eval "$(starship init zsh)"
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -85,3 +80,20 @@ alias pacman='sudo pacman'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+
+
+
+
+
+
+
+
+
+# >>> fancy start
+# Fetch
+clear && paste <(pokemon-colorscripts -r --no-title) <(printf '\n\n\n'; myfetch) | column -t -s $'\t' | head -n 20
+
+# Init Starship
+eval "$(starship init zsh)"
+# <<< fancy end
