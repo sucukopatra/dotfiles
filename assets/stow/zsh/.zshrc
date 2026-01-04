@@ -53,6 +53,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 
 # Aliases
+alias gdd='cd ~/gdd && zathura gdd.pdf & disown && nvim gdd.typ'
 alias update='yay --noconfirm && flatpak update -y'
 alias open='xdg-open'
 alias pm='adb shell pm'
@@ -80,6 +81,11 @@ alias pacman='sudo pacman'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+
+
+
+
 
 
 
