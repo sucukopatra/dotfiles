@@ -467,6 +467,16 @@ args = ""
 pre_args = ""
 
 #
+# Vlc
+#
+[vlc]
+
+# Comma-separated arguments to pass to the Vlc player.
+# Type: string
+# Default: ""
+args = ""
+
+#
 # Media_Registry
 #
 [media_registry]
