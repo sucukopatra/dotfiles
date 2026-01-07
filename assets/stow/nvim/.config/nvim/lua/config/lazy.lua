@@ -13,28 +13,23 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
--- C# LSP
+
+-- C#
 vim.lsp.config("roslyn", {
   filetypes = { "cs" },
 })
+vim.lsp.enable("roslyn")
 
--- Typst LSP
-vim.lsp.config("tinymist", {
-  filetypes = { "typst", "typ" },
-})
-
+-- Typst
+vim.api.nvim_create_autocmd("FileType", { pattern = { "typst", "typ" }, callback = function(args) vim.lsp.start({ name = "tinymist", cmd = { "tinymist" }, root_dir = vim.fn.getcwd(), }) end, })
 vim.lsp.enable("tinymist")
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "typst", "typ" },
-  callback = function(args)
-    vim.lsp.start({
-      name = "tinymist",
-      cmd = { "tinymist" },
-      root_dir = vim.fn.getcwd(),
-    })
-  end,
+-- Lua
+vim.lsp.config("lua", {
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
 })
+vim.lsp.enable("lua")
 
 require("lazy").setup({
   spec = {

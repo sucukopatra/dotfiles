@@ -46,7 +46,6 @@ if grep -q '^# >>> fancy start$' "$ZSHRC"; then
 else
     # Fancy is OFF → turn it ON
     cat >> "$ZSHRC" <<'EOF'
-
 # >>> fancy start
 # Fetch
 clear && paste <(pokemon-colorscripts -r --no-title) <(printf '\n\n\n'; myfetch) | column -t -s $'\t' | head -n 20
