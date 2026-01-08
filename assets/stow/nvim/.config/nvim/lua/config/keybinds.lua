@@ -9,16 +9,38 @@ vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "<leader><leader>", function()
-  vim.fn.system({
-    "zsh", "-lc",
-    [[
-      typst c *.typ &&
-      cd ~/dotfiles &&
-      git add -A &&
-      git commit -m "Update dotfiles: $(date '+%Y-%m-%d %H:%M')" &&
-      git push
-    ]]
-  })
+  -- open a horizontal split
+  vim.cmd("split")
+  vim.cmd("resize 12")
+
+  -- start terminal job
+  local buf = vim.api.nvim_get_current_buf()
+
+  vim.fn.termopen(
+    { "zsh", "-lc",
+      [[
+        typst c *.typ &&
+        cd ~/dotfiles &&
+        git add -A &&
+        git commit -m "Update dotfiles: $(date '+%Y-%m-%d %H:%M')" &&
+        git push
+      ]]
+    },
+    {
+      on_exit = function(_, exit_code)
+        if exit_code == 0 then
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(buf) then
+              vim.cmd("bd! " .. buf)
+            end
+          end)
+        end
+      end,
+    }
+  )
+
+  -- terminal mode, because humans have fingers
+  vim.cmd("startinsert")
 end, { silent = true })
 
 -- Quitting
