@@ -9,12 +9,15 @@ vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "<leader><leader>", function()
-  -- open a horizontal split
+  -- remember where you came from
+  local origin_win = vim.api.nvim_get_current_win()
+
+  -- open split
   vim.cmd("split")
   vim.cmd("resize 12")
 
-  -- start terminal job
-  local buf = vim.api.nvim_get_current_buf()
+  -- terminal buffer
+  local term_buf = vim.api.nvim_get_current_buf()
 
   vim.fn.termopen(
     { "zsh", "-lc",
@@ -27,11 +30,16 @@ vim.keymap.set("n", "<leader><leader>", function()
       ]]
     },
     {
-      on_exit = function(_, exit_code)
-        if exit_code == 0 then
+      on_exit = function(_, code)
+        if code == 0 then
           vim.schedule(function()
-            if vim.api.nvim_buf_is_valid(buf) then
-              vim.cmd("bd! " .. buf)
+            -- go back first
+            if vim.api.nvim_win_is_valid(origin_win) then
+              vim.api.nvim_set_current_win(origin_win)
+            end
+            -- then delete terminal buffer
+            if vim.api.nvim_buf_is_valid(term_buf) then
+              vim.api.nvim_buf_delete(term_buf, { force = true })
             end
           end)
         end
@@ -39,7 +47,6 @@ vim.keymap.set("n", "<leader><leader>", function()
     }
   )
 
-  -- terminal mode, because humans have fingers
   vim.cmd("startinsert")
 end, { silent = true })
 
