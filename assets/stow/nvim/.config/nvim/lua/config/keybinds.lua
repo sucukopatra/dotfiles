@@ -8,7 +8,9 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-vim.keymap.set("n", "<leader><leader>",":!typst c *.typ<CR><CR>" , {})
+vim.keymap.set("n", "<leader><leader>", function()
+  vim.cmd("terminal zsh -lc 'typst c *.typ && cd ~/dotfiles && git add -A && git commit -m \"Update dotfiles: $(date +%Y-%m-%d\\ %H:%M)\" && git push'")
+end)
 
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
