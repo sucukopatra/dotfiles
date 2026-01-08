@@ -9,8 +9,17 @@ vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "<leader><leader>", function()
-  vim.cmd("terminal zsh -lc 'typst c *.typ && cd ~/dotfiles && git add -A && git commit -m \"Update dotfiles: $(date +%Y-%m-%d\\ %H:%M)\" && git push'")
-end)
+  vim.fn.system({
+    "zsh", "-lc",
+    [[
+      typst c *.typ &&
+      cd ~/dotfiles &&
+      git add -A &&
+      git commit -m "Update dotfiles: $(date '+%Y-%m-%d %H:%M')" &&
+      git push
+    ]]
+  })
+end, { silent = true })
 
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })
