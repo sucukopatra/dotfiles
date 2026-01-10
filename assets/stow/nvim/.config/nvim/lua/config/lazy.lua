@@ -31,6 +31,13 @@ vim.lsp.config("lua", {
 })
 vim.lsp.enable("lua")
 
+-- Python
+vim.lsp.config("pyright", {
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+})
+vim.lsp.enable("pyright")
+
 require("lazy").setup({
   spec = {
     -- import your plugins

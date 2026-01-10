@@ -8,47 +8,7 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-vim.keymap.set("n", "<leader><leader>", function()
-  -- remember where you came from
-  local origin_win = vim.api.nvim_get_current_win()
-
-  -- open split
-  vim.cmd("split")
-  vim.cmd("resize 12")
-
-  -- terminal buffer
-  local term_buf = vim.api.nvim_get_current_buf()
-
-  vim.fn.termopen(
-    { "zsh", "-lc",
-      [[
-        typst c *.typ &&
-        cd ~/dotfiles &&
-        git add -A &&
-        git commit -m "Update dotfiles: $(date '+%Y-%m-%d %H:%M')" &&
-        git push
-      ]]
-    },
-    {
-      on_exit = function(_, code)
-        if code == 0 then
-          vim.schedule(function()
-            -- go back first
-            if vim.api.nvim_win_is_valid(origin_win) then
-              vim.api.nvim_set_current_win(origin_win)
-            end
-            -- then delete terminal buffer
-            if vim.api.nvim_buf_is_valid(term_buf) then
-              vim.api.nvim_buf_delete(term_buf, { force = true })
-            end
-          end)
-        end
-      end,
-    }
-  )
-
-  vim.cmd("startinsert")
-end, { silent = true })
+vim.keymap.set("n", "<leader><leader>",":!typst c *.typ<CR><CR>" , {})
 
 -- Quitting
 vim.keymap.set("n", "<leader>q", ":quit<CR>", { desc = "Quitting" })

@@ -76,7 +76,6 @@ vim.opt.signcolumn = "yes"
 -- Basic autocommands
 local augroup = vim.api.nvim_create_augroup("UserConfig", {})
 
-
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup,
@@ -96,7 +95,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
 
 -- Create undo directory if it doesn't exist
 local undodir = vim.fn.expand("~/.vim/undodir")
