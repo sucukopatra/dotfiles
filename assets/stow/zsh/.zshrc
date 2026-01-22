@@ -1,4 +1,3 @@
-
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -27,6 +26,7 @@ zinit cdreplay -q
 # Set nvim as default editor
 export EDITOR=nvim
 export VISUAL=nvim
+export PATH="$HOME/.local/bin:$PATH"
 
 # Keybindings
 bindkey -v
@@ -81,20 +81,6 @@ alias pacman='sudo pacman'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # >>> fancy start
 # Fetch

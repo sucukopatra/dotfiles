@@ -10,8 +10,8 @@ if grep -q '2560x1600@180' "$HYPRCONF"; then
         -e '/animations {/,/}/ s/enabled = 1/enabled = 0/' \
         -e '/^decoration {/,/^}/ {
               /rounding = 10/d
-              /active_opacity = 0.8/d
-              /inactive_opacity = 0.7/d
+              /active_opacity = 0.9/d
+              /inactive_opacity = 0.8/d
           }' \
         -e '/blur {/,/^}/ s/enabled = true/enabled = false/' \
         -e '/shadow {/,/^}/ s/enabled = true/enabled = false/' \
@@ -28,8 +28,8 @@ else
         -e '/animations {/,/}/ s/enabled = 0/enabled = 1/' \
         -e '/^decoration {$/a\
   rounding = 10\
-  active_opacity = 0.8\
-  inactive_opacity = 0.7' \
+  active_opacity = 0.9\
+  inactive_opacity = 0.8' \
         -e '/blur {/,/^}/ s/enabled = false/enabled = true/' \
         -e '/shadow {/,/^}/ s/enabled = false/enabled = true/' \
         -e 's|env = AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0|env = AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1|' \
