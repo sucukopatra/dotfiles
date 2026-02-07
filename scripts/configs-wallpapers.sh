@@ -13,7 +13,6 @@ sudo tee /etc/systemd/logind.conf.d/10-lid-ignore.conf > /dev/null
 # Creating directories
 mkdir -p ~/Downloads ~/Videos
 # Copy files
-sudo cp -an ~/dotfiles/assets/wallpapers ~/
 sudo cp -r ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
 sudo cp ~/dotfiles/assets/.conf/hosts /etc/hosts
 sudo cp -rn ~/dotfiles/assets/settings/ ~/
