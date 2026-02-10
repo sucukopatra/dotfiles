@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-01-07T12:51:11.429270",
+  "last_updated": "2026-02-09T00:05:28.290783",
   "media_index": {
     "anilist_181444": {
       "media_id": 181444,
@@ -188,15 +188,32 @@
       "start_date": "2026-01-07T12:51:11.426847",
       "completed_at": "2026-01-07T12:51:11.426847",
       "watch_completion_percentage": 0.26666666666666666
+    },
+    "anilist_167152": {
+      "media_id": 167152,
+      "media_api": "anilist",
+      "status": "watching",
+      "progress": "5",
+      "last_watch_position": "00:24:32",
+      "last_watched": "2026-02-09T00:05:28.290751",
+      "total_duration": "00:24:32",
+      "total_episodes": 0,
+      "score": 0.0,
+      "repeat": 0,
+      "notes": "",
+      "last_notified_episode": null,
+      "start_date": "2026-02-08T21:43:53.215908",
+      "completed_at": "2026-02-08T21:43:53.215911",
+      "watch_completion_percentage": 100.0
     }
   },
   "status_breakdown": {
-    "watching": 9,
+    "watching": 10,
     "planning": 1,
     "repeating": 1
   },
   "media_count_breakdown": {
-    "anilist": 11
+    "anilist": 12
   },
-  "media_count": 11
+  "media_count": 12
 }
