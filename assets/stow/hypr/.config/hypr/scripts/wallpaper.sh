@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WALLPAPER_DIR="$HOME/media/photos/wallpapers"
+WALLPAPER_DIR="$HOME/dotfiles/assets/wallpapers/"
 #I dont know what the fuck I am doing
 
 menu() {

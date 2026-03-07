@@ -34,6 +34,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# Gemini API key
+export GEMINI_API_KEY="AIzaSyDXvxX96XdpiqKf8wLLPUmPh-5p2CiD8no"
+
 # Keybindings
 bindkey -v
 bindkey '^l' autosuggest-accept
