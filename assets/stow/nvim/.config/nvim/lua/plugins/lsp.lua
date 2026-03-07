@@ -1,60 +1,55 @@
 return {
-      {
+  {
     "williamboman/mason.nvim",
     opts = {
+      ui = {
+        border = "rounded",
+      },
       registries = {
         "github:mason-org/mason-registry",
         "github:Crashdummyy/mason-registry",
       },
+    },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {
       ensure_installed = {
-        "lua-language-server",
+        "bash-language-server",
         "csharpier",
+        "json-lsp",
+        "lua-language-server",
+        "omnisharp",
         "prettier",
-        "stylua",
         "roslyn",
+        "shfmt",
+        "stylua",
+        "tinymist",
       },
+      run_on_start = true,
+      auto_update = false,
+      start_delay = 3000,
     },
   },
   {
     "seblyng/roslyn.nvim",
     ft = { "cs", "razor" },
-  },
-  {
-  "folke/trouble.nvim",
-  opts = {}, -- for default options, refer to the configuration section for custom setup.
-  cmd = "Trouble",
-  keys = {
-    {
-      "<leader>xx",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
-    },
-    {
-      "<leader>xX",
-      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
-    },
-    {
-      "<leader>cs",
-      "<cmd>Trouble symbols toggle focus=false<cr>",
-      desc = "Symbols (Trouble)",
-    },
-    {
-      "<leader>cl",
-      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / references / ... (Trouble)",
-    },
-    {
-      "<leader>xL",
-      "<cmd>Trouble loclist toggle<cr>",
-      desc = "Location List (Trouble)",
-    },
-    {
-      "<leader>xQ",
-      "<cmd>Trouble qflist toggle<cr>",
-      desc = "Quickfix List (Trouble)",
-    },
-  },
-}
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      local ok, roslyn = pcall(require, "roslyn")
+      if not ok then
+        vim.notify("roslyn.nvim not available. Use :LspUseOmniSharp as fallback.", vim.log.levels.WARN)
+        return
+      end
 
+      roslyn.setup({
+        broad_search = true,
+        filewatching = "roslyn",
+        config = {
+          capabilities = require("config.lsp").capabilities(),
+        },
+      })
+    end,
+  },
 }

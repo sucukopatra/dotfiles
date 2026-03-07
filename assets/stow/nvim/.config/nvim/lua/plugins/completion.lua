@@ -1,48 +1,59 @@
 return {
   {
-    "hrsh7th/cmp-nvim-lsp"
-  },
-  {
-    "L3MON4D3/LuaSnip",
-    config = function()
-    require("luasnip.loaders.from_lua").load({
-      paths = vim.fn.stdpath("config") .. "/lua/snippets",
-    })
-    end,
+    "saghen/blink.cmp",
+    version = "*",
     dependencies = {
-      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
     },
+    opts = {
+      keymap = {
+        preset = "none",
+        ["<C-n>"] = { "select_next", "show" },
+        ["<C-p>"] = { "select_prev", "show" },
+        ["<Tab>"] = { "select_and_accept", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<C-e>"] = { "hide", "fallback" },
+        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      },
+      appearance = {
+        nerd_font_variant = "mono",
+      },
+      snippets = { preset = "luasnip" },
+      completion = {
+        list = {
+          selection = {
+            preselect = true,
+            auto_insert = false,
+          },
+        },
+        menu = {
+          border = "rounded",
+        },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 200,
+          window = { border = "rounded" },
+        },
+      },
+      signature = { enabled = true },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+      },
+      fuzzy = {
+        implementation = "prefer_rust_with_warning",
+      },
+    },
+    opts_extend = { "sources.default" },
+    config = function(_, opts)
+      require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/snippets" } })
+      require("blink.cmp").setup(opts)
+    end,
   },
   {
-    "hrsh7th/nvim-cmp",
-    config = function()
-    local cmp = require('cmp')
-      require("luasnip.loaders.from_vscode").lazy_load()
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" }, -- For luasnip users.
-          { name = "buffer" },
-        }),
-      })
-    end,
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
   },
 }
