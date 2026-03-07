@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-02-09T00:05:28.290783",
+  "last_updated": "2026-02-13T03:21:38.792064",
   "media_index": {
     "anilist_181444": {
       "media_id": 181444,
@@ -193,9 +193,9 @@
       "media_id": 167152,
       "media_api": "anilist",
       "status": "watching",
-      "progress": "5",
-      "last_watch_position": "00:24:32",
-      "last_watched": "2026-02-09T00:05:28.290751",
+      "progress": "6",
+      "last_watch_position": "00:01:04",
+      "last_watched": "2026-02-13T01:48:03.689901",
       "total_duration": "00:24:32",
       "total_episodes": 0,
       "score": 0.0,
@@ -204,16 +204,33 @@
       "last_notified_episode": null,
       "start_date": "2026-02-08T21:43:53.215908",
       "completed_at": "2026-02-08T21:43:53.215911",
-      "watch_completion_percentage": 100.0
+      "watch_completion_percentage": 4.3478260869565215
+    },
+    "anilist_2167": {
+      "media_id": 2167,
+      "media_api": "anilist",
+      "status": "watching",
+      "progress": "4",
+      "last_watch_position": "00:22:16",
+      "last_watched": "2026-02-13T03:21:38.792031",
+      "total_duration": "00:24:12",
+      "total_episodes": 0,
+      "score": 0.0,
+      "repeat": 0,
+      "notes": "",
+      "last_notified_episode": null,
+      "start_date": "2026-02-13T02:15:12.472680",
+      "completed_at": "2026-02-13T02:15:12.472681",
+      "watch_completion_percentage": 92.01101928374655
     }
   },
   "status_breakdown": {
-    "watching": 10,
+    "watching": 11,
     "planning": 1,
     "repeating": 1
   },
   "media_count_breakdown": {
-    "anilist": 12
+    "anilist": 13
   },
-  "media_count": 12
+  "media_count": 13
 }

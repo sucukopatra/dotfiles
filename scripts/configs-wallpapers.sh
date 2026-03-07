@@ -11,11 +11,19 @@ echo -e "[Login]\nHandleLidSwitchExternalPower=ignore\nHandleLidSwitch=ignore" |
 sudo tee /etc/systemd/logind.conf.d/10-lid-ignore.conf > /dev/null
 
 # Creating directories
-mkdir -p ~/Downloads ~/Videos
+mkdir -p ~/media/{games,music,photos/screenshots,videos/{tv,movies,anime}} ~/dev ~/docs ~/downloads ~/tmp
+
+# Linking Wallpapers
+ln -s ~/dotfiles/assets/wallpapers ~/media/photos/wallpapers
+
 # Copy files
+sudo cp ~/dotfiles/assets/.conf/user-dirs.dirs ~/.config/user-dirs.dirs
 sudo cp -r ~/dotfiles/assets/desktopfiles/. /usr/share/applications/
 sudo cp ~/dotfiles/assets/.conf/hosts /etc/hosts
 sudo cp -rn ~/dotfiles/assets/settings/ ~/
+
+# Update the user directories
+xdg-user-dirs-update
 
 # Set default file explorer
 xdg-mime default thunar.desktop inode/directory

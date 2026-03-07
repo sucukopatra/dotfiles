@@ -1,5 +1,6 @@
 #!/bin/bash
-WALLPAPER_DIR="$HOME/wallpapers/walls"
+
+WALLPAPER_DIR="$HOME/media/photos/wallpapers"
 #I dont know what the fuck I am doing
 
 menu() {
@@ -29,9 +30,6 @@ main() {
     sed -i "s/^gradient_color_1 = .*/gradient_color_1 = '$color1'/" "$cava_config"
     sed -i "s/^gradient_color_2 = .*/gradient_color_2 = '$color2'/" "$cava_config"
     pkill -USR2 cava 2>/dev/null
-
-    # Optional: save current wallpaper
-    cp "$selected_wallpaper" ~/wallpapers/pywallpaper.jpg
 }
 
 main
