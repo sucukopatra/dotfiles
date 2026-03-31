@@ -43,25 +43,9 @@ install_yay() {
 }
 
 stow_packages() {
-  local repo_dir backup_dir rel target
+  local repo_dir pkg
   repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-  backup_dir="$HOME/.config-backup/$(date +%Y%m%d_%H%M%S)"
-
   for pkg in "$@"; do
-    echo "Stowing: $pkg"
-    while IFS= read -r rel; do
-      target="$HOME/$rel"
-      if [[ -e "$target" && ! -L "$target" ]]; then
-        mkdir -p "$backup_dir/$(dirname "$rel")"
-        cp -a "$target" "$backup_dir/$rel"
-      fi
-      rm -rf "$target"
-    done < <(
-      find "$repo_dir/stow/$pkg" -not -type d \
-        | sed "s|$repo_dir/stow/$pkg/||"
-    )
-    stow -d "$repo_dir/stow" -t "$HOME" --restow "$pkg"
+    stow --dotfiles -v -R --override='.*' -d "$repo_dir/stow" -t "$HOME" "$pkg"
   done
-
-  [[ -d "$backup_dir" ]] && echo "Backups saved to: $backup_dir"
 }
