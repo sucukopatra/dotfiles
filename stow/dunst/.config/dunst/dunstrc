@@ -1,0 +1,41 @@
+[global]
+font = JetBrainsMono Nerd Font 10
+corner_radius = 8
+frame_width = 1
+gap_size = 10
+padding = 10
+horizontal_padding = 12
+separator_height = 1
+line_height = 2
+markup = full
+format = "<b>%s</b>\n%b"
+alignment = left
+vertical_alignment = center
+icon_position = left
+min_icon_size = 20
+max_icon_size = 32
+
+transparency = 5
+
+[urgency_low]
+background = "#1e1e1e"
+foreground = "#dddddd"
+frame_color = "#3a3a3a"
+timeout = 3
+
+[urgency_normal]
+background = "#1e1e1e"
+foreground = "#eeeeee"
+frame_color = "#5a5a5a"
+timeout = 5
+
+[urgency_critical]
+background = "#1e1e1e"
+foreground = "#ffffff"
+frame_color = "#aaaaaa"
+timeout = 0
+
+[bluetooth]
+background = "#1e1e2e"
+foreground = "#89b4fa"
+timeout = 3
