@@ -46,6 +46,6 @@ stow_packages() {
   local repo_dir pkg
   repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
   for pkg in "$@"; do
-    stow --dotfiles -v -R --override='.*' -d "$repo_dir/stow" -t "$HOME" "$pkg"
+    stow --dotfiles -R --override='.*' -d "$repo_dir/stow" -t "$HOME" "$pkg"
   done
 }
