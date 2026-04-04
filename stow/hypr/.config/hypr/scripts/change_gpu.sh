@@ -1,5 +1,15 @@
 #!/bin/bash
 
-mv ~/.config/hypr/modules/active-gpu.conf ~/.config/hypr/modules/tmp
-mv ~/.config/hypr/modules/disabled-gpu.conf ~/.config/hypr/modules/active-gpu.conf
-mv ~/.config/hypr/modules/tmp ~/.config/hypr/modules/disabled-gpu.conf
+ACTIVE=~/.config/hypr/modules/active-gpu.conf
+DISABLED=~/.config/hypr/modules/disabled-gpu.conf
+TMP=~/.config/hypr/modules/tmp
+
+mv "$ACTIVE" "$TMP"
+mv "$DISABLED" "$ACTIVE"
+mv "$TMP" "$DISABLED"
+
+if grep -q "dgpu" "$ACTIVE"; then
+    notify-send "GPU Mode" "NVIDIA (dGPU) active"
+else
+    notify-send "GPU Mode" "Intel (iGPU) active"
+fi

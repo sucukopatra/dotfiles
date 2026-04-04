@@ -34,8 +34,3 @@ background = "#1e1e1e"
 foreground = "#ffffff"
 frame_color = "#aaaaaa"
 timeout = 0
-
-[bluetooth]
-background = "#1e1e2e"
-foreground = "#89b4fa"
-timeout = 3
