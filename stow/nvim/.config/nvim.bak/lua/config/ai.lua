@@ -7,6 +7,12 @@ local function run_cmd(cmd)
   end
 end
 
+function M.activate_codeium()
+  -- windsurf.nvim (codeium) enables suggestions via virtual_text.enabled at startup
+  -- this just notifies the user it is on
+  vim.notify("Codeium is enabled (default on)", vim.log.levels.INFO)
+end
+
 function M.disable_all_inline()
   run_cmd("Codeium Disable")
   vim.notify("Inline AI disabled", vim.log.levels.INFO)
@@ -16,14 +22,14 @@ function M.toggle_codeium()
   run_cmd("Codeium Toggle")
 end
 
-function M.toggle_claude_code()
-  run_cmd("ClaudeCode")
+function M.toggle_avante()
+  run_cmd("AvanteToggle")
 end
 
 function M.setup()
   vim.api.nvim_create_user_command("AIToggleCodeium", M.toggle_codeium, { desc = "Toggle Codeium inline suggestions" })
   vim.api.nvim_create_user_command("AIDisableInline", M.disable_all_inline, { desc = "Disable inline AI providers" })
-  vim.api.nvim_create_user_command("AIToggleClaudeCode", M.toggle_claude_code, { desc = "Toggle Claude Code" })
+  vim.api.nvim_create_user_command("AIToggleAvante", M.toggle_avante, { desc = "Toggle Avante" })
 end
 
 return M

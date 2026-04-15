@@ -20,27 +20,11 @@ return {
     end,
   },
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    build = "make",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "stevearc/dressing.nvim",
-      "MeanderingProgrammer/render-markdown.nvim",
-    },
-    opts = {
-      provider = "gemini",
-      providers = {
-        gemini = {
-          model = "gemini-2.5-flash",
-          api_key_name = "GEMINI_API_KEY",
-        },
-      },
-      windows = {
-        position = "right",
-        width = 42,
-      },
-    },
+    "greggh/claude-code.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "ClaudeCode", "ClaudeCodeDiff" },
+    config = function()
+      require("claude-code").setup()
+    end,
   },
 }

@@ -1,8 +1,8 @@
 return {
   "MeanderingProgrammer/render-markdown.nvim",
-  ft = { "markdown", "copilot-chat", "Avante", "avante" },
+  ft = { "markdown" },
   opts = {
-    file_types = { "markdown", "copilot-chat", "Avante", "avante" },
+    file_types = { "markdown" },
     render_modes = true,
   },
 }

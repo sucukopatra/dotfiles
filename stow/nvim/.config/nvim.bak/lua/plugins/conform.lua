@@ -12,5 +12,6 @@ return {
       zsh = { "shfmt" },
       typst = { "typstyle" },
     },
+    format_on_save = nil,
   },
 }

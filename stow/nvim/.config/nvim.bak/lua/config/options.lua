@@ -12,12 +12,14 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
+vim.opt.showmatch = true
 vim.g.have_nerd_font = true
 vim.opt.winblend = 0
 
@@ -44,7 +46,7 @@ vim.opt.inccommand = "nosplit"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
-vim.opt.redrawtime = 4000
+vim.opt.redrawtime = 10000
 vim.opt.maxmempattern = 20000
 
 vim.opt.wildmenu = true

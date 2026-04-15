@@ -12,7 +12,7 @@ return {
       wk.add({
         { "<leader>a", group = "AI" },
         { "<leader>c", group = "Code" },
-        { "<leader>f", group = "Find" },
+        { "<leader>f", group = "Find/Format" },
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Harpoon" },
         { "<leader>s", group = "Split" },
@@ -23,7 +23,6 @@ return {
   },
   {
     "ibhagwan/fzf-lua",
-    cmd = "FzfLua",
     dependencies = { "echasnovski/mini.icons" },
     opts = {
       winopts = {

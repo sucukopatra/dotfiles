@@ -52,7 +52,63 @@ map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
 map("n", "]h", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next git hunk" })
 map("n", "[h", "<cmd>Gitsigns prev_hunk<CR>", { desc = "Previous git hunk" })
 
-map("n", "<leader>cf", function()
+map("n", "<leader>ha", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():add()
+  end
+end, { desc = "Harpoon add current file" })
+
+map("n", "<leader>hh", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+  end
+end, { desc = "Harpoon quick menu" })
+
+map("n", "<A-1>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():select(1)
+  end
+end, { desc = "Harpoon file 1" })
+
+map("n", "<A-2>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():select(2)
+  end
+end, { desc = "Harpoon file 2" })
+
+map("n", "<A-3>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():select(3)
+  end
+end, { desc = "Harpoon file 3" })
+
+map("n", "<A-4>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():select(4)
+  end
+end, { desc = "Harpoon file 4" })
+
+map("n", "<C-p>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():prev()
+  end
+end, { desc = "Harpoon previous" })
+
+map("n", "<C-n>", function()
+  local ok, harpoon = pcall(require, "harpoon")
+  if ok then
+    harpoon:list():next()
+  end
+end, { desc = "Harpoon next" })
+
+map("n", "<leader>f", function()
   require("conform").format({ lsp_fallback = true, async = true })
 end, { desc = "Format buffer" })
 
@@ -66,6 +122,10 @@ map("n", "<leader>tc", function()
   end
 end, { desc = "Compile Typst file" })
 
+map("n", "<leader>ae", function()
+  require("config.ai").activate_codeium()
+end, { desc = "Enable Codeium suggestions" })
+
 map("n", "<leader>at", function()
   require("config.ai").toggle_codeium()
 end, { desc = "Toggle Codeium" })
@@ -74,7 +134,24 @@ map("n", "<leader>aa", function()
   require("config.ai").disable_all_inline()
 end, { desc = "Disable all inline AI" })
 
-map("n", "<leader>ac", function()
-  require("config.ai").toggle_claude_code()
-end, { desc = "Toggle Claude Code" })
+map("n", "<leader>av", function()
+  require("config.ai").toggle_avante()
+end, { desc = "Toggle Avante" })
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
+  callback = function(args)
+    local opts = { buffer = args.buf }
+
+    map("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "LSP hover" }))
+    map("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "LSP definition" }))
+    map("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "LSP declaration" }))
+    map("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "LSP references" }))
+    map("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "LSP implementation" }))
+    map("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "LSP code action" }))
+    map("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "LSP rename" }))
+    map("n", "<leader>ld", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Line diagnostics" }))
+    map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, vim.tbl_extend("force", opts, { desc = "Previous diagnostic" }))
+    map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
+  end,
+})

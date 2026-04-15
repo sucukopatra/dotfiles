@@ -1,7 +1,6 @@
 return {
   {
     "williamboman/mason.nvim",
-    event = "VeryLazy",
     opts = {
       ui = {
         border = "rounded",
@@ -27,7 +26,6 @@ return {
         "shfmt",
         "stylua",
         "tinymist",
-        "typstyle",
       },
       run_on_start = true,
       auto_update = false,

@@ -14,8 +14,27 @@ vertical_alignment = center
 icon_position = left
 min_icon_size = 20
 max_icon_size = 32
-
 transparency = 5
+
+follow = mouse
+
+notification_limit = 10
+indicate_hidden = yes
+sort = yes
+stack_duplicates = true
+hide_duplicate_count = false
+show_indicators = yes
+sticky_history = yes
+history_length = 20
+
+progress_bar = true
+
+separator_color = auto
+ellipsize = middle
+
+mouse_left_click = close_current
+mouse_middle_click = do_action, close_current
+mouse_right_click = close_all
 
 [urgency_low]
 background = "#1e1e1e"

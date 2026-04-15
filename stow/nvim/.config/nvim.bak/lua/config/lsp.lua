@@ -51,7 +51,7 @@ function M.setup()
 
   vim.lsp.config("tinymist", {
     cmd = { "tinymist" },
-    filetypes = { "typst" },
+    filetypes = { "typst", "typ" },
     root_markers = { ".git", "typst.toml" },
     capabilities = capabilities,
   })
@@ -74,24 +74,6 @@ function M.setup()
     vim.lsp.enable("omnisharp")
     vim.notify("OmniSharp enabled for C# buffers.", vim.log.levels.INFO)
   end, { desc = "Enable OmniSharp fallback for C#" })
-
-  local map = vim.keymap.set
-  vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
-    callback = function(args)
-      local opts = { buffer = args.buf }
-      map("n", "K",          vim.lsp.buf.hover,       vim.tbl_extend("force", opts, { desc = "LSP hover" }))
-      map("n", "gd",         vim.lsp.buf.definition,  vim.tbl_extend("force", opts, { desc = "LSP definition" }))
-      map("n", "gD",         vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "LSP declaration" }))
-      map("n", "gr",         vim.lsp.buf.references,  vim.tbl_extend("force", opts, { desc = "LSP references" }))
-      map("n", "gi",         vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "LSP implementation" }))
-      map("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "LSP code action" }))
-      map("n", "<leader>rn", vim.lsp.buf.rename,      vim.tbl_extend("force", opts, { desc = "LSP rename" }))
-      map("n", "<leader>ld", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Line diagnostics" }))
-      map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, vim.tbl_extend("force", opts, { desc = "Previous diagnostic" }))
-      map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end,  vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
-    end,
-  })
 end
 
 return M
