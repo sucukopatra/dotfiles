@@ -1,8 +1,0 @@
-return {
-  "MeanderingProgrammer/render-markdown.nvim",
-  ft = { "markdown" },
-  opts = {
-    file_types = { "markdown" },
-    render_modes = true,
-  },
-}
