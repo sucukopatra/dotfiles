@@ -49,33 +49,6 @@ function M.setup()
   })
   vim.lsp.enable("bashls")
 
-  vim.lsp.config("ts_ls", {
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact" },
-    root_markers = { "package.json", ".git" },
-    capabilities = capabilities,
-    init_options = {
-      hostInfo = "neovim",
-    },
-  })
-  vim.lsp.enable("ts_ls")
-
-  vim.lsp.config("cssls", {
-    cmd = { "vscode-css-language-server", "--stdio" },
-    filetypes = { "css" },
-    root_markers = { "package.json", ".git" },
-    capabilities = capabilities,
-  })
-  vim.lsp.enable("cssls")
-
-  vim.lsp.config("html", {
-    cmd = { "vscode-html-language-server", "--stdio" },
-    filetypes = { "html" },
-    root_markers = { "package.json", ".git" },
-    capabilities = capabilities,
-  })
-  vim.lsp.enable("html")
-
   vim.lsp.config("tinymist", {
     cmd = { "tinymist" },
     filetypes = { "typst" },

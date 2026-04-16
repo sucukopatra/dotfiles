@@ -18,9 +18,7 @@ return {
     opts = {
       ensure_installed = {
         "bash-language-server",
-        "css-lsp",
         "csharpier",
-        "html-lsp",
         "json-lsp",
         "lua-language-server",
         "omnisharp",
@@ -29,7 +27,6 @@ return {
         "shfmt",
         "stylua",
         "tinymist",
-        "typescript-language-server",
         "typstyle",
       },
       run_on_start = true,

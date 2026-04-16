@@ -6,12 +6,7 @@ return {
     ensure_installed = {
       "bash",
       "c_sharp",
-      "css",
-      "html",
-      "javascript",
-      "jsdoc",
       "json",
-      "jsx",
       "lua",
       "typst",
       "vim",
