@@ -1,18 +1,17 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  main = "nvim-treesitter",
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
   opts = {
     ensure_installed = {
       "bash",
       "c_sharp",
-      "css",
-      "html",
-      "javascript",
-      "jsdoc",
-      "json",
-      "jsx",
+      "gdscript",
       "lua",
+      "markdown",
+      "markdown_inline",
+      "python",
       "typst",
       "vim",
       "vimdoc",

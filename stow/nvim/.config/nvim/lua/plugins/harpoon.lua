@@ -2,6 +2,11 @@ return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
   dependencies = { "nvim-lua/plenary.nvim" },
+  keys = {
+    { "<leader>ha" }, { "<leader>hh" },
+    { "<A-1>" }, { "<A-2>" }, { "<A-3>" }, { "<A-4>" },
+    { "<A-p>" }, { "<A-n>" },
+  },
   config = function()
     local harpoon = require("harpoon")
     harpoon:setup()
@@ -13,7 +18,7 @@ return {
     map("n", "<A-2>",      function() harpoon:list():select(2) end,                      { desc = "Harpoon file 2" })
     map("n", "<A-3>",      function() harpoon:list():select(3) end,                      { desc = "Harpoon file 3" })
     map("n", "<A-4>",      function() harpoon:list():select(4) end,                      { desc = "Harpoon file 4" })
-    map("n", "<C-p>",      function() harpoon:list():prev() end,                         { desc = "Harpoon prev" })
-    map("n", "<C-n>",      function() harpoon:list():next() end,                         { desc = "Harpoon next" })
+    map("n", "<A-p>",      function() harpoon:list():prev() end,                         { desc = "Harpoon prev" })
+    map("n", "<A-n>",      function() harpoon:list():next() end,                         { desc = "Harpoon next" })
   end,
 }

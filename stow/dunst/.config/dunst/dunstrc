@@ -1,55 +1,78 @@
+# dunstrc — minimal black theme, JetBrains Mono Nerd Font
+# Only non-default values are set. See dunst(5) for all options.
+
 [global]
-font = JetBrainsMono Nerd Font 10
-corner_radius = 8
-frame_width = 1
-gap_size = 10
-padding = 10
-horizontal_padding = 12
-separator_height = 1
-line_height = 2
-markup = full
-format = "<b>%s</b>\n%b"
-alignment = left
-vertical_alignment = center
-icon_position = left
-min_icon_size = 20
-max_icon_size = 32
-transparency = 5
+    ### Geometry ###
+    width = 300
+    height = (0, 300)
+    origin = top-right
+    offset = (16, 48)
 
-follow = mouse
+    ### Appearance ###
+    frame_width = 2
+    frame_color = "#2a2a2a"
+    corner_radius = 6
+    separator_height = 1
+    separator_color = "#1e1e1e"
+    gap_size = 6                  # gaps between notifications; disables separator_height
+    padding = 10
+    horizontal_padding = 12
+    text_icon_padding = 10
+    transparency = 0
 
-notification_limit = 10
-indicate_hidden = yes
-sort = yes
-stack_duplicates = true
-hide_duplicate_count = false
-show_indicators = yes
-sticky_history = yes
-history_length = 20
+    ### Progress bar ###
+    progress_bar_height = 4
+    progress_bar_frame_width = 0  # no extra frame, the bar is flush
+    progress_bar_corner_radius = 2
+    progress_bar_min_width = 200
+    progress_bar_max_width = 260
 
-progress_bar = true
+    ### Icons ###
+    icon_position = left
+    min_icon_size = 24
+    max_icon_size = 32
+    icon_corner_radius = 3
+    enable_recursive_icon_lookup = true
 
-separator_color = auto
-ellipsize = middle
+    ### Text ###
+    font = JetBrainsMono Nerd Font
+    line_height = 2
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    ellipsize = end
+    word_wrap = yes
+    show_age_threshold = 60
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
 
-mouse_left_click = close_current
-mouse_middle_click = do_action, close_current
-mouse_right_click = close_all
+    ### Behaviour ###
+    notification_limit = 5
+    sticky_history = yes
+    history_length = 20
+    sort = urgency_descending
+
+    ### Mouse ###
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
 
 [urgency_low]
-background = "#1e1e1e"
-foreground = "#dddddd"
-frame_color = "#3a3a3a"
-timeout = 3
+    background = "#0e0e0e"
+    foreground = "#555555"
+    frame_color = "#1e1e1e"
+    timeout = 6
 
 [urgency_normal]
-background = "#1e1e1e"
-foreground = "#eeeeee"
-frame_color = "#5a5a5a"
-timeout = 5
+    background = "#0e0e0e"
+    foreground = "#c8c8c8"
+    frame_color = "#2a2a2a"
+    timeout = 8
 
 [urgency_critical]
-background = "#1e1e1e"
-foreground = "#ffffff"
-frame_color = "#aaaaaa"
-timeout = 0
+    background = "#0e0e0e"
+    foreground = "#e8e8e8"
+    frame_color = "#cc3333"
+    timeout = 20

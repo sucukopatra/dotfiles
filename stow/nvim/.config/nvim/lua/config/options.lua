@@ -51,14 +51,16 @@ vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
 vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 
-vim.diagnostic.config({
-  signs = true,
-  underline = true,
-  virtual_text = true,
-  severity_sort = true,
-  update_in_insert = false,
-  float = { border = "rounded" },
-})
+vim.schedule(function()
+  vim.diagnostic.config({
+    signs = true,
+    underline = true,
+    virtual_text = true,
+    severity_sort = true,
+    update_in_insert = false,
+    float = { border = "rounded" },
+  })
+end)
 
 vim.opt.signcolumn = "yes"
 
