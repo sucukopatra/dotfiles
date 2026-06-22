@@ -1,6 +1,6 @@
 require("modules.animations")
 require("modules.autostart")
-require("modules.env")
+--require("modules.env")
 require("modules.input")
 require("modules.keybinds")
 require("modules.layouts")

@@ -1,10 +1,11 @@
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+--hl.env("AQ_DRM_DEVICES", "/dev/dri/nvidia-dgpu:/dev/dri/intel-igpu")
+hl.env("AQ_DRM_DEVICES", "/dev/dri/intel-igpu:/dev/dri/nvidia-dgpu")
 
 -- NVIDIA: VA-API hardware video decode via libva-nvidia-driver
 hl.env("LIBVA_DRIVER_NAME", "iHD")
 --hl.env("NVD_BACKEND", "direct")
-
 -- NVIDIA: XWayland apps use NVIDIA GLX
 --hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 
@@ -22,4 +23,3 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-

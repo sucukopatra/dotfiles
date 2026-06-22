@@ -20,6 +20,16 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name = "impala",
+    match = { initial_title = "impala" },
+    float = true,
+    center = true,
+    size = { 900, 600 },
+    stay_focused = true,
+    dim_around = true,
+})
+
+hl.window_rule({
     name = "waypaper",
     match = { class = "waypaper" },
     float = true,

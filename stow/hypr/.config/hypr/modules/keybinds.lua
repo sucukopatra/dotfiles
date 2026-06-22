@@ -20,9 +20,13 @@ hl.bind(altMod .. "+W", hl.dsp.exec_cmd("pgrep -x waypaper && pkill waypaper || 
 hl.bind(mainMod.. " + W", hl.dsp.exec_cmd("waypaper --random"))
 hl.bind(mainMod .. "+G", hl.dsp.exec_cmd("pgrep -x pulsemixer && pkill pulsemixer || kitty --title pulsemixer -e pulsemixer"))
 
+-- Screenshots
 hl.bind("Print", hl.dsp.exec_cmd("pidof slurp || if area=$(slurp); then grim -g \"$area\" - | tee >(wl-copy) > $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png') && dunstify \"Screenshot of the region taken\" -t 1000; fi"))
-
+hl.bind("SHIFT+Print", hl.dsp.exec_cmd("pidof slurp || if area=$(slurp); then grim -g \"$area\" - | tesseract stdin stdout quiet | wl-copy && dunstify \"OCR text copied\" -t 1000; fi"))
 hl.bind(altMod .. "+Print", hl.dsp.exec_cmd("grim - | tee >(wl-copy) > $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png') && dunstify \"Screenshot of the screen taken\" -t 1000"))
+
+-- Clipboard
+hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd("cliphist list | cliphist decode | fuzzel --dmenu | cliphist encode | wl-copy"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))

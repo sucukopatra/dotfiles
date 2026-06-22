@@ -64,7 +64,7 @@ alias fonts='fc-list -f "%{family}\n"'
 alias spot='ncspot'
 alias lyrics='sptlrx'
 alias config='cd ~/.config/'
-alias hconfig='nvim ~/.config/hypr/hyprland.conf'
+alias hconfig='nvim ~/.config/hypr/'
 alias ..='cd ..'
 alias pacup='yay -Rncs $(yay -Qdtq)'
 #alias pacman='sudo pacman'
@@ -77,3 +77,4 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Init Starship
 eval "$(starship init zsh)"
+export PATH="/home/ender/.cmake-deps/cmake/linux/x64/bin:$PATH" # Added by JetBrains IDE
