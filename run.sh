@@ -31,8 +31,29 @@ install_packages "${FONTS[@]}"
 echo "Installing gamedev specific things..."
 install_packages "${GAME_DEV[@]}"
 
+echo "Setting up GPU udev symlinks..."
+setup_gpu_udev
+
+echo "Enabling TLP..."
+if command -v tlp >/dev/null 2>&1; then
+  sudo systemctl enable --now tlp.service
+fi
+
+echo "Setting up ly display manager..."
+# Disable other display managers if present
+for dm in gdm sddm lightdm lxdm; do
+  systemctl is-enabled "${dm}.service" >/dev/null 2>&1 \
+    && sudo systemctl disable "${dm}.service"
+done
+# Enable Ly service if not already enabled
+systemctl is-enabled ly@tty2.service >/dev/null 2>&1 \
+  || sudo systemctl enable ly@tty2.service
+
 echo "Installing stow configs..."
 stow_packages "${STOW[@]}"
+
+echo "Installing claude code..."
+command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 
 if [[ "$SHELL" != */zsh ]]; then
   echo "Changing to zsh..."
