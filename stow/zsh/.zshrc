@@ -77,4 +77,3 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # Init Starship
 eval "$(starship init zsh)"
-export PATH="/home/ender/.cmake-deps/cmake/linux/x64/bin:$PATH" # Added by JetBrains IDE
