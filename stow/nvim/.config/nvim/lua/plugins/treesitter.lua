@@ -6,7 +6,6 @@ return {
   opts = {
     ensure_installed = {
       "bash",
-      "c_sharp",
       "gdscript",
       "lua",
       "markdown",
@@ -15,6 +14,7 @@ return {
       "typst",
       "vim",
       "vimdoc",
+--      "c_sharp",
     },
     highlight = { enable = true },
     indent = { enable = true },

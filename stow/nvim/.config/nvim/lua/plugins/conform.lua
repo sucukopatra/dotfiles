@@ -4,7 +4,7 @@ return {
     notify_on_error = true,
     formatters_by_ft = {
       lua = { "stylua" },
-      cs = { "csharpier" },
+--      cs = { "csharpier" },
       python = { "ruff" },
       sh = { "shfmt" },
       bash = { "shfmt" },

@@ -73,23 +73,23 @@ function M.setup()
   })
   vim.lsp.enable("gdscript")
 
-  vim.lsp.config("omnisharp", {
-    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-    filetypes = { "cs" },
-    root_markers = { "*.sln", "*.csproj", ".git" },
-    capabilities = capabilities,
-    settings = {
-      FormattingOptions = {
-        EnableEditorConfigSupport = true,
-        OrganizeImports = true,
-      },
-    },
-  })
-
-  vim.api.nvim_create_user_command("LspUseOmniSharp", function()
-    vim.lsp.enable("omnisharp")
-    vim.notify("OmniSharp enabled for C# buffers.", vim.log.levels.INFO)
-  end, { desc = "Enable OmniSharp fallback for C#" })
+--  vim.lsp.config("omnisharp", {
+--    cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+--    filetypes = { "cs" },
+--    root_markers = { "*.sln", "*.csproj", ".git" },
+--    capabilities = capabilities,
+--    settings = {
+--      FormattingOptions = {
+--        EnableEditorConfigSupport = true,
+--        OrganizeImports = true,
+--      },
+--    },
+--  })
+-- 
+--  vim.api.nvim_create_user_command("LspUseOmniSharp", function()
+--    vim.lsp.enable("omnisharp")
+--    vim.notify("OmniSharp enabled for C# buffers.", vim.log.levels.INFO)
+--  end, { desc = "Enable OmniSharp fallback for C#" })
 
   local map = vim.keymap.set
   vim.api.nvim_create_autocmd("LspAttach", {

@@ -19,39 +19,39 @@ return {
       ensure_installed = {
         "bash-language-server",
         "basedpyright",
-        "csharpier",
         "lua-language-server",
-        "omnisharp",
-        "roslyn",
         "ruff",
         "shfmt",
         "stylua",
         "tinymist",
         "typstyle",
+        --        "roslyn",
+        --        "omnisharp",
+        --        "csharpier",
       },
       run_on_start = true,
       auto_update = false,
       start_delay = 3000,
     },
   },
-  {
-    "seblyng/roslyn.nvim",
-    ft = { "cs", "razor" },
-    dependencies = { "williamboman/mason.nvim" },
-    config = function()
-      local ok, roslyn = pcall(require, "roslyn")
-      if not ok then
-        vim.notify("roslyn.nvim not available. Use :LspUseOmniSharp as fallback.", vim.log.levels.WARN)
-        return
-      end
-
-      roslyn.setup({
-        broad_search = true,
-        filewatching = "roslyn",
-        config = {
-          capabilities = require("config.lsp").capabilities(),
-        },
-      })
-    end,
-  },
+--  {
+--    "seblyng/roslyn.nvim",
+--    ft = { "cs", "razor" },
+--    dependencies = { "williamboman/mason.nvim" },
+--    config = function()
+--      local ok, roslyn = pcall(require, "roslyn")
+--      if not ok then
+--        vim.notify("roslyn.nvim not available. Use :LspUseOmniSharp as fallback.", vim.log.levels.WARN)
+--        return
+--      end
+-- 
+--      roslyn.setup({
+--        broad_search = true,
+--        filewatching = "roslyn",
+--        config = {
+--          capabilities = require("config.lsp").capabilities(),
+--        },
+--      })
+--    end,
+--  },
 }
