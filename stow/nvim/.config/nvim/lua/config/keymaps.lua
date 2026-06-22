@@ -56,6 +56,22 @@ map("n", "<leader>cf", function()
   require("conform").format({ lsp_fallback = true, async = true })
 end, { desc = "Format buffer" })
 
+map("n", "<leader>cb", function()
+  if vim.bo.filetype ~= "c" then
+    vim.notify("Current buffer is not C.", vim.log.levels.INFO)
+    return
+  end
+  vim.cmd("write")
+  local src = vim.fn.shellescape(vim.fn.expand("%"))
+  local out = vim.fn.shellescape(vim.fn.expand("%:r"))
+  local exe = vim.fn.shellescape("./" .. vim.fn.expand("%:r"))
+  vim.cmd(string.format(
+    "botright split | terminal cc -Wall -Wextra -std=c17 -g %s -o %s && %s",
+    src, out, exe
+  ))
+  vim.cmd("startinsert")
+end, { desc = "Build & run C file" })
+
 map("n", "<leader>tc", function()
   if vim.bo.filetype == "typst" then
     vim.cmd("write")

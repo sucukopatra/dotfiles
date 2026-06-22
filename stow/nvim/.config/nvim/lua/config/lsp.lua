@@ -65,6 +65,28 @@ function M.setup()
   })
   vim.lsp.enable("basedpyright")
 
+  vim.lsp.config("clangd", {
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+      "--completion-style=detailed",
+      "--function-arg-placeholders",
+    },
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+    root_markers = {
+      ".clangd",
+      "compile_commands.json",
+      "compile_flags.txt",
+      "Makefile",
+      "configure.ac",
+      ".git",
+    },
+    capabilities = capabilities,
+  })
+  vim.lsp.enable("clangd")
+
   vim.lsp.config("gdscript", {
     cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
     filetypes = { "gdscript", "gd" },

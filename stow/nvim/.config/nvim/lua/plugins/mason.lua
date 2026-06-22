@@ -19,6 +19,8 @@ return {
       ensure_installed = {
         "bash-language-server",
         "basedpyright",
+        "clangd",
+        "clang-format",
         "lua-language-server",
         "ruff",
         "shfmt",
