@@ -73,7 +73,9 @@ alias pushsrv="rsync -avz --delete --exclude='config/' ~/dev/server/docker/ ende
 
 # Shell integrations
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
 
 # Init Starship
 eval "$(starship init zsh)"
+
+# zoxide must be initialized last, after anything that hooks precmd (e.g. starship)
+eval "$(zoxide init --cmd cd zsh)"
