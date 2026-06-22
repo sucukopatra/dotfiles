@@ -3,7 +3,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- iGPU only: Hyprland never opens the dGPU, so it can drop into RTD3 (0W).
 -- Use prime-run / __NV_PRIME_RENDER_OFFLOAD to wake the dGPU on demand (games).
 -- Note: external displays wired to the NVIDIA GPU won't work in this mode.
-hl.env("AQ_DRM_DEVICES", "/dev/dri/intel-igpu")
+--hl.env("AQ_DRM_DEVICES", "/dev/dri/intel-igpu")
 
 -- NVIDIA: VA-API hardware video decode via libva-nvidia-driver
 hl.env("LIBVA_DRIVER_NAME", "iHD")
