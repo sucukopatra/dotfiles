@@ -104,9 +104,9 @@ stow_packages() {
     done < <(find "$repo_dir/stow/$pkg" -type f -print0)
 
     if [[ "$target" == "/" ]]; then
-      sudo stow --dotfiles -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
+      sudo stow --dotfiles --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
     else
-      stow --dotfiles -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
+      stow --dotfiles --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
     fi
   done
 }
