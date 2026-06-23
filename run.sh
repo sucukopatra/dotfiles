@@ -14,6 +14,10 @@ trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
 
 mkdir -p ~/media/{photos,video,music} ~/docs ~/dev ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
 
+if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
+  git clone https://github.com/sucukopatra/wallpapers ~/media/photos/wallpapers
+fi
+
 install_yay
 
 echo "Installing system utilities..."
