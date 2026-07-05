@@ -1,5 +1,18 @@
 #!/bin/bash
 
+prompt_yn() {
+  local msg="$1" default="${2:-y}"
+  if [[ "${YES_ALL:-0}" == "1" ]]; then
+    echo "$msg [auto: y]"
+    return 0
+  fi
+  local indicator
+  [[ "$default" == "y" ]] && indicator="[Y/n]" || indicator="[y/N]"
+  read -r -p "$msg $indicator: " ans
+  ans="${ans:-$default}"
+  [[ "$ans" =~ ^[Yy] ]]
+}
+
 is_installed() {
   pacman -Qi "$1" &>/dev/null
 }
