@@ -17,40 +17,16 @@ enable_services() {
     local service
 
     for service; do
-        if ! systemctl is-enabled "$service" &>/dev/null; then
-            sudo systemctl enable --now "$service"
-
-            case "$service" in
-                tailscaled)
-                    echo
-                    echo "  Tailscale enabled."
-                    echo "  Next step: run 'tailscale login'"
-                    ;;
-                syncthing)
-                    echo
-                    echo "  Syncthing enabled."
-                    echo "  Open http://127.0.0.1:8384/ to complete the initial setup."
-                    ;;
-            esac
-        fi
+        sudo systemctl enable --now "$service"
     done
 }
 
-install_group() {
-  local name=$1
-  local array=$2
-  shift 2
+enable_user_services() {
+    local service
 
-  prompt_yn "Install $name?" || return
-
-  echo "==> Installing $name..."
-
-  declare -n pkgs="$array"
-  install_packages "${pkgs[@]}"
-
-  if (( $# )); then
-      "$@"
-  fi
+    for service; do
+        systemctl --user enable --now "$service"
+    done
 }
 
 is_installed() {
@@ -72,8 +48,8 @@ install_packages() {
   done
 
   if [ ${#to_install[@]} -ne 0 ]; then
-    echo "Installing: ${to_install[*]}"
-    yay -S --needed --noconfirm "${to_install[@]}"
+    echo "installing: ${to_install[*]}"
+    yay -s --needed --noconfirm "${to_install[@]}"
   fi
 }
 
@@ -82,7 +58,7 @@ install_yay() {
     local tmpdir
     tmpdir="$(mktemp -d)"
 
-    sudo pacman -S --needed --noconfirm base-devel git
+    sudo pacman -s --needed --noconfirm base-devel git
     git clone https://aur.archlinux.org/yay.git "$tmpdir/yay"
     (
       cd "$tmpdir/yay"
