@@ -49,7 +49,7 @@ install_packages() {
 
   if [ ${#to_install[@]} -ne 0 ]; then
     echo "installing: ${to_install[*]}"
-    yay -s --needed --noconfirm "${to_install[@]}"
+    yay -S --needed --noconfirm "${to_install[@]}"
   fi
 }
 
@@ -58,7 +58,7 @@ install_yay() {
     local tmpdir
     tmpdir="$(mktemp -d)"
 
-    sudo pacman -s --needed --noconfirm base-devel git
+    sudo pacman -S --needed --noconfirm base-devel git
     git clone https://aur.archlinux.org/yay.git "$tmpdir/yay"
     (
       cd "$tmpdir/yay"
