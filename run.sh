@@ -26,17 +26,19 @@ if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
 fi
 
 install_yay
-
+is_dev_installed=false
 prompt_yn "Install system utilities?" && { echo "Installing system utilities..."; install_packages "${SYSTEM_UTILS[@]}"; }
-prompt_yn "Install development tools?" && { echo "Installing development tools..."; install_packages "${DEV_TOOLS[@]}"; }
+prompt_yn "Install development tools?" && { echo "Installing development tools..."; install_packages "${DEV_TOOLS[@]}"; is_dev_installed=true}
 prompt_yn "Install system maintenance tools?" && { echo "Installing system maintenance tools..."; install_packages "${MAINTENANCE[@]}"; }
 prompt_yn "Install desktop environment packages?" && { echo "Installing desktop environment..."; install_packages "${DESKTOP[@]}"; }
 prompt_yn "Install media packages?" && { echo "Installing media packages..."; install_packages "${MEDIA[@]}"; }
 prompt_yn "Install fonts?" && { echo "Installing fonts..."; install_packages "${FONTS[@]}"; }
 prompt_yn "Install game development packages?" "n" && { echo "Installing gamedev specific things..."; install_packages "${GAME_DEV[@]}"; }
 
-systemctl --user enable --now syncthing
-echo "Go to http://127.0.0.1:8384/ for configuring syncthing"
+if [[ $is_dev_installed == true ]]; then
+    echo "Enabling some services"
+    install_services syncthing tailscaled
+fi
 
 if prompt_yn "Set up Intel/NVIDIA GPU udev symlinks?"; then
   echo "Setting up GPU udev symlinks..."
@@ -69,11 +71,11 @@ fi
 
 if [[ "$SHELL" != */zsh ]]; then
   if prompt_yn "Change default shell to zsh?"; then
-    echo "Changing to zsh..."
+    echo "changing to zsh..."
     sudo chsh -s /bin/zsh "$USER"
   fi
 fi
 
-if command -v hyprctl &>/dev/null && pgrep -x Hyprland &>/dev/null; then
+if command -v hyprctl &>/dev/null && pgrep -x hyprland &>/dev/null; then
   hyprctl reload
 fi

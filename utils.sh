@@ -13,6 +13,14 @@ prompt_yn() {
   [[ "$ans" =~ ^[Yy] ]]
 }
 
+install_services() {
+  local service
+
+  for service; do
+      sudo systemctl enable "$service"
+  done
+}
+
 is_installed() {
   pacman -Qi "$1" &>/dev/null
 }
