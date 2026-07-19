@@ -48,7 +48,9 @@ install_group() {
   declare -n pkgs="$array"
   install_packages "${pkgs[@]}"
 
-  (( $# )) && "$@"
+  if (( $# )); then
+      "$@"
+  fi
 }
 
 is_installed() {
