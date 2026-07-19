@@ -35,6 +35,8 @@ prompt_yn "Install media packages?" && { echo "Installing media packages..."; in
 prompt_yn "Install fonts?" && { echo "Installing fonts..."; install_packages "${FONTS[@]}"; }
 prompt_yn "Install game development packages?" "n" && { echo "Installing gamedev specific things..."; install_packages "${GAME_DEV[@]}"; }
 
+systemctl --user enable --now syncthing
+
 if prompt_yn "Set up Intel/NVIDIA GPU udev symlinks?"; then
   echo "Setting up GPU udev symlinks..."
   setup_gpu_udev
