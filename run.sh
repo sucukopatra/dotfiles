@@ -36,6 +36,7 @@ prompt_yn "Install fonts?" && { echo "Installing fonts..."; install_packages "${
 prompt_yn "Install game development packages?" "n" && { echo "Installing gamedev specific things..."; install_packages "${GAME_DEV[@]}"; }
 
 systemctl --user enable --now syncthing
+echo "Go to http://127.0.0.1:8384/ for configuring syncthing"
 
 if prompt_yn "Set up Intel/NVIDIA GPU udev symlinks?"; then
   echo "Setting up GPU udev symlinks..."
