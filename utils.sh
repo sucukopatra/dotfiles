@@ -13,12 +13,42 @@ prompt_yn() {
   [[ "$ans" =~ ^[Yy] ]]
 }
 
-install_services() {
-  local service
+enable_services() {
+    local service
 
-  for service; do
-      sudo systemctl enable "$service"
-  done
+    for service; do
+        if ! systemctl is-enabled "$service" &>/dev/null; then
+            sudo systemctl enable --now "$service"
+
+            case "$service" in
+                tailscaled)
+                    echo
+                    echo "  Tailscale enabled."
+                    echo "  Next step: run 'tailscale login'"
+                    ;;
+                syncthing)
+                    echo
+                    echo "  Syncthing enabled."
+                    echo "  Open http://127.0.0.1:8384/ to complete the initial setup."
+                    ;;
+            esac
+        fi
+    done
+}
+
+install_group() {
+  local name=$1
+  local array=$2
+  shift 2
+
+  prompt_yn "Install $name?" || return
+
+  echo "==> Installing $name..."
+
+  declare -n pkgs="$array"
+  install_packages "${pkgs[@]}"
+
+  (( $# )) && "$@"
 }
 
 is_installed() {

@@ -26,19 +26,12 @@ if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
 fi
 
 install_yay
-is_dev_installed=false
-prompt_yn "Install system utilities?" && { echo "Installing system utilities..."; install_packages "${SYSTEM_UTILS[@]}"; }
-prompt_yn "Install development tools?" && { echo "Installing development tools..."; install_packages "${DEV_TOOLS[@]}"; is_dev_installed=true}
-prompt_yn "Install system maintenance tools?" && { echo "Installing system maintenance tools..."; install_packages "${MAINTENANCE[@]}"; }
-prompt_yn "Install desktop environment packages?" && { echo "Installing desktop environment..."; install_packages "${DESKTOP[@]}"; }
-prompt_yn "Install media packages?" && { echo "Installing media packages..."; install_packages "${MEDIA[@]}"; }
-prompt_yn "Install fonts?" && { echo "Installing fonts..."; install_packages "${FONTS[@]}"; }
-prompt_yn "Install game development packages?" "n" && { echo "Installing gamedev specific things..."; install_packages "${GAME_DEV[@]}"; }
-
-if [[ $is_dev_installed == true ]]; then
-    echo "Enabling some services"
-    install_services syncthing tailscaled
-fi
+install_group "System utilities" SYSTEM_UTILS
+install_group "Development tools" DEV_TOOLS enable_services syncthing tailscaled
+install_group "Maintenance tools" MAINTENANCE
+install_group "Desktop environment" DESKTOP
+install_group "Media packages" MEDIA
+install_group "Fonts" FONTS
 
 if prompt_yn "Set up Intel/NVIDIA GPU udev symlinks?"; then
   echo "Setting up GPU udev symlinks..."
@@ -54,7 +47,7 @@ fi
 
 if prompt_yn "Set up ly display manager?"; then
   echo "Setting up ly display manager..."
-  for dm in gdm sddm lightdm lxdm; do
+  for dm in gdm sddm lightdm lxdm greetd; do
     systemctl is-enabled "${dm}.service" >/dev/null 2>&1 \
       && sudo systemctl disable "${dm}.service"
   done
