@@ -17,7 +17,7 @@ while true; do sudo -n true; sleep 60; done 2>/dev/null &
 SUDO_KEEPALIVE_PID=$!
 trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
 
-mkdir -p ~/media/{photos,video,music} ~/docs ~/dev ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
+mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/dev ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
 
 if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
   if prompt_yn "Clone wallpaper repository to ~/media/photos/wallpapers/?"; then
