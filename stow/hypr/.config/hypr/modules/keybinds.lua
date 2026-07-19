@@ -9,7 +9,7 @@ local altMod = "ALT"
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pgrep -x clock-rs && pkill clock-rs || kitty --title clock-rs -e clock-rs"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pgrep -x tty-clock && pkill tty-clock || kitty --title tty-clock -e tty-clock -s -S -c -b -n"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pgrep -x bluetui && pkill bluetui || kitty --title bluetui -e bluetui"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pgrep -x impala && pkill impala || kitty --title impala -e impala"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))

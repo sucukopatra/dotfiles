@@ -21,7 +21,7 @@ hl.window_rule({
 
 hl.window_rule({
     name = "clock-rs",
-    match = { initial_title = "clock-rs" },
+    match = { initial_title = "tty-clock" },
     float = true,
     center = true,
     size = { 900, 600 },
