@@ -67,6 +67,7 @@ alias config='cd ~/.config/'
 alias hconfig='nvim ~/.config/hypr/'
 alias ..='cd ..'
 alias pacup='yay -Rncs $(yay -Qdtq)'
+alias tree='eza --tree'
 #alias pacman='sudo pacman'
 alias pullsrv="rsync -avz --exclude='config/' ender@bmo:/srv/docker/ ~/dev/server/docker/"
 alias pushsrv="rsync -avz --delete --exclude='config/' ~/dev/server/docker/ ender@bmo:/srv/docker/"
