@@ -3,6 +3,19 @@ set -euo pipefail
 
 REPO_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
+TARGET_DIR="$HOME/dev/dotfiles"
+if [[ "$REPO_DIR" != "$TARGET_DIR" ]]; then
+  if [[ -e "$TARGET_DIR" ]]; then
+    echo "Error: $TARGET_DIR already exists but this repo is at $REPO_DIR." >&2
+    echo "Move or remove $TARGET_DIR, then re-run this script." >&2
+    exit 1
+  fi
+  echo "Moving repo to $TARGET_DIR..."
+  mkdir -p "$HOME/dev"
+  mv "$REPO_DIR" "$TARGET_DIR"
+  exec "$TARGET_DIR/run.sh" "$@"
+fi
+
 source "$REPO_DIR/utils.sh"
 source "$REPO_DIR/packages.conf"
 
