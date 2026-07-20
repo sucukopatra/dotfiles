@@ -5,8 +5,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- Note: external displays wired to the NVIDIA GPU won't work in this mode.
 hl.env("AQ_DRM_DEVICES", "/dev/dri/intel-igpu")
 
--- NVIDIA: VA-API hardware video decode via libva-nvidia-driver
-hl.env("LIBVA_DRIVER_NAME", "iHD")
+hl.env("LIBVA_DRIVER_NAME", "iHD") -- change iHD to nvidia if you want
 --hl.env("NVD_BACKEND", "direct")
 -- NVIDIA: XWayland apps use NVIDIA GLX
 --hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
