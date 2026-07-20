@@ -33,7 +33,8 @@ map("n", "<leader>fg", "<cmd>FzfLua live_grep<CR>", { desc = "Live grep" })
 map("n", "<leader>fb", "<cmd>FzfLua buffers<CR>", { desc = "Find buffers" })
 map("n", "<leader>fr", "<cmd>FzfLua oldfiles<CR>", { desc = "Recent files" })
 map("n", "<leader>fh", "<cmd>FzfLua help_tags<CR>", { desc = "Help tags" })
-map("n", "<leader>fn", "<cmd>FzfLua files cwd=~/.config/nvim<CR>", { desc = "Find Neovim config files" })
+map("n", "<leader>fv", "<cmd>FzfLua files cwd=~/.config/nvim<CR>", { desc = "Find Neovim config files" })
+map("n", "<leader>fn", "<cmd>FzfLua files cwd=~/notes<CR>", { desc = "Find Neovim config files" })
 
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Buffer diagnostics (Trouble)" })
@@ -81,15 +82,3 @@ map("n", "<leader>tc", function()
     vim.notify("Current buffer is not Typst.", vim.log.levels.INFO)
   end
 end, { desc = "Compile Typst file" })
-
-map("n", "<leader>at", function()
-  require("config.ai").toggle_codeium()
-end, { desc = "Toggle Codeium" })
-
-map("n", "<leader>aa", function()
-  require("config.ai").disable_all_inline()
-end, { desc = "Disable all inline AI" })
-
-map("n", "<leader>ac", function()
-  require("config.ai").toggle_claude_code()
-end, { desc = "Toggle Claude Code" })
