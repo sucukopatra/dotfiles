@@ -48,6 +48,17 @@ hl.window_rule({
     stay_focused = true,
     dim_around = true,
 })
+
+hl.window_rule({
+    name = "vpn-menu",
+    match = { initial_title = "vpn-menu" },
+    float = true,
+    center = true,
+    size = { 900, 600 },
+    stay_focused = true,
+    dim_around = true,
+})
+
 hl.window_rule({
     name = "file-roller",
     match = { class = "org.gnome.FileRoller" },
