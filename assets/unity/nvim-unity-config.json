@@ -1,0 +1,23 @@
+{
+  "AnalyzerDiagnosticScope": "openFiles",
+  "CompilerDiagnosticScope": "openFiles",
+  "CsprojFlags": 159,
+  "NvimExecutablePath": "/usr/bin/nvim",
+  "TermLaunchCmd": "kitty",
+  "TermLaunchArgs": "--title \"nvimunity-{instanceId}\" {app} {filePath} --listen {serverSocket}",
+  "TermLaunchEnv": "",
+  "OpenFileArgs": "",
+  "JumpToCursorPositionArgs": "--server {serverSocket} --remote-send \":call cursor({line},{column})<CR>\"",
+  "ProcessTimeout": 150,
+  "PrevServerSocket": "",
+  "Analyzers": [
+    "{{HOME}}/dev/unity/analyzers/Microsoft.Unity.Analyzers.dll"
+  ],
+  "ModifierBindings": [
+    {
+      "Modifiers": 0,
+      "Representation": "",
+      "Args": "--server {serverSocket} --remote-send \":drop {filePath}<CR>\""
+    }
+  ]
+}

@@ -12,7 +12,8 @@ return {
     formatters_by_ft = {
       lua = { "stylua" },
       c = { "clang-format" },
---      cs = { "csharpier" },
+      cs = { "csharpier" },
+      gdscript = { "gdformat" },
       python = { "ruff" },
       sh = { "shfmt" },
       bash = { "shfmt" },

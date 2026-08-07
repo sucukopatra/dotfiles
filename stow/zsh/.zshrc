@@ -73,6 +73,7 @@ alias untar='tar xzf'
 #alias pacman='sudo pacman'
 alias pullsrv="rsync -avz --exclude='config/' ender@bmo:/srv/docker/ ~/dev/server/docker/"
 alias pushsrv="rsync -avz --delete --exclude='config/' ~/dev/server/docker/ ender@bmo:/srv/docker/"
+alias make50='make CC=clang CFLAGS="-fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow" LDLIBS="-lcrypt -lcs50 -lm"'
 
 # Shell integrations
 eval "$(fzf --zsh)"

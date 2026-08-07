@@ -73,6 +73,16 @@ fi
 echo "Installing stow configs..."
 stow_packages "${STOW[@]}"
 
+if prompt_yn "Bootstrap Neovim (plugins, LSPs, formatters, parsers)?"; then
+  echo "Bootstrapping Neovim..."
+  bootstrap_neovim
+fi
+
+if prompt_yn "Set up Unity + Neovim development environment?" "n"; then
+  echo "Setting up Unity development environment..."
+  setup_unity_dev "$REPO_DIR"
+fi
+
 if prompt_yn "Install Claude Code?"; then
   command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 fi
