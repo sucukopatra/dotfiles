@@ -15,6 +15,12 @@ return {
         "github:mason-org/mason-registry",
         -- Carries `roslyn`/`roslyn-nightly`, which track the language server
         -- version shipped with the VS Code C# extension.
+        --
+        -- Deliberately unpinned. Mason does support `@<tag>` here, but pinning
+        -- would only stop *new* roslyn versions arriving on a fresh install --
+        -- `auto_update = false` below already keeps the installed server put --
+        -- while costing a manual bump forever. It would not change the trust
+        -- relationship: the binary is this author's build either way.
         "github:Crashdummyy/mason-registry",
       },
     },

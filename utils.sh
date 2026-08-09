@@ -151,9 +151,11 @@ bootstrap_neovim() {
 
 # Microsoft's Visual Studio Tools for Unity debug adapter, used by nvim-dap to
 # attach to a running Unity Editor. Not on Mason, so it is pulled straight from
-# the marketplace. Referenced by VSTUC_DLL in lua/plugins/dap.lua.
+# the marketplace. `dir` must match VSTUC_DIR in
+# stow/nvim/.config/nvim/lua/plugins/dap.lua; change both together.
 install_vstuc() {
-  local dll="$VSTUC_DIR/content/extension/bin/UnityDebugAdapter.dll"
+  local dir=~/.local/share/vstuc
+  local dll="$dir/content/extension/bin/UnityDebugAdapter.dll"
   if [[ -f "$dll" ]]; then
     echo "  unchanged: $dll"
     return 0
@@ -170,8 +172,8 @@ install_vstuc() {
     return 0
   fi
 
-  mkdir -p "$VSTUC_DIR"
-  unzip -qo "$tmp/vstuc.vsix" -d "$VSTUC_DIR"
+  mkdir -p "$dir"
+  unzip -qo "$tmp/vstuc.vsix" -d "$dir"
   rm -rf "$tmp"
 
   if [[ -f "$dll" ]]; then
@@ -183,9 +185,12 @@ install_vstuc() {
 
 # Roslyn analyzers that teach the language server about Unity semantics, so it
 # stops suggesting `readonly` on [SerializeField] fields or reporting Unity
-# message methods such as Update() as unused.
+# message methods such as Update() as unused. `dir` is what Unity's
+# "Add/Remove C# analyzers" points at, and is also baked into
+# assets/unity/nvim-unity-config.json; change both together.
 install_unity_analyzers() {
-  local dll="$UNITY_ANALYZER_DIR/Microsoft.Unity.Analyzers.dll"
+  local dir=~/dev/unity/analyzers
+  local dll="$dir/Microsoft.Unity.Analyzers.dll"
   if [[ -f "$dll" ]]; then
     echo "  unchanged: $dll"
     return 0
@@ -203,8 +208,8 @@ install_unity_analyzers() {
   if curl -fsSL -o "$tmp/pkg.nupkg" \
     "https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/$version/microsoft.unity.analyzers.$version.nupkg"; then
     unzip -qo "$tmp/pkg.nupkg" -d "$tmp/x"
-    mkdir -p "$UNITY_ANALYZER_DIR"
-    cp "$tmp/x/analyzers/dotnet/cs/Microsoft.Unity.Analyzers.dll" "$UNITY_ANALYZER_DIR/"
+    mkdir -p "$dir"
+    cp "$tmp/x/analyzers/dotnet/cs/Microsoft.Unity.Analyzers.dll" "$dir/"
     echo "  installed:  $dll (v$version)"
   else
     echo "  WARNING: Microsoft.Unity.Analyzers download failed." >&2
@@ -260,6 +265,9 @@ install_unity_editor() {
     echo "  WARNING: unity-cli not installed (unity-cli-bin); skipping editor install." >&2
     return 0
   fi
+
+  # Must precede the install, or the download lands in Unity's ~/Unity/Hub/Editor default.
+  unity install-path --set ~/dev/unity/editor --no-banner >/dev/null
 
   local installed
   installed="$(unity editors -i --no-banner --format tsv 2>/dev/null | tail -n +2 | awk 'NF{print $1}')"
@@ -364,6 +372,7 @@ PY
 setup_unity_dev() {
   local repo_dir="$1"
 
+  mkdir -p ~/dev/unity/{editor,projects}
   echo "  vstuc debug adapter:"
   install_vstuc
   echo "  Unity Roslyn analyzers:"

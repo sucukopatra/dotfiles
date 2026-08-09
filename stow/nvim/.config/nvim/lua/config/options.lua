@@ -9,11 +9,12 @@ vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 
--- Fallback only: .editorconfig wins where a project ships one, and treesitter's
--- indentexpr (set by the FileType autocmd) overrides indent calculation.
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+-- Default for filetypes with no stronger opinion (lua, c, typst, json/toml).
+-- Languages whose formatter disagrees override this per-filetype; see the
+-- indent autocmd in config/autocmds.lua.
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 
 vim.opt.ignorecase = true
@@ -28,6 +29,10 @@ vim.opt.timeoutlen = 500
 vim.opt.ttimeoutlen = 10
 
 vim.opt.mouse = "a"
+-- Every yank *and* every delete goes to the system clipboard -- that is all
+-- "unnamedplus" does, and no setting mirrors yanks only. Decided: worth it.
+-- After an intervening delete, `"0p` still pastes the last yank inside Neovim,
+-- but the system clipboard itself will be holding the deleted text.
 vim.opt.clipboard = "unnamedplus"
 vim.opt.confirm = true
 
@@ -41,6 +46,11 @@ vim.opt.foldlevelstart = 99
 vim.opt.foldtext = ""
 
 vim.opt.wildmode = "longest:full,full"
+-- Reaches `:e`/`:find` completion and glob()/expand() (unless the caller passes
+-- nosuf). It does NOT reach FzfLua, which spawns `fd` and obeys .gitignore --
+-- fzf-lua never reads this option, so no <leader>f mapping is affected by it.
+-- Nothing under ~/dev matches these patterns today; kept for cs50, where .o
+-- files sitting next to sources are the one plausible case.
 vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 
 vim.diagnostic.config({

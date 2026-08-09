@@ -11,10 +11,13 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Half page down centered" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Half page up centered" })
 map("n", "J", "mzJ`z", { desc = "Join lines keep cursor" })
 
-map("v", "<", "<gv", { desc = "Indent left and reselect" })
-map("v", ">", ">gv", { desc = "Indent right and reselect" })
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
-map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+-- "x" (Visual), not "v" (Visual + Select). Select mode is where LuaSnip parks
+-- you on a placeholder, and there a printable key must replace the selection --
+-- a "v" mapping here means K moves lines instead of typing K.
+map("x", "<", "<gv", { desc = "Indent left and reselect" })
+map("x", ">", ">gv", { desc = "Indent right and reselect" })
+map("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 map("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "[b", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
@@ -54,7 +57,12 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics (Trouble)" })
 map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Buffer diagnostics (Trouble)" })
 map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<CR>", { desc = "Symbols (Trouble)" })
-map("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<CR>", { desc = "LSP locations (Trouble)" })
+map(
+  "n",
+  "<leader>xl",
+  "<cmd>Trouble lsp toggle focus=false win.position=right<CR>",
+  { desc = "LSP locations (Trouble)" }
+)
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<CR>", { desc = "Location list (Trouble)" })
 map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<CR>", { desc = "Quickfix list (Trouble)" })
 
@@ -74,28 +82,6 @@ map("n", "<leader>cf", function()
   require("conform").format({ lsp_format = "fallback", async = true })
 end, { desc = "Format buffer" })
 
-map("n", "<leader>cc", function()
-  if vim.bo.filetype ~= "c" then
-    vim.notify("Current buffer is not C.", vim.log.levels.INFO)
-    return
-  end
-  vim.cmd("write")
-  local src = vim.fn.shellescape(vim.fn.expand("%"))
-  local out = vim.fn.shellescape(vim.fn.expand("%:r"))
-  local exe = vim.fn.shellescape("./" .. vim.fn.expand("%:r"))
-  vim.cmd(string.format(
-    "botright split | terminal cc -Wall -Wextra -std=c17 -g %s -o %s && %s",
-    src, out, exe
-  ))
-  vim.cmd("startinsert")
-end, { desc = "Compile & run C file" })
-
-map("n", "<leader>tc", function()
-  if vim.bo.filetype == "typst" then
-    vim.cmd("write")
-    vim.cmd("silent !typst compile %")
-    vim.cmd("checktime")
-  else
-    vim.notify("Current buffer is not Typst.", vim.log.levels.INFO)
-  end
-end, { desc = "Compile Typst file" })
+-- `<leader>cc` (compile & run) is defined per-filetype in after/ftplugin/c.lua
+-- and after/ftplugin/typst.lua, buffer-locally, so it only exists where it
+-- works. `<leader>cf` above stays global because conform handles every filetype.

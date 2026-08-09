@@ -1,24 +1,55 @@
+-- lazy.nvim's `keys` entries carry their own callbacks, so the mappings are
+-- declared once here rather than repeated as bare lhs stubs plus a config body.
+local keys = {
+  {
+    "<leader>ha",
+    function()
+      require("harpoon"):list():add()
+    end,
+    desc = "Harpoon add",
+  },
+  {
+    "<leader>hh",
+    function()
+      local harpoon = require("harpoon")
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end,
+    desc = "Harpoon menu",
+  },
+  {
+    "<A-p>",
+    function()
+      require("harpoon"):list():prev()
+    end,
+    desc = "Harpoon prev",
+  },
+  {
+    "<A-n>",
+    function()
+      require("harpoon"):list():next()
+    end,
+    desc = "Harpoon next",
+  },
+}
+
+for i = 1, 4 do
+  table.insert(keys, {
+    "<A-" .. i .. ">",
+    function()
+      require("harpoon"):list():select(i)
+    end,
+    desc = "Harpoon file " .. i,
+  })
+end
+
 return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
   dependencies = { "nvim-lua/plenary.nvim" },
-  keys = {
-    { "<leader>ha" }, { "<leader>hh" },
-    { "<A-1>" }, { "<A-2>" }, { "<A-3>" }, { "<A-4>" },
-    { "<A-p>" }, { "<A-n>" },
-  },
+  keys = keys,
+  -- setup() is declared as Harpoon.setup(self, config), so it needs the colon
+  -- call; lazy's default opts handling would pass opts as `self`.
   config = function()
-    local harpoon = require("harpoon")
-    harpoon:setup()
-
-    local map = vim.keymap.set
-    map("n", "<leader>ha", function() harpoon:list():add() end,                          { desc = "Harpoon add" })
-    map("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon menu" })
-    map("n", "<A-1>",      function() harpoon:list():select(1) end,                      { desc = "Harpoon file 1" })
-    map("n", "<A-2>",      function() harpoon:list():select(2) end,                      { desc = "Harpoon file 2" })
-    map("n", "<A-3>",      function() harpoon:list():select(3) end,                      { desc = "Harpoon file 3" })
-    map("n", "<A-4>",      function() harpoon:list():select(4) end,                      { desc = "Harpoon file 4" })
-    map("n", "<A-p>",      function() harpoon:list():prev() end,                         { desc = "Harpoon prev" })
-    map("n", "<A-n>",      function() harpoon:list():next() end,                         { desc = "Harpoon next" })
+    require("harpoon"):setup()
   end,
 }

@@ -8,12 +8,21 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+local no_restore = {
+  gitcommit = true, -- COMMIT_EDITMSG, MERGE_MSG, TAG_EDITMSG
+  gitrebase = true, -- git-rebase-todo
+  gitsendemail = true, -- .gitsendemail.msg
+}
+
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup,
   desc = "Restore last cursor position",
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local line_count = vim.api.nvim_buf_line_count(0)
+  callback = function(args)
+    if no_restore[vim.filetype.match({ buf = args.buf }) or ""] then
+      return
+    end
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
     if mark[1] > 0 and mark[1] <= line_count then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
@@ -38,6 +47,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- Indentation follows each language's own convention, which is whatever its
+-- formatter emits. Only the filetypes that disagree with the 2-space default in
+-- config/options.lua need an entry, and C# is the only one: Neovim's built-in
+-- ftplugins already set python to 4 spaces and gdscript to tabs, and
+-- shfmt/clang-format/typstyle all match the default. C# lives in
+-- after/ftplugin/cs.lua, which is sourced after the runtime ftplugin rather than
+-- before it.
+
+-- Kept as an autocmd rather than three near-identical after/ftplugin files: one
+-- pattern list is the clearer expression of "these filetypes are prose".
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   pattern = { "markdown", "typst", "gitcommit" },
@@ -57,5 +76,10 @@ vim.api.nvim_create_autocmd("FileType", {
 --               "<C-\><C-N>:n {file}<CR>:call cursor({line},{col})<CR>"
 -- Add `godothost` to the project's .gitignore.
 if vim.uv.fs_stat(vim.fn.getcwd() .. "/project.godot") then
-  pcall(vim.fn.serverstart, "./godothost")
+  local ok, err = pcall(vim.fn.serverstart, "./godothost")
+  if not ok then
+    vim.schedule(function()
+      vim.notify(("Godot external editor inactive: %s"):format((err:gsub("^Vim:", ""))), vim.log.levels.WARN)
+    end)
+  end
 end

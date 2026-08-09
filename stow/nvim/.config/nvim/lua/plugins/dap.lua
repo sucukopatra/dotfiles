@@ -42,7 +42,8 @@ return {
         "<leader>de",
         function() require("dapui").eval(nil, { enter = true }) end,
         desc = "Evaluate expression",
-        mode = { "n", "v" },
+        -- "x", not "v": see the note on the visual maps in config/keymaps.lua.
+        mode = { "n", "x" },
       },
       { "<F5>", function() require("dap").continue() end, desc = "Continue" },
       { "<F10>", function() require("dap").step_over() end, desc = "Step over" },

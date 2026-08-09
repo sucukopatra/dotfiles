@@ -1,8 +1,9 @@
 -- Server definitions live in ~/.config/nvim/lsp/<name>.lua and are picked up
 -- from 'runtimepath' automatically; see :h lsp-config.
 --
--- Completion capabilities are not set here: blink.cmp registers them globally
--- via vim.lsp.config('*') from its own plugin file.
+-- Completion capabilities are not set here: lua/plugins/completion.lua calls
+-- vim.lsp.config('*') after blink.cmp's setup(), since the capabilities come
+-- from blink.cmp.get_lsp_capabilities().
 vim.lsp.enable({
   "basedpyright",
   "bashls",
