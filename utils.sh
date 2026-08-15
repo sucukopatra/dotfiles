@@ -282,7 +282,18 @@ EOF
 }
 
 setup_cs50() {
-  install_packages "${CS50[@]}"
+  install_packages "libcs50"
+
+  local tool
+  for tool in check50 style50 submit50; do
+    if pipx list --short 2>/dev/null | grep -q "^$tool "; then
+      echo "  unchanged: $tool"
+    elif pipx install "$tool" >/dev/null; then
+      echo "  installed: $tool"
+    else
+      echo "  WARNING: pipx install $tool failed." >&2
+    fi
+  done
 
   cat <<'EOF'
   Manual steps:
@@ -292,6 +303,7 @@ setup_cs50() {
   Usage:
     Build with `make50 <program>` (alias in ~/.zshrc), or compile by hand:
       clang foo.c -lcs50 -o foo
+    After a python minor upgrade, run `pipx reinstall-all`.
 EOF
 }
 
