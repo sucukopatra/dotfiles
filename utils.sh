@@ -29,12 +29,17 @@ enable_user_services() {
     done
 }
 
-is_installed() {
-  pacman -Qi "$1" &>/dev/null
+is_installed() { pacman -Qi "$1" &>/dev/null
 }
 
 is_group_installed() {
   pacman -Qg "$1" &>/dev/null
+}
+
+system_upgrade() {
+  local -a args=(-Syu)
+  [[ "${YES_ALL:-0}" == "1" ]] && args+=(--noconfirm)
+  sudo pacman "${args[@]}"
 }
 
 install_packages() {
@@ -105,50 +110,6 @@ setup_gpu_udev() {
   sudo udevadm trigger --subsystem-match=drm
 }
 
-# Drive Neovim's own bootstrap headlessly so a fresh machine is ready before
-# the first interactive launch: lazy.nvim clones itself and installs plugins
-# from lazy-lock.json, nvim-treesitter compiles parsers, and mason-tool-installer
-# fetches the LSPs/formatters/debug adapters listed in lua/plugins/mason.lua.
-bootstrap_neovim() {
-  if ! command -v nvim >/dev/null 2>&1; then
-    echo "  WARNING: nvim not installed; skipping." >&2
-    return 0
-  fi
-
-  echo "  syncing plugins (lazy.nvim)..."
-  nvim --headless "+Lazy! sync" +qa 2>&1 | grep -viE "^\s*$|progress|receiving|resolving" | tail -3 || true
-
-  # Mason and nvim-treesitter install asynchronously, so a plain `+qa` would
-  # kill them mid-download. Poll until every expected binary resolves.
-  echo "  installing LSPs, formatters, debug adapters and parsers..."
-  nvim --headless -c 'lua
-    local want = { "lua-language-server", "bash-language-server", "basedpyright",
-                   "clangd", "clang-format", "ruff", "shfmt", "stylua",
-                   "tinymist", "typstyle", "codelldb", "netcoredbg" }
-    -- csharpier/roslyn need dotnet; only require them when it is present.
-    if vim.fn.executable("dotnet") == 1 then
-      table.insert(want, "csharpier")
-      table.insert(want, "roslyn")
-    end
-    local deadline = vim.uv.now() + 900000
-    local missing
-    repeat
-      vim.wait(5000)
-      missing = {}
-      for _, b in ipairs(want) do
-        if vim.fn.exepath(b) == "" then missing[#missing + 1] = b end
-      end
-    until #missing == 0 or vim.uv.now() > deadline
-    if #missing > 0 then
-      print("  WARNING: still missing after timeout: " .. table.concat(missing, ", "))
-    else
-      print("  all mason packages present")
-    end
-    local ok, ts = pcall(require, "nvim-treesitter")
-    if ok then print("  treesitter parsers: " .. #ts.get_installed()) end
-    vim.cmd("qa!")' 2>&1 | grep -E "WARNING|present|parsers" || true
-}
-
 # Microsoft's Visual Studio Tools for Unity debug adapter, used by nvim-dap to
 # attach to a running Unity Editor. Not on Mason, so it is pulled straight from
 # the marketplace. `dir` must match VSTUC_DIR in
@@ -163,8 +124,6 @@ install_vstuc() {
 
   local tmp
   tmp="$(mktemp -d)"
-  # NOTE: --compressed is required. The endpoint always gzips its response, so
-  # without it curl writes a gzip stream that unzip cannot read.
   if ! curl -fsSL --compressed -o "$tmp/vstuc.vsix" \
     "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/visualstudiotoolsforunity/vsextensions/vstuc/latest/vspackage"; then
     echo "  WARNING: vstuc download failed; Unity attach will be unavailable." >&2
@@ -217,94 +176,6 @@ install_unity_analyzers() {
   rm -rf "$tmp"
 }
 
-# Ensure a Unity license is active, activating the free Personal one if not.
-#
-# --accept-eula agrees to Unity's Personal license terms non-interactively. That
-# is deliberate: this runs only under the opt-in Unity prompt in run.sh, on a
-# machine whose owner asked for it. Return it later with `unity license return`.
-#
-# Sign-in cannot be automated the same way: `unity auth login` is a browser OAuth
-# flow (service-account credentials are the CI alternative), so it is offered
-# rather than forced.
-ensure_unity_license() {
-  local lic_status
-  lic_status="$(unity license status --no-banner 2>/dev/null)"
-
-  if grep -q "^License: active" <<<"$lic_status"; then
-    echo "  license: already active"
-    return 0
-  fi
-
-  if ! grep -qi "^Signed in: yes" <<<"$lic_status"; then
-    echo "  Not signed in to a Unity account (activation requires one)."
-    if prompt_yn "  Run 'unity auth login' now? (opens a browser)"; then
-      unity auth login || { echo "  WARNING: sign-in failed." >&2; return 1; }
-    else
-      echo "  Skipping license activation; run 'unity auth login' then re-run."
-      return 1
-    fi
-  fi
-
-  echo "  activating Unity Personal license (accepting Unity's Personal terms)..."
-  if unity license activate --personal --accept-eula --no-banner; then
-    echo "  license: activated"
-    return 0
-  fi
-
-  # A stale session reports "Signed in: yes" but still fails to activate.
-  echo "  Activation failed. The session may have expired; try:" >&2
-  echo "    unity auth login && unity license activate --personal --accept-eula" >&2
-  return 1
-}
-
-# Install a Unity Editor via unity-cli. Versions are not pinned, so the
-# available releases are listed and chosen interactively; under --yes the
-# newest LTS (an "f" release) is taken so unattended runs do not hang.
-install_unity_editor() {
-  if ! command -v unity >/dev/null 2>&1; then
-    echo "  WARNING: unity-cli not installed (unity-cli-bin); skipping editor install." >&2
-    return 0
-  fi
-
-  # Must precede the install, or the download lands in Unity's ~/Unity/Hub/Editor default.
-  unity install-path --set ~/dev/unity/editor --no-banner >/dev/null
-
-  local installed
-  installed="$(unity editors -i --no-banner --format tsv 2>/dev/null | tail -n +2 | awk 'NF{print $1}')"
-  if [[ -n "$installed" ]]; then
-    echo "  already installed: $(echo "$installed" | tr '\n' ' ')"
-    prompt_yn "  Install an additional Unity Editor?" "n" || return 0
-  fi
-
-  local releases
-  releases="$(unity editors --releases --no-banner --format tsv 2>/dev/null | tail -n +2 | awk 'NF{print $1}')"
-  if [[ -z "$releases" ]]; then
-    echo "  WARNING: could not list Unity releases (are you signed in?); skipping." >&2
-    return 0
-  fi
-
-  local version
-  if [[ "${YES_ALL:-0}" == "1" ]]; then
-    # Newest stable ("f") release; alpha/beta builds are skipped.
-    version="$(echo "$releases" | grep 'f[0-9]*$' | sort -V | tail -1)"
-    echo "  auto-selected: $version"
-  else
-    echo "  available Unity releases:"
-    echo "$releases" | nl -w4 -s'. ' | sed 's/^/    /'
-    read -r -p "  Version to install (blank to skip): " version
-    [[ -z "$version" ]] && { echo "  skipped."; return 0; }
-    if ! echo "$releases" | grep -qx "$version"; then
-      echo "  WARNING: '$version' is not in the release list; skipping." >&2
-      return 0
-    fi
-  fi
-
-  ensure_unity_license || return 0
-
-  echo "  installing Unity $version (multi-GB, this takes a while)..."
-  unity install "$version" --no-banner --non-interactive --accept-eula -y
-}
-
 # Write the com.walcht.ide.neovim settings into Unity's global EditorPrefs so a
 # fresh machine does not need the Neovim => Settings window filled in by hand.
 #
@@ -320,11 +191,6 @@ configure_unity_prefs() {
     return 0
   fi
 
-  # Match process names exactly. `pgrep -f` compares whole command lines and so
-  # matches this function's own shell; an unanchored name match catches the
-  # long-lived "Unity.Licensing" helper, which runs with no Editor open. The
-  # kernel truncates comm to 15 chars, hence the trailing dash on the unity-cli
-  # form ("unityhub-unity-editor-6000.3.21f1" -> "unityhub-unity-").
   if pgrep -x "Unity|unityhub-unity-" >/dev/null 2>&1; then
     echo "  WARNING: Unity Editor is running. Quit it and re-run, or Unity will" >&2
     echo "           overwrite these settings on exit. Skipping." >&2
@@ -333,7 +199,7 @@ configure_unity_prefs() {
 
   mkdir -p "$(dirname "$prefs")"
   UNITY_PREFS="$prefs" UNITY_TEMPLATE="$template" python3 - <<'PY'
-import base64, os, xml.etree.ElementTree as ET
+import base64, os, sys, xml.etree.ElementTree as ET
 
 prefs = os.environ["UNITY_PREFS"]
 template = os.environ["UNITY_TEMPLATE"]
@@ -343,7 +209,11 @@ payload = open(template, encoding="utf-8").read().replace("{{HOME}}", os.path.ex
 encoded = base64.b64encode(payload.encode("utf-8")).decode("ascii")
 
 if os.path.exists(prefs) and os.path.getsize(prefs) > 0:
-    tree = ET.parse(prefs)
+    try:
+        tree = ET.parse(prefs)
+    except ET.ParseError as err:
+        print(f"  WARNING: {prefs} is malformed ({err}); skipping.", file=sys.stderr)
+        raise SystemExit(0)
     root = tree.getroot()
 else:
     root = ET.Element("unity_prefs", {"version_major": "1", "version_minor": "1"})
@@ -366,9 +236,25 @@ print(f"  {action}:   {key} in {prefs}")
 PY
 }
 
+# Point unity-cli at ~/dev/unity/editor so a hand-installed Editor lands there
+# rather than in Unity's ~/Unity/Hub/Editor default. Must be set before any
+# `unity install`, which is left manual.
+set_unity_install_path() {
+  if ! command -v unity >/dev/null 2>&1; then
+    echo "  WARNING: unity-cli not installed (unity-cli-bin); skipping." >&2
+    return 0
+  fi
+
+  if unity install-path --set ~/dev/unity/editor --no-banner >/dev/null 2>&1; then
+    echo "  install path: ~/dev/unity/editor"
+  else
+    echo "  WARNING: could not set Unity install path." >&2
+  fi
+}
+
 # Everything a machine needs to edit Unity C# in Neovim, beyond the packages in
-# GAME_DEV: the debug adapter, the Unity-aware analyzers, an Editor, and the
-# Neovim integration settings.
+# GAME_DEV: the debug adapter, the Unity-aware analyzers, and the Neovim
+# integration settings. The Editor itself is installed by hand.
 setup_unity_dev() {
   local repo_dir="$1"
 
@@ -377,17 +263,21 @@ setup_unity_dev() {
   install_vstuc
   echo "  Unity Roslyn analyzers:"
   install_unity_analyzers
-  echo "  Unity Editor:"
-  install_unity_editor
+  echo "  Unity Editor install path:"
+  set_unity_install_path
   echo "  Neovim integration settings:"
   configure_unity_prefs "$repo_dir/assets/unity/nvim-unity-config.json"
 
   cat <<'EOF'
-  Per-project steps (Unity cannot do these from the CLI):
-    1. Add to <project>/Packages/manifest.json dependencies:
+  Manual steps:
+    1. Install a Unity Editor (install path is already set):
+         unity auth login && unity license activate --personal
+         unity install <version>
+  Per-project (Unity cannot do these from the CLI):
+    2. Add to <project>/Packages/manifest.json dependencies:
          "com.walcht.ide.neovim": "https://github.com/walcht/com.walcht.ide.neovim.git"
-    2. Edit > Preferences > External Tools > External Script Editor > Neovim
-    3. Neovim > Settings > Regenerate project files
+    3. Edit > Preferences > External Tools > External Script Editor > Neovim
+    4. Neovim > Settings > Regenerate project files
 EOF
 }
 
@@ -396,7 +286,7 @@ stow_packages() {
   repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
   local -a sys_dirs=(etc usr lib lib64 var opt srv run)
-  local pkg dir top sys src rel transformed target_path target
+  local pkg dir top sys src rel target_path target
 
   for pkg in "$@"; do
     target="$HOME"
@@ -409,19 +299,25 @@ stow_packages() {
       done
     done
 
+    # Clear any real file sitting where a symlink needs to go, or stow refuses
+    # to adopt the package. Paths are used as-is: packages store literal
+    # dotfiles (stow/nvim/.config/...), not stow's dot- prefix form.
     while IFS= read -r -d '' src; do
       rel="${src#"$repo_dir/stow/$pkg/"}"
-      transformed="$(printf '%s' "$rel" | sed 's|/dot-|/.|g; s|^dot-|.|')"
-      target_path="${target%/}/$transformed"
+      target_path="${target%/}/$rel"
       if [[ -f "$target_path" && ! -L "$target_path" ]]; then
-        [[ "$target" == "/" ]] && sudo rm -f "$target_path" || rm -f "$target_path"
+        if [[ "$target" == "/" ]]; then
+          sudo rm -f "$target_path"
+        else
+          rm -f "$target_path"
+        fi
       fi
     done < <(find "$repo_dir/stow/$pkg" -type f -print0)
 
     if [[ "$target" == "/" ]]; then
-      sudo stow --dotfiles --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
+      sudo stow --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
     else
-      stow --dotfiles --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
+      stow --no-folding -R --override='.*' -d "$repo_dir/stow" -t "$target" "$pkg"
     fi
   done
 }

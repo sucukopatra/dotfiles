@@ -30,7 +30,7 @@ while true; do sudo -n true; sleep 60; done 2>/dev/null &
 SUDO_KEEPALIVE_PID=$!
 trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
 
-mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/dev ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
+mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
 
 if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
   if prompt_yn "Clone wallpaper repository to ~/media/photos/wallpapers/?"; then
@@ -38,10 +38,18 @@ if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
   fi
 fi
 
+if prompt_yn "Upgrade the system first? (strongly recommended)"; then
+  echo "Upgrading system..."
+  system_upgrade
+else
+  echo "WARNING: skipping the upgrade. Everything installed below is built" >&2
+  echo "         against current repo state, so mixing it into a stale system" >&2
+  echo "         is a partial upgrade and can break it. Run 'pacman -Syu' soon." >&2
+fi
+
 install_yay
-is_dev_installed=false
 prompt_yn "Install system utilities?" && { echo "Installing system utilities..."; install_packages "${SYSTEM_UTILS[@]}"; }
-prompt_yn "Install development tools?" && { echo "Installing development tools..."; install_packages "${DEV_TOOLS[@]}"; is_dev_installed=true; }
+prompt_yn "Install development tools?" && { echo "Installing development tools..."; install_packages "${DEV_TOOLS[@]}"; }
 prompt_yn "Install system maintenance tools?" && { echo "Installing system maintenance tools..."; install_packages "${MAINTENANCE[@]}"; }
 prompt_yn "Install desktop environment packages?" && { echo "Installing desktop environment..."; install_packages "${DESKTOP[@]}"; }
 prompt_yn "Install media packages?" && { echo "Installing media packages..."; install_packages "${MEDIA[@]}"; }
@@ -53,16 +61,15 @@ if prompt_yn "Set up Intel/NVIDIA GPU udev symlinks?"; then
   setup_gpu_udev
 fi
 
-if prompt_yn "Enable TLP power management?"; then
-  if command -v tlp >/dev/null 2>&1; then
-    echo "Enabling TLP..."
-    sudo systemctl enable --now tlp.service
-  fi
+if command -v tlp >/dev/null 2>&1 && prompt_yn "Enable TLP power management?"; then
+  echo "Enabling TLP..."
+  sudo systemctl enable --now tlp.service
 fi
 
 if prompt_yn "Set up ly display manager?"; then
   echo "Setting up ly display manager..."
   for dm in gdm sddm lightdm lxdm greetd; do
+    is_installed "$dm" || continue
     systemctl is-enabled "${dm}.service" >/dev/null 2>&1 \
       && sudo systemctl disable "${dm}.service"
   done
@@ -72,11 +79,6 @@ fi
 
 echo "Installing stow configs..."
 stow_packages "${STOW[@]}"
-
-if prompt_yn "Bootstrap Neovim (plugins, LSPs, formatters, parsers)?"; then
-  echo "Bootstrapping Neovim..."
-  bootstrap_neovim
-fi
 
 if prompt_yn "Set up Unity + Neovim development environment?" "n"; then
   echo "Setting up Unity development environment..."
@@ -88,18 +90,24 @@ if prompt_yn "Install Claude Code?"; then
 fi
 
 if [[ "$SHELL" != */zsh ]]; then
-  if prompt_yn "Change default shell to zsh?"; then
+  zsh_path="$(command -v zsh || true)"
+  if [[ -z "$zsh_path" ]]; then
+    echo "WARNING: zsh is not installed; leaving default shell unchanged." >&2
+  elif prompt_yn "Change default shell to zsh?"; then
     echo "changing to zsh..."
-    sudo chsh -s /bin/zsh "$USER"
+    sudo chsh -s "$zsh_path" "$USER"
   fi
 fi
 
-if [[ $is_dev_installed == true ]]; then
+if command -v tailscale >/dev/null 2>&1; then
     enable_services tailscaled
+    echo "If this is the first run, run 'tailscale login' to complete the setup."
+fi
+if command -v syncthing >/dev/null 2>&1; then
     enable_user_services syncthing
-    echo "If you are running this script for the first time, Open http://127.0.0.1:8384/ and run 'tailscale login' to complete the setup."
+    echo "If this is the first run, open http://127.0.0.1:8384/ to complete the setup."
 fi
 
-if command -v hyprctl &>/dev/null && pgrep -x hyprland &>/dev/null; then
+if command -v hyprctl &>/dev/null && pgrep -x Hyprland &>/dev/null; then
   hyprctl reload
 fi
