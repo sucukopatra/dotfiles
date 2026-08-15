@@ -85,6 +85,11 @@ if prompt_yn "Set up Unity + Neovim development environment?" "n"; then
   setup_unity_dev "$REPO_DIR"
 fi
 
+if prompt_yn "Set up CS50 development environment?" "n"; then
+  echo "Setting up CS50 development environment..."
+  setup_cs50
+fi
+
 if prompt_yn "Install Claude Code?"; then
   command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 fi

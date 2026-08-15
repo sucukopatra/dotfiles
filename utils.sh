@@ -281,6 +281,20 @@ setup_unity_dev() {
 EOF
 }
 
+setup_cs50() {
+  install_packages "${CS50[@]}"
+
+  cat <<'EOF'
+  Manual steps:
+    1. Authorize your GitHub account for submissions once, in a browser.
+    2. The first `submit50` run then does the GitHub login interactively;
+       there is nothing to configure ahead of time.
+  Usage:
+    Build with `make50 <program>` (alias in ~/.zshrc), or compile by hand:
+      clang foo.c -lcs50 -o foo
+EOF
+}
+
 stow_packages() {
   local repo_dir
   repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
