@@ -37,7 +37,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Servers are asked to compute these (see lsp/roslyn.lua, lsp/clangd.lua);
     -- without enabling them client-side the results are simply discarded.
     if client:supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
       map("<leader>ch", function()
         local on = vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf })
         vim.lsp.inlay_hint.enable(not on, { bufnr = args.buf })

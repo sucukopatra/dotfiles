@@ -8,7 +8,18 @@
 --     visualstudiotoolsforunity/vsextensions/vstuc/latest/vspackage
 -- and unzip over that directory.
 local VSTUC_DIR = vim.fn.expand("~/.local/share/vstuc")
-local VSTUC_DLL = VSTUC_DIR .. "/content/extension/bin/UnityDebugAdapter.dll"
+
+local vstuc_dll
+local function find_vstuc_dll()
+  if not vstuc_dll then
+    vstuc_dll = vim.fs.find("UnityDebugAdapter.dll", {
+      path = VSTUC_DIR,
+      type = "file",
+      limit = 1,
+    })[1]
+  end
+  return vstuc_dll
+end
 
 return {
   {
@@ -139,12 +150,14 @@ return {
       }
 
       -- Unity Editor via Microsoft's vstuc adapter.
-      dap.adapters.unity = {
-        type = "executable",
-        command = "dotnet",
-        args = { VSTUC_DLL },
-        name = "Attach to Unity",
-      }
+      dap.adapters.unity = function(callback)
+        callback({
+          type = "executable",
+          command = "dotnet",
+          args = { find_vstuc_dll() },
+          name = "Attach to Unity",
+        })
+      end
 
       -- Unity's process name varies by install method: "Unity"/"Unity.bin" via
       -- the Hub, but "unityhub-unity-<version>" via unity-cli, which the kernel
@@ -154,8 +167,8 @@ return {
         type = "unity",
         request = "attach",
         endPoint = function()
-          if vim.fn.filereadable(VSTUC_DLL) == 0 then
-            error("vstuc adapter missing at " .. VSTUC_DLL .. " (see comment at top of dap.lua)", 0)
+          if not find_vstuc_dll() then
+            error("vstuc adapter missing under " .. VSTUC_DIR .. " (see comment at top of dap.lua)", 0)
           end
           local res = vim.system({ "ss", "-tlnp" }, { text = true }):wait()
           if res.code ~= 0 then

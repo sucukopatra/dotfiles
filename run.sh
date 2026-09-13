@@ -34,7 +34,7 @@ mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/downloads ~/media/photos/
 
 if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
   if prompt_yn "Clone wallpaper repository to ~/media/photos/wallpapers/?"; then
-    git clone https://github.com/sucukopatra/wallpapers.git ~/media/photos/wallpapers
+    git clone --depth 1 https://github.com/sucukopatra/wallpapers.git ~/media/photos/wallpapers
   fi
 fi
 

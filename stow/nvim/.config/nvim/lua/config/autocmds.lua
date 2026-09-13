@@ -49,11 +49,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Indentation follows each language's own convention, which is whatever its
 -- formatter emits. Only the filetypes that disagree with the 2-space default in
--- config/options.lua need an entry, and C# is the only one: Neovim's built-in
--- ftplugins already set python to 4 spaces and gdscript to tabs, and
--- shfmt/clang-format/typstyle all match the default. C# lives in
--- after/ftplugin/cs.lua, which is sourced after the runtime ftplugin rather than
--- before it.
+-- config/options.lua need an entry: Neovim's built-in ftplugins already set
+-- python to 4 spaces and gdscript to tabs, and shfmt/typstyle match the default.
+-- The two that need one are C# (csharpier) and C (Allman clang-format), both at
+-- 4 spaces, and both live in after/ftplugin/, which is sourced after the runtime
+-- ftplugin rather than before it.
 
 -- Kept as an autocmd rather than three near-identical after/ftplugin files: one
 -- pattern list is the clearer expression of "these filetypes are prose".

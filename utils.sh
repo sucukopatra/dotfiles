@@ -116,8 +116,9 @@ setup_gpu_udev() {
 # stow/nvim/.config/nvim/lua/plugins/dap.lua; change both together.
 install_vstuc() {
   local dir=~/.local/share/vstuc
-  local dll="$dir/content/extension/bin/UnityDebugAdapter.dll"
-  if [[ -f "$dll" ]]; then
+  local dll
+  dll="$(find "$dir" -type f -name UnityDebugAdapter.dll -print -quit 2>/dev/null)"
+  if [[ -n "$dll" ]]; then
     echo "  unchanged: $dll"
     return 0
   fi
@@ -135,7 +136,8 @@ install_vstuc() {
   unzip -qo "$tmp/vstuc.vsix" -d "$dir"
   rm -rf "$tmp"
 
-  if [[ -f "$dll" ]]; then
+  dll="$(find "$dir" -type f -name UnityDebugAdapter.dll -print -quit 2>/dev/null)"
+  if [[ -n "$dll" ]]; then
     echo "  installed:  $dll"
   else
     echo "  WARNING: vstuc extracted but UnityDebugAdapter.dll not found." >&2

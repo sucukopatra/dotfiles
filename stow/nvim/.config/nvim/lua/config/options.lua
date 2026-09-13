@@ -9,7 +9,7 @@ vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 
--- Default for filetypes with no stronger opinion (lua, c, typst, json/toml).
+-- Default for filetypes with no stronger opinion (lua, typst, json/toml).
 -- Languages whose formatter disagrees override this per-filetype; see the
 -- indent autocmd in config/autocmds.lua.
 vim.opt.tabstop = 2
