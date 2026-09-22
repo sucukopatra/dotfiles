@@ -75,28 +75,6 @@ alias pullsrv="rsync -avz --exclude='config/' ender@bmo:/srv/docker/ ~/dev/serve
 alias pushsrv="rsync -avz --delete --exclude='config/' ~/dev/server/docker/ ender@bmo:/srv/docker/"
 alias make50='make CC=clang CFLAGS="-fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wshadow" LDLIBS="-lcrypt -lcs50 -lm"'
 
-# Functions
-# Deploy the weekly timetable to bmo. Only app/ is deployed, so --delete can
-# never reach the server's data/. The trailing slash on "$src/app/" matters:
-# without it rsync creates app/app/.
-schedule-deploy() {
-  local src=~/dev/server/schedule
-  local dest=bmo:/srv/docker/config/caddy/webpages/schedule/app/
-  local out
-  out=$(rsync -az --delete --itemize-changes "$src/app/" "$dest") || return 1
-  [[ -z "$out" ]] && { echo "Nothing changed."; return 0; }
-  echo "$out"
-  if grep -q 'server\.py' <<<"$out"; then
-    # Page changes need no restart; server.py does. --force-recreate is not
-    # optional: compose compares the service definition, not the code, and
-    # server.py arrives through a bind mount -- without it compose prints
-    # "Container schedule Running", leaves the old process up, and the newer
-    # files 404 while index.html asks for them.
-    ssh bmo 'cd /srv/docker && docker compose up -d --force-recreate schedule' \
-      && echo "Recreated schedule (server.py changed)."
-  fi
-}
-
 # Shell integrations
 eval "$(fzf --zsh)"
 
