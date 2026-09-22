@@ -104,6 +104,10 @@ if [[ "$SHELL" != */zsh ]]; then
   fi
 fi
 
+if command -v pkgfile >/dev/null 2>&1; then
+    compgen -G "/var/cache/pkgfile/*.files" >/dev/null || sudo pkgfile --update
+    enable_services pkgfile-update.timer
+fi
 if is_installed bluez; then
     enable_services bluetooth
 fi
