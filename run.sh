@@ -104,6 +104,9 @@ if [[ "$SHELL" != */zsh ]]; then
   fi
 fi
 
+if is_installed bluez; then
+    enable_services bluetooth
+fi
 if command -v tailscale >/dev/null 2>&1; then
     enable_services tailscaled
     echo "If this is the first run, run 'tailscale login' to complete the setup."
