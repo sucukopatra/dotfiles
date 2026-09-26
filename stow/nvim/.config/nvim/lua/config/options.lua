@@ -7,7 +7,10 @@ vim.opt.wrap = false
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
-vim.opt.termguicolors = true
+-- Default border for every floating window that doesn't pick its own: LSP
+-- hover/signature, diagnostics, gitsigns popups, and blink, mason and oil
+-- (all three fall back to this when their `border` is left nil).
+vim.opt.winborder = "rounded"
 
 -- Default for filetypes with no stronger opinion (lua, typst, json/toml).
 -- Languages whose formatter disagrees override this per-filetype; see the
@@ -59,5 +62,4 @@ vim.diagnostic.config({
   virtual_text = true,
   severity_sort = true,
   update_in_insert = false,
-  float = { border = "rounded" },
 })

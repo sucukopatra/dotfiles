@@ -1,6 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "echasnovski/mini.icons" },
+  dependencies = { "nvim-mini/mini.icons" },
   opts = {
     options = {
       -- "auto" derives the palette from the active colourscheme's highlight
@@ -29,9 +29,9 @@ return {
           cond = require("lazy.status").has_updates,
           -- updates() returns `false`, not "", when nothing is pending; `cond`
           -- is what keeps that out of the statusline.
-          on_click = function()
-            vim.cmd("Lazy")
-          end,
+          -- No on_click: lualine registers click handlers through the
+          -- deprecated vim.validate{} form (removed in Nvim 1.0). <leader>l
+          -- opens :Lazy instead.
         },
         "encoding",
         "fileformat",

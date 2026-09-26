@@ -11,7 +11,12 @@ local select_objects = {
 }
 
 -- Deliberately not mapping ]c/[c: those are Vim's diff-mode change motions and
--- are wanted intact inside Diffview.
+-- are wanted intact in diff mode (`nvim -d`, :DiffTool, :Gitsigns diffthis).
+--
+-- ]a/[a *do* replace Neovim's built-in argument-list maps (:next/:previous),
+-- on purpose: parameter jumps get far more use here, and the arglist rarely
+-- holds more than one file (Godot opens scripts with `:n {file}`, which
+-- replaces it). :next/:prev still work when needed.
 local move_objects = {
   goto_next_start = { ["]f"] = "@function.outer", ["]a"] = "@parameter.inner" },
   goto_next_end = { ["]F"] = "@function.outer" },

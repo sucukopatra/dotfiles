@@ -17,17 +17,17 @@ return {
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Harpoon" },
         { "<leader>s", group = "Split" },
-        { "<leader>x", group = "Trouble" },
+        { "<leader>u", group = "Toggles" },
+        { "<leader>x", group = "Diagnostics" },
       })
     end,
   },
   {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
-    dependencies = { "echasnovski/mini.icons" },
+    dependencies = { "nvim-mini/mini.icons" },
     opts = {
       winopts = {
-        border = "rounded",
         preview = {
           layout = "vertical",
           vertical = "down:55%",
@@ -47,7 +47,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {},
     config = function(_, opts)
       local icons = require("mini.icons")

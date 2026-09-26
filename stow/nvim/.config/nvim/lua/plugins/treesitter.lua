@@ -19,6 +19,7 @@ local ensure_installed = {
   "printf",
   "python",
   "query",
+  "racket",
   "regex",
   "toml",
   "typst",
@@ -30,6 +31,11 @@ local ensure_installed = {
   "xml",
   "yaml",
 }
+
+-- Parsers that ship no indents query, where nvim-treesitter's indentexpr would
+-- only copy the previous line's indent. Racket keeps Vim's Lisp indenting
+-- instead ('lisp' + 'lispwords', set by $VIMRUNTIME/indent/racket.vim).
+local runtime_indent = { racket = true }
 
 return {
   "nvim-treesitter/nvim-treesitter",
@@ -59,7 +65,9 @@ return {
           return
         end
         vim.treesitter.start(args.buf, lang)
-        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        if not runtime_indent[lang] then
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
         vim.b[args.buf].ts_folds = true
       end,
     })

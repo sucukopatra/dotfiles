@@ -30,6 +30,10 @@ return {
   opts = {
     notify_on_error = true,
     format_on_save = function(bufnr)
+      -- Flipped by <leader>uf (config/keymaps.lua).
+      if vim.g.disable_autoformat then
+        return
+      end
       local enabled = { c = true, cs = true, typst = true }
       if not enabled[vim.bo[bufnr].filetype] then
         return

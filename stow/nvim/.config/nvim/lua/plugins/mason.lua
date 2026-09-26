@@ -8,9 +8,6 @@ return {
     lazy = false,
     priority = 100,
     opts = {
-      ui = {
-        border = "rounded",
-      },
       registries = {
         "github:mason-org/mason-registry",
         -- Carries `roslyn`/`roslyn-nightly`, which track the language server
@@ -31,11 +28,13 @@ return {
     event = "VeryLazy",
     dependencies = { "mason-org/mason.nvim" },
     opts = {
+      -- No clangd/clang-format: both come from Arch's `clang` package (listed in
+      -- the dotfiles' packages.conf), the same LLVM version as the clang that
+      -- builds CS50 code, so editor diagnostics and formatting match the
+      -- compiler and the terminal. A Mason copy would shadow them on PATH.
       ensure_installed = {
         "bash-language-server",
         "basedpyright",
-        "clangd",
-        "clang-format",
         "codelldb",
         "csharpier",
         "gdtoolkit",
@@ -52,5 +51,14 @@ return {
       auto_update = false,
       start_delay = 3000,
     },
+    -- run_on_start is normally driven by a VimEnter autocmd in the plugin's
+    -- plugin/ file, but VeryLazy fires *after* VimEnter, so that autocmd is
+    -- registered too late and never runs. Kick it off by hand instead;
+    -- run_on_start() still honours the run_on_start flag and start_delay.
+    config = function(_, opts)
+      local mti = require("mason-tool-installer")
+      mti.setup(opts)
+      mti.run_on_start()
+    end,
   },
 }

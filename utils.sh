@@ -123,9 +123,15 @@ install_vstuc() {
     return 0
   fi
 
+  # ~8 MB from the VS Marketplace, which can be slow: show a progress bar so it
+  # doesn't look hung, and abort only if the transfer actually stalls (under
+  # 1 KB/s for 30 s) rather than capping the total time.
   local tmp
   tmp="$(mktemp -d)"
-  if ! curl -fsSL --compressed -o "$tmp/vstuc.vsix" \
+  echo "  downloading vstuc (~8 MB) from the VS Marketplace..."
+  if ! curl -fL --progress-bar --compressed \
+    --connect-timeout 20 --speed-limit 1024 --speed-time 30 \
+    -o "$tmp/vstuc.vsix" \
     "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/visualstudiotoolsforunity/vsextensions/vstuc/latest/vspackage"; then
     echo "  WARNING: vstuc download failed; Unity attach will be unavailable." >&2
     rm -rf "$tmp"
@@ -158,7 +164,10 @@ install_unity_analyzers() {
   fi
 
   local version tmp
-  version="$(curl -fsSL https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/index.json \
+  # Small files, so no progress bar; the timeouts only stop a dead connection
+  # from hanging the whole setup.
+  version="$(curl -fsSL --connect-timeout 20 --speed-limit 1024 --speed-time 30 \
+    https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/index.json \
     | grep -oE '"[0-9]+\.[0-9]+\.[0-9]+"' | tail -1 | tr -d '"')"
   if [[ -z "$version" ]]; then
     echo "  WARNING: could not resolve Microsoft.Unity.Analyzers version." >&2
@@ -166,7 +175,7 @@ install_unity_analyzers() {
   fi
 
   tmp="$(mktemp -d)"
-  if curl -fsSL -o "$tmp/pkg.nupkg" \
+  if curl -fsSL --connect-timeout 20 --speed-limit 1024 --speed-time 30 -o "$tmp/pkg.nupkg" \
     "https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/$version/microsoft.unity.analyzers.$version.nupkg"; then
     unzip -qo "$tmp/pkg.nupkg" -d "$tmp/x"
     mkdir -p "$dir"

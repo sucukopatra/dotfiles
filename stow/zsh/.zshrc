@@ -27,7 +27,7 @@ export VISUAL=nvim
 
 # Keybindings
 bindkey -v
-KEYTIMEOUT=1
+KEYTIMEOUT=20
 bindkey '^l' autosuggest-accept
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -80,7 +80,7 @@ pacup() {
 }
 
 # Shell integrations
-eval "$(fzf --zsh)"
+eval "$(fzf --zsh)" 2>/dev/null
 
 # Init Starship
 eval "$(starship init zsh)"

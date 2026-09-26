@@ -31,6 +31,9 @@ require("lazy").setup({
   install = {
     colorscheme = { "rose-pine" },
   },
+  -- No plugin here ships a rockspec, and luarocks isn't installed, so leaving
+  -- this on only earns a :checkhealth ERROR. Re-enable if a plugin needs it.
+  rocks = { enabled = false },
   -- Keep checking for updates, but silently: `notify` defaults to true, which
   -- pops a "# Plugin Updates" window once per launch for as long as anything is
   -- out of date. The hourly re-check never notifies (lazy calls report() with no

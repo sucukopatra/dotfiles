@@ -1,20 +1,25 @@
 -- Server definitions live in ~/.config/nvim/lsp/<name>.lua and are picked up
 -- from 'runtimepath' automatically; see :h lsp-config.
 --
--- Completion capabilities are not set here: lua/plugins/completion.lua calls
--- vim.lsp.config('*') after blink.cmp's setup(), since the capabilities come
--- from blink.cmp.get_lsp_capabilities().
+-- Completion capabilities are not set here: blink.cmp's plugin/blink-cmp.lua
+-- registers them with vim.lsp.config('*') when blink loads. That has to happen
+-- before the first client starts, which holds while blink is a start plugin;
+-- if it ever gains an `event`/`ft` trigger, set them here instead.
 vim.lsp.enable({
   "basedpyright",
   "bashls",
   "clangd",
   "gdscript",
   "lua_ls",
+  "racket_langserver",
   "tinymist",
 })
 
--- Neovim already maps K, ]d, [d, grn, gra, grr, gri and gO out of the box
--- (see :h lsp-defaults), so only the additions live here.
+-- Neovim already maps K, ]d, [d, gO and the gr* family out of the box -- grn
+-- rename, gra code action, grr references, gri implementation, grt type
+-- definition, grx code lens -- plus <C-w>d for line diagnostics (see
+-- :h lsp-defaults). Those are used as-is, so only the additions live here.
+-- Inlay hints are toggled by <leader>uh (config/keymaps.lua).
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
   desc = "Buffer-local LSP keymaps",
@@ -25,22 +30,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     map("gd", vim.lsp.buf.definition, "LSP definition")
     map("gD", vim.lsp.buf.declaration, "LSP declaration")
-    map("<leader>ca", vim.lsp.buf.code_action, "LSP code action")
-    map("<leader>cr", vim.lsp.buf.rename, "LSP rename")
-    map("<leader>cd", vim.diagnostic.open_float, "Line diagnostics")
 
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if not client then
       return
-    end
-
-    -- Servers are asked to compute these (see lsp/roslyn.lua, lsp/clangd.lua);
-    -- without enabling them client-side the results are simply discarded.
-    if client:supports_method("textDocument/inlayHint") then
-      map("<leader>ch", function()
-        local on = vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf })
-        vim.lsp.inlay_hint.enable(not on, { bufnr = args.buf })
-      end, "Toggle inlay hints")
     end
 
     -- enable() drives its own refresh lifecycle, so no BufEnter/InsertLeave
