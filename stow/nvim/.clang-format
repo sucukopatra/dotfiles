@@ -1,0 +1,14 @@
+# Fallback C style for everything under ~ (stowed from dotfiles/stow/nvim):
+# clang-format and clangd use the nearest .clang-format, so a project's own
+# file still wins. Indent width matches ~/.editorconfig.
+BasedOnStyle: LLVM
+BreakBeforeBraces: Allman
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+# LLVM collapses short constructs onto one line, which pulls the brace back up
+# onto the header and undoes Allman for exactly the short cases.
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never

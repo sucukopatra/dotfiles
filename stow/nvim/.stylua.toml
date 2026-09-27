@@ -1,0 +1,5 @@
+# Lua style for everything under ~ (stowed from dotfiles/stow/nvim), matching
+# the nvim config. A project's own stylua.toml still wins.
+indent_type = "Spaces"
+indent_width = 2
+column_width = 120

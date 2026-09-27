@@ -19,8 +19,6 @@ map("x", ">", ">gv", { desc = "Indent right and reselect" })
 map("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 map("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
--- ]b/[b (next/previous buffer) are Neovim defaults since 0.11.
-
 -- :bdelete also closes every window showing the buffer, which collapses splits.
 -- Point those windows at another buffer first so the layout survives.
 local function delete_buffer(force)
@@ -61,16 +59,16 @@ map("n", "<leader>bD", function()
 end, { desc = "Delete buffer (force)" })
 map("n", "<leader>bo", "<cmd>%bdelete|edit#|bdelete#<CR>", { desc = "Delete other buffers" })
 
-map("n", "<C-h>", "<C-w>h", { desc = "Focus left window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Focus lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Focus upper window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Focus right window" })
+-- Terminal mode too, so the run window and the Ctrl-/ shell are left with one
+-- key. Inside terminals this costs the shell's own <C-h>, <C-k> and <C-l>.
+map({ "n", "t" }, "<C-h>", "<cmd>wincmd h<CR>", { desc = "Focus left window" })
+map({ "n", "t" }, "<C-j>", "<cmd>wincmd j<CR>", { desc = "Focus lower window" })
+map({ "n", "t" }, "<C-k>", "<cmd>wincmd k<CR>", { desc = "Focus upper window" })
+map({ "n", "t" }, "<C-l>", "<cmd>wincmd l<CR>", { desc = "Focus right window" })
 map("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Taller window" })
 map("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Shorter window" })
 map("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Narrower window" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Wider window" })
-map("n", "<leader>sv", "<cmd>vsplit<CR>", { desc = "Split vertical" })
-map("n", "<leader>sh", "<cmd>split<CR>", { desc = "Split horizontal" })
 
 map("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open Oil explorer" })
 
@@ -163,7 +161,6 @@ map(
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<CR>", { desc = "Location list (Trouble)" })
 map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<CR>", { desc = "Quickfix list (Trouble)" })
 
-map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
 map("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>", { desc = "Diff file against index" })
 map("n", "<leader>gD", function()
   require("gitsigns").diffthis("@")
@@ -194,6 +191,6 @@ map("n", "<leader>cf", function()
   require("conform").format({ lsp_format = "fallback", async = true })
 end, { desc = "Format buffer" })
 
--- `<leader>cc` (compile & run) is defined per-filetype in after/ftplugin/c.lua
--- and after/ftplugin/typst.lua, buffer-locally, so it only exists where it
+-- `<leader>cc` (compile & run) is defined per-filetype in after/ftplugin/c.lua,
+-- racket.lua and typst.lua, buffer-locally, so it only exists where it
 -- works. `<leader>cf` above stays global because conform handles every filetype.

@@ -16,7 +16,6 @@ return {
         { "<leader>f", group = "Find" },
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Harpoon" },
-        { "<leader>s", group = "Split" },
         { "<leader>u", group = "Toggles" },
         { "<leader>x", group = "Diagnostics" },
       })
@@ -52,14 +51,7 @@ return {
     config = function(_, opts)
       local icons = require("mini.icons")
       icons.setup(opts)
-      -- fzf-lua and oil support mini.icons directly, but lualine, trouble and
-      -- which-key only ever ask for nvim-web-devicons -- and they do it behind a
-      -- pcall, so a missing provider costs an icon with no error. The mock
-      -- registers mini.icons under that module name to fill the gap.
-      --
-      -- No load-order handling is needed: all three require it from inside a
-      -- render function, not at module level, so the mock is always in place by
-      -- the time the first statusline is drawn.
+      -- lualine, trouble and which-key only know nvim-web-devicons.
       icons.mock_nvim_web_devicons()
     end,
   },

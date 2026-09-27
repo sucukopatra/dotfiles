@@ -21,6 +21,74 @@ local function find_vstuc_dll()
   return vstuc_dll
 end
 
+-- stylua: ignore
+local keys = {
+  { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  {
+    "<leader>dB",
+    function()
+      vim.ui.input({ prompt = "Breakpoint condition: " }, function(cond)
+        if cond and cond ~= "" then
+          require("dap").set_breakpoint(cond)
+        end
+      end)
+    end,
+    desc = "Conditional breakpoint",
+  },
+  { "<leader>dc", function() require("dap").continue() end, desc = "Continue / start" },
+  { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+  {
+    "<leader>dP",
+    function()
+      local session = require("dap").session()
+      if not session then
+        return
+      end
+      -- nvim-dap only learns the thread list when the program stops, so on
+      -- a program that never has (the one stuck in a loop, i.e. the reason
+      -- to pause) dap.pause() finds zero threads and does nothing. Ask the
+      -- adapter directly; pausing one thread stops the whole program.
+      session:request("threads", nil, function(err, resp)
+        local thread = not err and resp and resp.threads and resp.threads[1]
+        if thread then
+          require("dap").pause(thread.id)
+        else
+          vim.notify("dap: no thread to pause", vim.log.levels.WARN)
+        end
+      end)
+    end,
+    desc = "Pause",
+  },
+  { "<leader>dR", function() require("dap").restart() end, desc = "Restart" },
+  { "<leader>dk", function() require("dap").up() end, desc = "Stack frame up (caller)" },
+  { "<leader>dj", function() require("dap").down() end, desc = "Stack frame down" },
+  { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
+  { "<leader>do", function() require("dap").step_over() end, desc = "Step over" },
+  { "<leader>dO", function() require("dap").step_out() end, desc = "Step out" },
+  { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+  { "<leader>dl", function() require("dap").run_last() end, desc = "Run last" },
+  { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+  { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },
+  {
+    "<leader>de",
+    function() require("dapui").eval(nil, { enter = true }) end,
+    desc = "Evaluate expression",
+    -- "x", not "v": see the note on the visual maps in config/keymaps.lua.
+    mode = { "n", "x" },
+  },
+  -- Visual Studio / VS Code / Rider layout. Shifted F-keys are listed twice:
+  -- kitty's keyboard protocol delivers <S-F5>, legacy terminals send F17
+  -- (and <S-F11> as F23).
+  { "<F5>", function() require("dap").continue() end, desc = "Continue" },
+  { "<S-F5>", function() require("dap").terminate() end, desc = "Terminate" },
+  { "<F17>", function() require("dap").terminate() end, desc = "Terminate" },
+  { "<F9>", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { "<F10>", function() require("dap").step_over() end, desc = "Step over" },
+  { "<F11>", function() require("dap").step_into() end, desc = "Step into" },
+  { "<S-F11>", function() require("dap").step_out() end, desc = "Step out" },
+  { "<F23>", function() require("dap").step_out() end, desc = "Step out" },
+}
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -28,72 +96,7 @@ return {
       { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
       "theHamsta/nvim-dap-virtual-text",
     },
-    keys = {
-      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-      {
-        "<leader>dB",
-        function()
-          vim.ui.input({ prompt = "Breakpoint condition: " }, function(cond)
-            if cond and cond ~= "" then
-              require("dap").set_breakpoint(cond)
-            end
-          end)
-        end,
-        desc = "Conditional breakpoint",
-      },
-      { "<leader>dc", function() require("dap").continue() end, desc = "Continue / start" },
-      { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
-      {
-        "<leader>dP",
-        function()
-          local session = require("dap").session()
-          if not session then
-            return
-          end
-          -- nvim-dap only learns the thread list when the program stops, so on
-          -- a program that never has (the one stuck in a loop, i.e. the reason
-          -- to pause) dap.pause() finds zero threads and does nothing. Ask the
-          -- adapter directly; pausing one thread stops the whole program.
-          session:request("threads", nil, function(err, resp)
-            local thread = not err and resp and resp.threads and resp.threads[1]
-            if thread then
-              require("dap").pause(thread.id)
-            else
-              vim.notify("dap: no thread to pause", vim.log.levels.WARN)
-            end
-          end)
-        end,
-        desc = "Pause",
-      },
-      { "<leader>dR", function() require("dap").restart() end, desc = "Restart" },
-      { "<leader>dk", function() require("dap").up() end, desc = "Stack frame up (caller)" },
-      { "<leader>dj", function() require("dap").down() end, desc = "Stack frame down" },
-      { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
-      { "<leader>do", function() require("dap").step_over() end, desc = "Step over" },
-      { "<leader>dO", function() require("dap").step_out() end, desc = "Step out" },
-      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-      { "<leader>dl", function() require("dap").run_last() end, desc = "Run last" },
-      { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },
-      {
-        "<leader>de",
-        function() require("dapui").eval(nil, { enter = true }) end,
-        desc = "Evaluate expression",
-        -- "x", not "v": see the note on the visual maps in config/keymaps.lua.
-        mode = { "n", "x" },
-      },
-      -- Visual Studio / VS Code / Rider layout. Shifted F-keys are listed twice:
-      -- kitty's keyboard protocol delivers <S-F5>, legacy terminals send F17
-      -- (and <S-F11> as F23).
-      { "<F5>", function() require("dap").continue() end, desc = "Continue" },
-      { "<S-F5>", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<F17>", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<F9>", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-      { "<F10>", function() require("dap").step_over() end, desc = "Step over" },
-      { "<F11>", function() require("dap").step_into() end, desc = "Step into" },
-      { "<S-F11>", function() require("dap").step_out() end, desc = "Step out" },
-      { "<F23>", function() require("dap").step_out() end, desc = "Step out" },
-    },
+    keys = keys,
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
@@ -139,8 +142,7 @@ return {
       }
       dap.configurations.cpp = dap.configurations.c
 
-      -- Standalone .NET via netcoredbg. Unity attach is added separately by
-      -- nvim-dap-unity, which appends to this same list.
+      -- Standalone .NET via netcoredbg. Unity attach is appended below.
       dap.adapters.coreclr = {
         type = "executable",
         command = vim.fn.exepath("netcoredbg"),
@@ -205,7 +207,7 @@ return {
           end
           local res = vim.system({ "ss", "-tlnp" }, { text = true }):wait()
           if res.code ~= 0 then
-            error("nvim-dap-unity: `ss` failed; is iproute2 installed?", 0)
+            error("Attach to Unity: `ss` failed; is iproute2 installed?", 0)
           end
           for line in vim.gsplit(res.stdout, "\n") do
             if line:lower():match("unity") then

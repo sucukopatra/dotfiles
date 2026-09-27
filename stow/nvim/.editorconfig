@@ -1,0 +1,9 @@
+# Indent for typing in Neovim (built-in editorconfig support) and for csharpier.
+# Matches the formatters: ~/.clang-format for C, csharpier's default for C#.
+# Everything else keeps the 2-space default in nvim's options.lua. A project's
+# own .editorconfig with `root = true` replaces this one.
+root = true
+
+[*.{c,h,cs}]
+indent_style = space
+indent_size = 4

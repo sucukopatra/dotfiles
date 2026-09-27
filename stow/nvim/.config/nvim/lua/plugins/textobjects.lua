@@ -29,10 +29,6 @@ return {
   branch = "main",
   lazy = false,
   dependencies = { "nvim-treesitter/nvim-treesitter" },
-  -- The README suggests `vim.g.no_plugin_maps = true` here. It is not read by
-  -- this plugin at all; it is a Vim runtime variable that strips ]]/[[/]m/[m
-  -- from the built-in python and gdscript ftplugins. The maps below avoid those
-  -- lhs's anyway, so there is nothing to opt out of.
   config = function()
     require("nvim-treesitter-textobjects").setup({
       select = {
