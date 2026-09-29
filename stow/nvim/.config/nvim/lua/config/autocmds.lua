@@ -75,3 +75,18 @@ if vim.uv.fs_stat(vim.fn.getcwd() .. "/project.godot") then
     end)
   end
 end
+
+-- Unity opens files through bin/unity-code (set as Unity's External Script
+-- Editor), which finds this Neovim by a socket named after a hash of the
+-- project root. The naming must match that script.
+local unity_root = vim.fs.root(vim.fn.getcwd(), "ProjectSettings")
+if unity_root and vim.uv.fs_stat(unity_root .. "/ProjectSettings/ProjectVersion.txt") then
+  local root = vim.uv.fs_realpath(unity_root) or unity_root
+  local sock = ("%s/nvim-unity-%s.sock"):format(vim.env.XDG_RUNTIME_DIR or "/tmp", vim.fn.sha256(root):sub(1, 12))
+  local ok, err = pcall(vim.fn.serverstart, sock)
+  if not ok then
+    vim.schedule(function()
+      vim.notify(("Unity external editor inactive: %s"):format((err:gsub("^Vim:", ""))), vim.log.levels.WARN)
+    end)
+  end
+end

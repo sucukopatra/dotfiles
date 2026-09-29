@@ -1,37 +1,6 @@
--- separate rules
 hl.window_rule({
-    name = "pulsemixer",
-    match = { initial_title = "pulsemixer" },
-    float = true,
-    center = true,
-    size = { 900, 600 },
-    stay_focused = true,
-    dim_around = true,
-})
-
-hl.window_rule({
-    name = "bluetui",
-    match = { initial_title = "bluetui" },
-    float = true,
-    center = true,
-    size = { 900, 600 },
-    stay_focused = true,
-    dim_around = true,
-})
-
-hl.window_rule({
-    name = "clock-rs",
-    match = { initial_title = "tty-clock" },
-    float = true,
-    center = true,
-    size = { 900, 600 },
-    stay_focused = true,
-    dim_around = true,
-})
-
-hl.window_rule({
-    name = "impala",
-    match = { initial_title = "impala" },
+    name = "tui-popups",
+    match = { initial_title = "pulsemixer|bluetui|tty-clock|impala" },
     float = true,
     center = true,
     size = { 900, 600 },
@@ -42,16 +11,6 @@ hl.window_rule({
 hl.window_rule({
     name = "waypaper",
     match = { class = "waypaper" },
-    float = true,
-    center = true,
-    size = { 900, 600 },
-    stay_focused = true,
-    dim_around = true,
-})
-
-hl.window_rule({
-    name = "vpn-menu",
-    match = { initial_title = "vpn-menu" },
     float = true,
     center = true,
     size = { 900, 600 },

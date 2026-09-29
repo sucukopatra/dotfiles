@@ -1,0 +1,15 @@
+<!--
+  Copied to ~/dev/personal/unity/ by setup_unity_dev (utils.sh). Unity's generated
+  .csproj files are SDK-style, so MSBuild imports this for every project under
+  ~/dev/personal/unity/projects, giving Roslyn the Unity-aware analyzers (no `readonly`
+  nags on [SerializeField], no "unused" Update()). The dll ships with vstuc; see
+  install_vstuc in utils.sh.
+-->
+<Project>
+  <PropertyGroup>
+    <UnityAnalyzersDll>$(HOME)/.local/share/vstuc/extension/Analyzers/Microsoft.Unity.Analyzers.dll</UnityAnalyzersDll>
+  </PropertyGroup>
+  <ItemGroup Condition="Exists('$(UnityAnalyzersDll)')">
+    <Analyzer Include="$(UnityAnalyzersDll)" />
+  </ItemGroup>
+</Project>

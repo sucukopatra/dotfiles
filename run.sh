@@ -3,7 +3,7 @@ set -euo pipefail
 
 REPO_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-TARGET_DIR="$HOME/dev/dotfiles"
+TARGET_DIR="$HOME/dev/personal/dotfiles"
 if [[ "$REPO_DIR" != "$TARGET_DIR" ]]; then
   if [[ -e "$TARGET_DIR" ]]; then
     echo "Error: $TARGET_DIR already exists but this repo is at $REPO_DIR." >&2
@@ -11,7 +11,7 @@ if [[ "$REPO_DIR" != "$TARGET_DIR" ]]; then
     exit 1
   fi
   echo "Moving repo to $TARGET_DIR..."
-  mkdir -p "$HOME/dev"
+  mkdir -p "$(dirname "$TARGET_DIR")"
   mv "$REPO_DIR" "$TARGET_DIR"
   exec "$TARGET_DIR/run.sh" "$@"
 fi
@@ -30,7 +30,7 @@ while true; do sudo -n true; sleep 60; done 2>/dev/null &
 SUDO_KEEPALIVE_PID=$!
 trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
 
-mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies}
+mkdir -p ~/media/{photos,video,music} ~/notes ~/docs ~/downloads ~/media/photos/{screenshots,wallpapers} ~/media/video/{shows,movies} ~/dev/{personal,academic,experimental}
 
 if [[ ! -d ~/media/photos/wallpapers/.git ]]; then
   if prompt_yn "Clone wallpaper repository to ~/media/photos/wallpapers/?"; then
@@ -80,9 +80,11 @@ fi
 echo "Installing stow configs..."
 stow_packages "${STOW[@]}"
 
+UNITY_DEV=0
 if prompt_yn "Set up Unity + Neovim development environment?" "n"; then
   echo "Setting up Unity development environment..."
   setup_unity_dev "$REPO_DIR"
+  UNITY_DEV=1
 fi
 
 if prompt_yn "Set up CS50 development environment?" "n"; then
@@ -92,6 +94,13 @@ fi
 
 if prompt_yn "Install Claude Code?"; then
   command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
+if [[ $UNITY_DEV == 1 ]] && command -v claude >/dev/null 2>&1 && command -v unity >/dev/null 2>&1; then
+  echo "Connecting Claude Code to Unity..."
+  unity mcp configure claude-code --yes --no-banner
+  unity skill install claude-code --yes --no-banner
 fi
 
 if [[ "$SHELL" != */zsh ]]; then

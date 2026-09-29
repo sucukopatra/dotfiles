@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Unity "External Script Editor" shim. Unity's Visual Studio package treats any
+# executable whose path ends in "code" as VS Code, which turns on SDK-style
+# .sln/.csproj generation for roslyn.nvim, and runs it as:
+#   unity-code "<project>" [-g "<file>":<line>:<column>]
+# Files go to the Neovim serving this project (see the Unity block in
+# lua/config/autocmds.lua; the socket naming here must match it). With no such
+# Neovim running, a new one is started in a terminal.
+set -euo pipefail
+
+die() {
+  command -v notify-send >/dev/null && notify-send -a unity-code "unity-code" "$1"
+  echo "unity-code: $1" >&2
+  exit 1
+}
+
+[[ $# -ge 1 ]] || die "usage: unity-code <project> [-g <file>:<line>:<column>]"
+
+# Unity passes a lone *.code-workspace instead of the folder when one exists.
+project=$1
+[[ -f $project ]] && project=$(dirname -- "$project")
+project=$(realpath -- "$project")
+
+file="" line=1 col=1
+if [[ ${2-} == -g && -n ${3-} ]]; then
+  spec=$3
+  col=${spec##*:}
+  spec=${spec%:*}
+  line=${spec##*:}
+  file=${spec%:*}
+  # Unity sends column 0 for "unknown"; cursor() would keep the old column.
+  ((col >= 1)) || col=1
+fi
+
+hash=$(printf %s "$project" | sha256sum | cut -c1-12)
+sock="${XDG_RUNTIME_DIR:-/tmp}/nvim-unity-$hash.sock"
+
+# Raise the terminal holding the Neovim on $sock. Hyprland only; elsewhere the
+# file still opens, the window just isn't raised.
+focus() {
+  command -v hyprctl >/dev/null && [[ -n ${HYPRLAND_INSTANCE_SIGNATURE-} ]] || return 0
+  local pid
+  pid=$(nvim --server "$sock" --remote-expr 'getpid()') || return 0
+  # Walk up from nvim (through any shell) to the process that owns a window.
+  while [[ $pid -gt 1 ]]; do
+    # Lua dispatcher syntax (0.55+), then the classic one.
+    [[ $(hyprctl dispatch "hl.dsp.focus({ window = \"pid:$pid\" })" 2>/dev/null) == ok ]] && return 0
+    [[ $(hyprctl dispatch focuswindow "pid:$pid" 2>/dev/null) == ok ]] && return 0
+    pid=$(ps -o ppid= -p "$pid" | tr -d ' ') || return 0
+  done
+}
+
+if nvim --server "$sock" --remote-expr 1 >/dev/null 2>&1; then
+  if [[ -n $file ]]; then
+    # Single quotes are the only character a Vim '...' string needs escaped.
+    esc=${file//\'/\'\'}
+    nvim --server "$sock" --remote-expr \
+      "execute('drop +call\\ cursor($line,$col) ' .. fnameescape('$esc'))" >/dev/null
+  fi
+  focus
+  exit 0
+fi
+
+args=(nvim)
+[[ -n $file ]] && args+=("+call cursor($line,$col)" -- "$file")
+
+term=${TERMINAL-}
+if [[ -z $term ]]; then
+  for t in kitty foot alacritty wezterm ghostty xterm; do
+    command -v "$t" >/dev/null && { term=$t; break; }
+  done
+fi
+[[ -n $term ]] || die "no terminal found; set \$TERMINAL"
+
+# Started from the project root so the autocmd picks it up and serves $sock;
+# setsid detaches it from Unity.
+cd -- "$project"
+case ${term##*/} in
+  kitty | foot) setsid -f "$term" "${args[@]}" ;;
+  wezterm) setsid -f "$term" start -- "${args[@]}" ;;
+  *) setsid -f "$term" -e "${args[@]}" ;;
+esac >/dev/null 2>&1

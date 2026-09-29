@@ -66,6 +66,11 @@ hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = -10, relati
     --
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + SHIFT + S",         hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + CTRL + S", function()
+    local w = hl.get_active_window()
+    if not w then return end
+    hl.dispatch(hl.dsp.window.move({ workspace = w.workspace.special and w.monitor.active_workspace.id or "special:magic" }))
+end)
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + TAB", hl.dsp.focus({ workspace = "e+1" }))
@@ -78,8 +83,8 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true })
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d *_backlight -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d *_backlight -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
 

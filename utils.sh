@@ -112,8 +112,10 @@ setup_gpu_udev() {
 
 # Microsoft's Visual Studio Tools for Unity debug adapter, used by nvim-dap to
 # attach to a running Unity Editor. Not on Mason, so it is pulled straight from
-# the marketplace. `dir` must match VSTUC_DIR in
-# stow/nvim/.config/nvim/lua/plugins/dap.lua; change both together.
+# the marketplace. It also ships the Microsoft.Unity.Analyzers.dll that
+# assets/unity/Directory.Build.props feeds to Roslyn. `dir` must match VSTUC_DIR
+# in stow/nvim/.config/nvim/lua/plugins/dap.lua and the path in that props
+# file; change all three together.
 install_vstuc() {
   local dir=~/.local/share/vstuc
   local dll
@@ -150,57 +152,16 @@ install_vstuc() {
   fi
 }
 
-# Roslyn analyzers that teach the language server about Unity semantics, so it
-# stops suggesting `readonly` on [SerializeField] fields or reporting Unity
-# message methods such as Update() as unused. `dir` is what Unity's
-# "Add/Remove C# analyzers" points at, and is also baked into
-# assets/unity/nvim-unity-config.json; change both together.
-install_unity_analyzers() {
-  local dir=~/dev/unity/analyzers
-  local dll="$dir/Microsoft.Unity.Analyzers.dll"
-  if [[ -f "$dll" ]]; then
-    echo "  unchanged: $dll"
-    return 0
-  fi
-
-  local version tmp
-  # Small files, so no progress bar; the timeouts only stop a dead connection
-  # from hanging the whole setup.
-  version="$(curl -fsSL --connect-timeout 20 --speed-limit 1024 --speed-time 30 \
-    https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/index.json \
-    | grep -oE '"[0-9]+\.[0-9]+\.[0-9]+"' | tail -1 | tr -d '"')"
-  if [[ -z "$version" ]]; then
-    echo "  WARNING: could not resolve Microsoft.Unity.Analyzers version." >&2
-    return 0
-  fi
-
-  tmp="$(mktemp -d)"
-  if curl -fsSL --connect-timeout 20 --speed-limit 1024 --speed-time 30 -o "$tmp/pkg.nupkg" \
-    "https://api.nuget.org/v3-flatcontainer/microsoft.unity.analyzers/$version/microsoft.unity.analyzers.$version.nupkg"; then
-    unzip -qo "$tmp/pkg.nupkg" -d "$tmp/x"
-    mkdir -p "$dir"
-    cp "$tmp/x/analyzers/dotnet/cs/Microsoft.Unity.Analyzers.dll" "$dir/"
-    echo "  installed:  $dll (v$version)"
-  else
-    echo "  WARNING: Microsoft.Unity.Analyzers download failed." >&2
-  fi
-  rm -rf "$tmp"
-}
-
-# Write the com.walcht.ide.neovim settings into Unity's global EditorPrefs so a
-# fresh machine does not need the Neovim => Settings window filled in by hand.
+# Set Unity's External Script Editor (a global EditorPref, so once per machine)
+# to the Neovim shim in stow/nvim/.config/nvim/bin/unity-code. Unity's Visual
+# Studio package takes it for VS Code and generates .sln/.csproj for Roslyn.
 #
 # Unity rewrites this file wholesale when it exits, so any edit made while the
 # Editor is running would be silently discarded. Refuse in that case.
 configure_unity_prefs() {
   # EditorPrefs live under the XDG *data* dir, not ~/.config/unity3d (which
   # holds Hub state and PlayerPrefs).
-  local template="$1" prefs="$HOME/.local/share/unity3d/prefs"
-
-  if [[ ! -f "$template" ]]; then
-    echo "  WARNING: template not found: $template" >&2
-    return 0
-  fi
+  local prefs="$HOME/.local/share/unity3d/prefs"
 
   if pgrep -x "Unity|unityhub-unity-" >/dev/null 2>&1; then
     echo "  WARNING: Unity Editor is running. Quit it and re-run, or Unity will" >&2
@@ -209,14 +170,13 @@ configure_unity_prefs() {
   fi
 
   mkdir -p "$(dirname "$prefs")"
-  UNITY_PREFS="$prefs" UNITY_TEMPLATE="$template" python3 - <<'PY'
+  UNITY_PREFS="$prefs" python3 - <<'PY'
 import base64, os, sys, xml.etree.ElementTree as ET
 
 prefs = os.environ["UNITY_PREFS"]
-template = os.environ["UNITY_TEMPLATE"]
-key = "NvimUnityConfigJson"
+key = "kScriptsDefaultApp"
 
-payload = open(template, encoding="utf-8").read().replace("{{HOME}}", os.path.expanduser("~"))
+payload = os.path.expanduser("~/.config/nvim/bin/unity-code")
 encoded = base64.b64encode(payload.encode("utf-8")).decode("ascii")
 
 if os.path.exists(prefs) and os.path.getsize(prefs) > 0:
@@ -247,7 +207,7 @@ print(f"  {action}:   {key} in {prefs}")
 PY
 }
 
-# Point unity-cli at ~/dev/unity/editor so a hand-installed Editor lands there
+# Point unity-cli at ~/dev/personal/unity/editor so a hand-installed Editor lands there
 # rather than in Unity's ~/Unity/Hub/Editor default. Must be set before any
 # `unity install`, which is left manual.
 set_unity_install_path() {
@@ -256,39 +216,38 @@ set_unity_install_path() {
     return 0
   fi
 
-  if unity install-path --set ~/dev/unity/editor --no-banner >/dev/null 2>&1; then
-    echo "  install path: ~/dev/unity/editor"
+  if unity install-path --set ~/dev/personal/unity/editor --no-banner >/dev/null 2>&1; then
+    echo "  install path: ~/dev/personal/unity/editor"
   else
     echo "  WARNING: could not set Unity install path." >&2
   fi
 }
 
 # Everything a machine needs to edit Unity C# in Neovim, beyond the packages in
-# GAME_DEV: the debug adapter, the Unity-aware analyzers, and the Neovim
-# integration settings. The Editor itself is installed by hand.
+# GAME_DEV: the debug adapter, the Unity-aware analyzers, and the External
+# Script Editor setting. The Editor itself is installed by hand. Nothing is
+# needed per project: every Unity template includes com.unity.ide.visualstudio,
+# which generates the .sln/.csproj.
 setup_unity_dev() {
   local repo_dir="$1"
 
-  mkdir -p ~/dev/unity/{editor,projects}
+  mkdir -p ~/dev/personal/unity/{editor,projects}
   echo "  vstuc debug adapter:"
   install_vstuc
-  echo "  Unity Roslyn analyzers:"
-  install_unity_analyzers
+  # The generated .csproj files are SDK-style, so MSBuild picks this up from any
+  # parent directory and hands the analyzers to Roslyn for every project here.
+  cp "$repo_dir/assets/unity/Directory.Build.props" ~/dev/personal/unity/
+  echo "  Unity Roslyn analyzers: ~/dev/personal/unity/Directory.Build.props"
   echo "  Unity Editor install path:"
   set_unity_install_path
-  echo "  Neovim integration settings:"
-  configure_unity_prefs "$repo_dir/assets/unity/nvim-unity-config.json"
+  echo "  External Script Editor:"
+  configure_unity_prefs
 
   cat <<'EOF'
   Manual steps:
     1. Install a Unity Editor (install path is already set):
          unity auth login && unity license activate --personal
          unity install <version>
-  Per-project (Unity cannot do these from the CLI):
-    2. Add to <project>/Packages/manifest.json dependencies:
-         "com.walcht.ide.neovim": "https://github.com/walcht/com.walcht.ide.neovim.git"
-    3. Edit > Preferences > External Tools > External Script Editor > Neovim
-    4. Neovim > Settings > Regenerate project files
 EOF
 }
 
@@ -337,12 +296,14 @@ stow_packages() {
     done
 
     # Clear any real file sitting where a symlink needs to go, or stow refuses
-    # to adopt the package. Paths are used as-is: packages store literal
-    # dotfiles (stow/nvim/.config/...), not stow's dot- prefix form.
+    # to adopt the package. Same for a symlink that doesn't resolve to this
+    # repo's file (left behind when the repo moves): stow doesn't own it and
+    # won't replace it. Paths are used as-is: packages store literal dotfiles
+    # (stow/nvim/.config/...), not stow's dot- prefix form.
     while IFS= read -r -d '' src; do
       rel="${src#"$repo_dir/stow/$pkg/"}"
       target_path="${target%/}/$rel"
-      if [[ -f "$target_path" && ! -L "$target_path" ]]; then
+      if [[ -f "$target_path" || -L "$target_path" ]] && [[ ! "$target_path" -ef "$src" ]]; then
         if [[ "$target" == "/" ]]; then
           sudo rm -f "$target_path"
         else
