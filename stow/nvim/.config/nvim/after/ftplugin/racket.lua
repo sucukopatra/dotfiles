@@ -10,18 +10,20 @@
 -- stylua: ignore
 vim.keymap.set("n", "<leader>cc", function()
   vim.cmd("write")
-  local file = vim.fn.expand("%:p")
-  local mod = ('(file "%s")'):format((file:gsub('[\\"]', "\\%0")))
-  local run_subs = ("(for ([s '(main test)]) (define m `(submod %s ,s))"
-    .. " (when (module-declared? m #t) (dynamic-require m #f)))"):format(mod)
+  local function str(s)
+    return '"' .. s:gsub('[\\"]', "\\%0") .. '"'
+  end
+  local file = str(vim.fn.expand("%:p"))
+  local helper = str(vim.fn.stdpath("config") .. "/racket/repl.rkt")
   require("config.terminal").run({
     "racket",
     -- The REPL starts output on a fresh line before its prompt, but only knows
     -- the column once line counting is on; it turns that on itself too late
     -- for the -e output, so a bare `(printf "hi")` got drawn over.
     "-e", "(port-count-lines! (current-output-port))",
-    "-e", ("(enter! %s)"):format(mod),
-    "-e", run_subs,
+    "-e", ("(require (file %s))"):format(helper),
+    "-e", ("(prepare %s)"):format(file),
+    "-e", ("(enter! (file %s))"):format(file),
     "-i",
   }, vim.fn.expand("%:p:h"))
 end, { buffer = true, desc = "Run Racket file in REPL" })

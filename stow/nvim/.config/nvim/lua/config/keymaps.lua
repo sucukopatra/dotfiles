@@ -2,9 +2,6 @@ local map = vim.keymap.set
 
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
-map("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
-map("n", "<leader>w", "<cmd>write<CR>", { desc = "Write buffer" })
-
 map("n", "n", "nzzzv", { desc = "Next search result centered" })
 map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Half page down centered" })
@@ -18,46 +15,6 @@ map("x", "<", "<gv", { desc = "Indent left and reselect" })
 map("x", ">", ">gv", { desc = "Indent right and reselect" })
 map("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 map("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
-
--- :bdelete also closes every window showing the buffer, which collapses splits.
--- Point those windows at another buffer first so the layout survives.
-local function delete_buffer(force)
-  local buf = vim.api.nvim_get_current_buf()
-  if vim.bo[buf].modified and not force then
-    local name = vim.fn.bufname(buf) ~= "" and vim.fn.fnamemodify(vim.fn.bufname(buf), ":t") or "[No Name]"
-    local choice = vim.fn.confirm(("Save changes to %s?"):format(name), "&Yes\n&No\n&Cancel", 3)
-    if choice == 1 then
-      vim.cmd.write()
-    elseif choice == 2 then
-      force = true
-    else
-      return
-    end
-  end
-  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
-    vim.api.nvim_win_call(win, function()
-      local alt = vim.fn.bufnr("#")
-      if alt > 0 and alt ~= buf and vim.fn.buflisted(alt) == 1 then
-        vim.cmd.buffer(alt)
-      else
-        vim.cmd.bprevious()
-      end
-      -- Only one listed buffer: nothing to fall back to, so leave an empty one.
-      if vim.api.nvim_get_current_buf() == buf then
-        vim.cmd.enew()
-      end
-    end)
-  end
-  vim.cmd((force and "bdelete! " or "bdelete ") .. buf)
-end
-
-map("n", "<leader>bd", function()
-  delete_buffer(false)
-end, { desc = "Delete buffer" })
-map("n", "<leader>bD", function()
-  delete_buffer(true)
-end, { desc = "Delete buffer (force)" })
-map("n", "<leader>bo", "<cmd>%bdelete|edit#|bdelete#<CR>", { desc = "Delete other buffers" })
 
 -- Terminal mode too, so the run window and the Ctrl-/ shell are left with one
 -- key. Inside terminals this costs the shell's own <C-h>, <C-k> and <C-l>.
@@ -90,9 +47,6 @@ map("n", "<leader>fS", "<cmd>FzfLua lsp_live_workspace_symbols<CR>", { desc = "W
 map("n", "<leader>fk", "<cmd>FzfLua keymaps<CR>", { desc = "Keymaps" })
 map("n", "<leader>fu", "<cmd>FzfLua undotree<CR>", { desc = "Undo tree" })
 
-map("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Open Lazy" })
-map("n", "<leader>m", "<cmd>Mason<CR>", { desc = "Open Mason" })
-
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- Both spellings: kitty's keyboard protocol delivers <C-/>, terminals without
 -- it send the legacy byte for Ctrl-/, which Neovim reads as <C-_>.
@@ -116,6 +70,12 @@ toggle("<leader>uh", "Inlay hints", function()
   return vim.lsp.inlay_hint.is_enabled()
 end, function(on)
   vim.lsp.inlay_hint.enable(on)
+end)
+toggle("<leader>ua", "AI completion", function()
+  return vim.lsp.inline_completion.is_enabled()
+end, function(on)
+  vim.lsp.enable("copilot", on)
+  vim.lsp.inline_completion.enable(on)
 end)
 toggle("<leader>ud", "Diagnostics", function()
   return vim.diagnostic.is_enabled()

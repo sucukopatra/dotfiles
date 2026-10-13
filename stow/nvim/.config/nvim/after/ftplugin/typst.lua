@@ -9,3 +9,5 @@ vim.keymap.set("n", "<leader>cc", function()
   vim.cmd("redraw!")
   vim.cmd("cwindow")
 end, { buffer = true, desc = "Compile Typst file" })
+
+vim.keymap.set("n", "<leader>cp", "<cmd>TypstPreviewToggle<CR>", { buffer = true, desc = "Toggle Typst preview" })

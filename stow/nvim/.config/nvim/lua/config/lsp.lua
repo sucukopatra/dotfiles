@@ -10,10 +10,33 @@ vim.lsp.enable({
   "bashls",
   "clangd",
   "gdscript",
+  "harper_ls",
   "lua_ls",
   "racket_langserver",
   "tinymist",
 })
+
+local inline_ns = vim.api.nvim_create_namespace("nvim.lsp.inline_completion")
+
+local function inline_or_key(key, action)
+  return function()
+    if #vim.api.nvim_buf_get_extmarks(0, inline_ns, 0, -1, { limit = 1 }) > 0 then
+      action()
+    else
+      vim.api.nvim_feedkeys(vim.keycode(key), "n", false)
+    end
+  end
+end
+
+vim.keymap.set("i", "<C-l>", inline_or_key("<C-l>", function()
+  vim.lsp.inline_completion.get()
+end), { desc = "Accept inline completion" })
+vim.keymap.set("i", "<C-j>", inline_or_key("<C-j>", function()
+  vim.lsp.inline_completion.select({ count = 1 })
+end), { desc = "Next inline completion" })
+vim.keymap.set("i", "<C-k>", inline_or_key("<C-k>", function()
+  vim.lsp.inline_completion.select({ count = -1 })
+end), { desc = "Previous inline completion" })
 
 -- Neovim already maps K, ]d, [d, gO and the gr* family out of the box -- grn
 -- rename, gra code action, grr references, gri implementation, grt type

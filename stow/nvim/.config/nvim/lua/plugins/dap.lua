@@ -65,15 +65,21 @@ local keys = {
   { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
   { "<leader>do", function() require("dap").step_over() end, desc = "Step over" },
   { "<leader>dO", function() require("dap").step_out() end, desc = "Step out" },
-  { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+  { "<leader>dr", function() require("dap-view").jump_to_view("repl") end, desc = "Jump to REPL" },
   { "<leader>dl", function() require("dap").run_last() end, desc = "Run last" },
   { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-  { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },
+  { "<leader>du", function() require("dap-view").toggle() end, desc = "Toggle DAP view" },
   {
     "<leader>de",
-    function() require("dapui").eval(nil, { enter = true }) end,
+    function() require("dap-view").hover(nil, true) end,
     desc = "Evaluate expression",
     -- "x", not "v": see the note on the visual maps in config/keymaps.lua.
+    mode = { "n", "x" },
+  },
+  {
+    "<leader>dw",
+    function() require("dap-view").add_expr() end,
+    desc = "Watch expression",
     mode = { "n", "x" },
   },
   -- Visual Studio / VS Code / Rider layout. Shifted F-keys are listed twice:
@@ -93,27 +99,18 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
-      "theHamsta/nvim-dap-virtual-text",
+      {
+        "igorlfs/nvim-dap-view",
+        version = "1.*",
+        opts = {
+          auto_toggle = true,
+          virtual_text = { enabled = true },
+        },
+      },
     },
     keys = keys,
     config = function()
       local dap = require("dap")
-      local dapui = require("dapui")
-
-      dapui.setup()
-      require("nvim-dap-virtual-text").setup({})
-
-      -- Open/close the UI automatically around a session.
-      dap.listeners.after.event_initialized["dapui"] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui"] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui"] = function()
-        dapui.close()
-      end
 
       vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError" })
       vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn" })
