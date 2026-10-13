@@ -18,6 +18,8 @@ fi
 
 source "$REPO_DIR/utils.sh"
 source "$REPO_DIR/packages.conf"
+# Same XDG paths as a login shell, so nothing below writes into ~
+eval "$(grep '^export' "$REPO_DIR/stow/zsh/.zprofile")"
 
 YES_ALL=0
 for arg in "$@"; do

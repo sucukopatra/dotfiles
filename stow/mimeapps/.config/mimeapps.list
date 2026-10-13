@@ -1,0 +1,86 @@
+[Default Applications]
+# Browser
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop
+x-scheme-handler/chrome=zen.desktop
+text/html=zen.desktop
+application/x-extension-htm=zen.desktop
+application/x-extension-html=zen.desktop
+application/x-extension-shtml=zen.desktop
+application/xhtml+xml=zen.desktop
+application/x-extension-xhtml=zen.desktop
+application/x-extension-xht=zen.desktop
+
+# App links
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/magnet=org.qbittorrent.qBittorrent.desktop
+application/x-bittorrent=org.qbittorrent.qBittorrent.desktop
+
+# Files
+inode/directory=org.gnome.Nautilus.desktop
+application/uproject=UnrealEditor.desktop
+
+# Documents
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop
+
+# Text
+text/plain=nvim.desktop
+text/markdown=nvim.desktop
+text/x-csrc=nvim.desktop
+text/x-chdr=nvim.desktop
+text/x-c++src=nvim.desktop
+text/x-csharp=nvim.desktop
+text/x-python=nvim.desktop
+text/x-lua=nvim.desktop
+application/json=nvim.desktop
+application/toml=nvim.desktop
+application/x-yaml=nvim.desktop
+application/x-shellscript=nvim.desktop
+text/x-shellscript=nvim.desktop
+
+# Images
+image/png=org.gnome.Loupe.desktop
+image/jpeg=org.gnome.Loupe.desktop
+image/gif=org.gnome.Loupe.desktop
+image/webp=org.gnome.Loupe.desktop
+image/svg+xml=org.gnome.Loupe.desktop
+image/bmp=org.gnome.Loupe.desktop
+image/tiff=org.gnome.Loupe.desktop
+image/avif=org.gnome.Loupe.desktop
+image/heif=org.gnome.Loupe.desktop
+
+# Video
+video/mp4=io.github.celluloid_player.Celluloid.desktop
+video/x-matroska=io.github.celluloid_player.Celluloid.desktop
+video/webm=io.github.celluloid_player.Celluloid.desktop
+video/quicktime=io.github.celluloid_player.Celluloid.desktop
+video/x-msvideo=io.github.celluloid_player.Celluloid.desktop
+video/mpeg=io.github.celluloid_player.Celluloid.desktop
+video/ogg=io.github.celluloid_player.Celluloid.desktop
+
+# Audio
+audio/mpeg=io.github.celluloid_player.Celluloid.desktop
+audio/flac=io.github.celluloid_player.Celluloid.desktop
+audio/ogg=io.github.celluloid_player.Celluloid.desktop
+audio/opus=io.github.celluloid_player.Celluloid.desktop
+audio/x-wav=io.github.celluloid_player.Celluloid.desktop
+audio/mp4=io.github.celluloid_player.Celluloid.desktop
+audio/x-m4a=io.github.celluloid_player.Celluloid.desktop
+audio/aac=io.github.celluloid_player.Celluloid.desktop
+
+# Archives
+application/zip=org.gnome.FileRoller.desktop
+application/x-7z-compressed=org.gnome.FileRoller.desktop
+application/vnd.rar=org.gnome.FileRoller.desktop
+application/x-tar=org.gnome.FileRoller.desktop
+application/gzip=org.gnome.FileRoller.desktop
+application/x-compressed-tar=org.gnome.FileRoller.desktop
+application/x-xz-compressed-tar=org.gnome.FileRoller.desktop
+application/x-zstd-compressed-tar=org.gnome.FileRoller.desktop
+
+[Added Associations]
+x-scheme-handler/http=zen.desktop;
+x-scheme-handler/https=zen.desktop;
+x-scheme-handler/chrome=zen.desktop;
