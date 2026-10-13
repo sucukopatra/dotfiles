@@ -7,6 +7,11 @@ if [ ! -d "$ZINIT_HOME" ]; then
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
+# Keep zsh state/cache out of ~
+mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+typeset -A ZINIT
+ZINIT[ZCOMPDUMP_PATH]="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -34,7 +39,7 @@ bindkey '^n' history-search-forward
 
 # History
 HISTSIZE=50000
-HISTFILE=~/.zsh_history
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 SAVEHIST=$HISTSIZE
 setopt sharehistory
 setopt hist_ignore_space

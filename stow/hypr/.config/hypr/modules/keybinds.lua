@@ -19,7 +19,7 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(altMod  .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + U", hl.dsp.layout("togglesplit"))
-hl.bind(altMod .. "+W", hl.dsp.exec_cmd("pgrep -x waypaper && pkill waypaper || waypaper"))
+hl.bind(altMod .. "+W", hl.dsp.exec_cmd("pgrep -x waypaper && pkill waypaper || waypaper --zen-mode --folder ~/media/photos/wallpapers"))
 hl.bind(mainMod .. "+G", hl.dsp.exec_cmd("pgrep -x pulsemixer && pkill pulsemixer || kitty --title pulsemixer -e pulsemixer"))
 
 -- Screenshots
