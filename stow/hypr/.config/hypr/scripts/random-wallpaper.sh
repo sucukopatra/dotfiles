@@ -17,7 +17,7 @@ queue_next() {
     dunstify -a random-wallpaper "Wallpaper" "No images found in $WALLPAPER_DIR" -t 3000
     exit 1
   fi
-  ln -f "$pick" "$NEXT"
+  ln -f "$pick" "$NEXT" || { dunstify -a random-wallpaper "Wallpaper" "Can't hard-link into $NEXT" -t 3000; exit 1; }
 }
 
 [[ -e "$NEXT" ]] || queue_next
