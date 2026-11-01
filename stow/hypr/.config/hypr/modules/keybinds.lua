@@ -9,6 +9,7 @@ local altMod = "ALT"
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(browser))
+hl.bind(altMod .. " + B", hl.dsp.exec_cmd("pgrep -x tty-battery.sh && pkill -x tty-battery.sh || kitty --title tty-battery -e ~/.config/hypr/scripts/tty-battery.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("pgrep -x tty-clock && pkill tty-clock || kitty --title tty-clock -e tty-clock -s -S -c -b -n"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("pgrep -x bluetui && pkill bluetui || kitty --title bluetui -e bluetui"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pgrep -x impala && pkill impala || kitty --title impala -e impala"))
@@ -28,7 +29,8 @@ hl.bind("SHIFT+Print", hl.dsp.exec_cmd("pidof slurp || if area=$(slurp); then gr
 hl.bind(altMod .. "+Print", hl.dsp.exec_cmd("grim - | tee >(wl-copy) > $(xdg-user-dir PICTURES)/screenshots/$(date +'%s_grim.png') && dunstify \"Screenshot of the screen taken\" -t 1000"))
 
 -- Clipboard
-hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd("cliphist list | cliphist decode | fuzzel --dmenu | cliphist encode | wl-copy"))
+hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-menu.sh"))
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-menu.sh images"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))

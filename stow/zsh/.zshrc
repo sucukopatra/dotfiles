@@ -84,6 +84,12 @@ pacup() {
   fi
 }
 
+# Open a Unity project on the NVIDIA dGPU with Vulkan; the default Intel
+# OpenGL path draws red-dot artifacts over the Scene view
+uopen() {
+  prime-run unity open "$@" --args -force-vulkan
+}
+
 # Shell integrations
 eval "$(fzf --zsh)" 2>/dev/null
 

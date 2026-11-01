@@ -1,6 +1,6 @@
 hl.window_rule({
     name = "tui-popups",
-    match = { initial_title = "pulsemixer|bluetui|tty-clock|impala" },
+    match = { initial_title = "pulsemixer|bluetui|tty-clock|impala|tty-battery" },
     float = true,
     center = true,
     size = { 900, 600 },

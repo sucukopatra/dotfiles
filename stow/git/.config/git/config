@@ -7,3 +7,8 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[merge "unityyamlmerge"]
+	name = Unity SmartMerge
+	driver = /home/ender/dev/personal/unity/editor/6000.6.7f1/Editor/Data/Tools/UnityYAMLMerge merge -p %O %B %A %A
+[http]
+	sslverify = false
