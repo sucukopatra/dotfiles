@@ -122,6 +122,9 @@ fi
 if is_installed bluez; then
     enable_services bluetooth
 fi
+if [[ "$(systemctl is-enabled systemd-networkd-wait-online.service 2>/dev/null)" != masked ]]; then
+    sudo systemctl mask systemd-networkd-wait-online.service
+fi
 if command -v tailscale >/dev/null 2>&1; then
     enable_services tailscaled
     echo "If this is the first run, run 'tailscale login' to complete the setup."

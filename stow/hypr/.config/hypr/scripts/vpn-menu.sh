@@ -76,6 +76,7 @@ if [[ -n "$active" ]] && ! tunnel_down "$active"; then
   exit 1
 fi
 
+notify "Connecting to $choice…" 0
 if systemctl start "wg-quick@$choice"; then
   notify "Connected to $choice"
 else
