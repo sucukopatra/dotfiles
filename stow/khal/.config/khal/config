@@ -1,0 +1,12 @@
+[calendars]
+[[radicale]]
+path = ~/.local/share/calendars/*
+type = discover
+
+[default]
+default_calendar = Calendar
+
+[locale]
+timeformat = %H:%M
+datetimeformat = %x %H:%M
+longdatetimeformat = %x %H:%M

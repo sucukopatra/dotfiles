@@ -277,6 +277,27 @@ setup_cs50() {
 EOF
 }
 
+setup_pimsync() {
+  local creds=~/.local/share/pimsync/credentials url user pass
+
+  mkdir -p ~/.local/share/calendars "${creds%/*}"
+  if [[ -s "$creds" ]]; then
+    echo "  unchanged: $creds"
+  else
+    read -r -p "  Radicale URL: " url
+    read -r -p "  Radicale username: " user
+    read -r -s -p "  Radicale password: " pass
+    echo
+    if [[ -z "$url" || -z "$user" || -z "$pass" ]]; then
+      echo "  WARNING: missing Radicale details; skipping calendar sync." >&2
+      return 0
+    fi
+    (umask 077; printf '%s\n' "$url" "$user" "$pass" > "$creds")
+    echo "  written:   $creds"
+  fi
+  enable_user_services pimsync
+}
+
 stow_packages() {
   local repo_dir
   repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"

@@ -133,6 +133,10 @@ if command -v syncthing >/dev/null 2>&1; then
     enable_user_services syncthing
     echo "If this is the first run, open http://127.0.0.1:8384/ to complete the setup."
 fi
+if command -v pimsync >/dev/null 2>&1 && prompt_yn "Set up Radicale calendar sync?"; then
+    echo "Setting up calendar sync..."
+    setup_pimsync
+fi
 
 if command -v hyprctl &>/dev/null && pgrep -x Hyprland &>/dev/null; then
   hyprctl reload

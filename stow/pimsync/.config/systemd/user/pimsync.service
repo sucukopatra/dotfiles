@@ -1,0 +1,10 @@
+[Unit]
+Description=pimsync daemon
+
+[Service]
+ExecStart=/usr/bin/pimsync daemon
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target
