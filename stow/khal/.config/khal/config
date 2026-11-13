@@ -5,8 +5,26 @@ type = discover
 
 [default]
 default_calendar = Calendar
+highlight_event_days = True
 
 [locale]
 timeformat = %H:%M
 datetimeformat = %x %H:%M
 longdatetimeformat = %x %H:%M
+
+[view]
+blank_line_before_day = True
+frame = color
+agenda_day_format = '{bold}{name}{reset}  {date-long}'
+agenda_event_format = '{calendar-color}▍{reset}{cancelled}{start-end-time-style}  {bold}{title}{reset}{description-separator}{description}'
+event_format = '{calendar-color}▍{reset}{cancelled}{start}-{end}  {bold}{title}{reset}{description-separator}{description}'
+
+[palette]
+list = light gray, ''
+line header = white, ''
+bright = white, dark gray
+edit = white, dark gray
+date header focused = black, light gray
+today = black, dark green
+frame = dark gray, ''
+frame focus color = light gray, ''
